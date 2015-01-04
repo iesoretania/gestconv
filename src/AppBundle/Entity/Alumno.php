@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Parte;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,7 +58,7 @@ class Alumno
     protected $apellido2;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Grupo")
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="alumnado")
      * @var Grupo
      */
     protected $grupo;
@@ -148,27 +149,6 @@ class Alumno
 
         return $this;
     }
-    
-    /**
-     *
-     * @return Grupo
-     */
-    public function getGrupo()
-    {
-        return $this->grupo;
-    }
-    
-    /**
-     *
-     * @param Grupo $grupo
-     * @return Alumno
-     */
-    public function setGrupo($grupo)
-    {
-        $grupo->incorporarAlumno($this);
-
-        return $this;
-    }
 
     /**
      *
@@ -239,5 +219,28 @@ class Alumno
     public function getPartes()
     {
         return $this->partes;
+    }
+
+    /**
+     * Set grupo
+     *
+     * @param Grupo $grupo
+     * @return Alumno
+     */
+    public function setGrupo(Grupo $grupo = null)
+    {
+        $this->grupo = $grupo;
+
+        return $this;
+    }
+
+    /**
+     * Get grupo
+     *
+     * @return Grupo
+     */
+    public function getGrupo()
+    {
+        return $this->grupo;
     }
 }

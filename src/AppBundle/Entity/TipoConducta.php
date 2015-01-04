@@ -21,7 +21,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Grupo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

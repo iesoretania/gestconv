@@ -21,13 +21,11 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\ActitudFamiliaParte;
-use AppBundle\Entity\Alumno;
+use AppBundle\Entity\ActitudFamiliaSancion;
 use AppBundle\Entity\AvisoSancion;
 use AppBundle\Entity\Medida;
 use AppBundle\Entity\Parte;
 use AppBundle\Entity\Usuario;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

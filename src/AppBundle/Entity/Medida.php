@@ -21,7 +21,6 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Sancion;
 use AppBundle\Entity\TipoMedida;
 use Doctrine\ORM\Mapping as ORM;

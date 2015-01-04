@@ -21,11 +21,9 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Parte;
 use AppBundle\Entity\Sancion;
 use AppBundle\Entity\TipoConducta;
-use AppBundle\Entity\TipoMedida;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

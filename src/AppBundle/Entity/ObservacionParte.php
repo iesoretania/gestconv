@@ -22,7 +22,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\CategoriaMedida;
-use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Parte;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -68,31 +67,6 @@ class ObservacionParte
     public function getId()
     {
         return $this->id;
-    }
-
-
-
-    /**
-     * Set categoria
-     *
-     * @param CategoriaMedida $categoria
-     * @return TipoMedida
-     */
-    public function setCategoria(CategoriaMedida $categoria = null)
-    {
-        $this->categoria = $categoria;
-
-        return $this;
-    }
-
-    /**
-     * Get categoria
-     *
-     * @return CategoriaMedida
-     */
-    public function getCategoria()
-    {
-        return $this->categoria;
     }
 
     /**

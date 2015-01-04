@@ -21,13 +21,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\User;
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\Alumno;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="grupo")
+ * @ORM\Table
  */
 class Grupo
 {
