@@ -23,7 +23,6 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\AvisoParte;
-use AppBundle\Entity\Observacion;
 use AppBundle\Entity\ObservacionParte;
 use AppBundle\Entity\Sancion;
 use AppBundle\Entity\TramoParte;

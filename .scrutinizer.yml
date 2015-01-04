@@ -1,0 +1,16 @@
+build:
+    environment:
+        php:
+            version: 5.4.28
+            ini:
+                'date.timezone': 'Europe/Madrid'
+
+        hosts:
+            local.dev: '127.0.0.1'
+
+        apache2:
+            modules: ['rewrite']
+            sites:
+                symfony_app:
+                    web_root: 'web/'
+                    host: 'local.dev'

@@ -68,7 +68,7 @@ class Aviso
      * Set anotacion
      *
      * @param string $anotacion
-     * @return Conducta
+     * @return Aviso
      */
     public function setAnotacion($anotacion)
     {
