@@ -83,6 +83,7 @@ class Usuario
 
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="usuario")
+     * @var Collection
      */
     protected $partes = null;
 
