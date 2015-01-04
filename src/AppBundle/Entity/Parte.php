@@ -26,6 +26,7 @@ use AppBundle\Entity\AvisoParte;
 use AppBundle\Entity\Observacion;
 use AppBundle\Entity\ObservacionParte;
 use AppBundle\Entity\Sancion;
+use AppBundle\Entity\TramoParte;
 use AppBundle\Entity\Usuario;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -79,8 +80,12 @@ class Parte
      */
     protected $fecha_creacion;
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @var int
+     * @ORM\ManyToOne(targetEntity="TramoParte")
+     */
+    protected $tramo;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
      */
     protected $avisado;
     /**
@@ -88,6 +93,11 @@ class Parte
      * @var \DateTime
      */
     protected $fecha_aviso;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $prescrito;
     /**
      * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="partes")
      */
@@ -261,10 +271,10 @@ class Parte
     /**
      * Set usuario
      *
-     * @param \AppBundle\Entity\Usuario $usuario
+     * @param Usuario $usuario
      * @return Parte
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    public function setUsuario(Usuario $usuario = null)
     {
         $this->usuario = $usuario;
 
@@ -274,7 +284,7 @@ class Parte
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return Usuario
      */
     public function getUsuario()
     {
@@ -284,10 +294,10 @@ class Parte
     /**
      * Set alumno
      *
-     * @param \AppBundle\Entity\Alumno $alumno
+     * @param Alumno $alumno
      * @return Parte
      */
-    public function setAlumno(\AppBundle\Entity\Alumno $alumno = null)
+    public function setAlumno(Alumno $alumno = null)
     {
         $this->alumno = $alumno;
 
@@ -297,7 +307,7 @@ class Parte
     /**
      * Get alumno
      *
-     * @return \AppBundle\Entity\Alumno 
+     * @return Alumno
      */
     public function getAlumno()
     {
@@ -307,10 +317,10 @@ class Parte
     /**
      * Set profesor_guardia
      *
-     * @param \AppBundle\Entity\Usuario $profesorGuardia
+     * @param Usuario $profesorGuardia
      * @return Parte
      */
-    public function setProfesorGuardia(\AppBundle\Entity\Usuario $profesorGuardia = null)
+    public function setProfesorGuardia(Usuario $profesorGuardia = null)
     {
         $this->profesor_guardia = $profesorGuardia;
 
@@ -320,7 +330,7 @@ class Parte
     /**
      * Get profesor_guardia
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return Usuario
      */
     public function getProfesorGuardia()
     {
@@ -330,10 +340,10 @@ class Parte
     /**
      * Set sancion
      *
-     * @param \AppBundle\Entity\Sancion $sancion
+     * @param Sancion $sancion
      * @return Parte
      */
-    public function setSancion(\AppBundle\Entity\Sancion $sancion = null)
+    public function setSancion(Sancion $sancion = null)
     {
         $this->sancion = $sancion;
 
@@ -343,7 +353,7 @@ class Parte
     /**
      * Get sancion
      *
-     * @return \AppBundle\Entity\Sancion 
+     * @return Sancion
      */
     public function getSancion()
     {
@@ -353,10 +363,10 @@ class Parte
     /**
      * Add observaciones
      *
-     * @param \AppBundle\Entity\ObservacionParte $observaciones
+     * @param ObservacionParte $observaciones
      * @return Parte
      */
-    public function addObservacione(\AppBundle\Entity\ObservacionParte $observaciones)
+    public function addObservacion(ObservacionParte $observaciones)
     {
         $this->observaciones[] = $observaciones;
 
@@ -366,9 +376,9 @@ class Parte
     /**
      * Remove observaciones
      *
-     * @param \AppBundle\Entity\ObservacionParte $observaciones
+     * @param ObservacionParte $observaciones
      */
-    public function removeObservacione(\AppBundle\Entity\ObservacionParte $observaciones)
+    public function removeObservacion(ObservacionParte $observaciones)
     {
         $this->observaciones->removeElement($observaciones);
     }
@@ -376,7 +386,7 @@ class Parte
     /**
      * Get observaciones
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getObservaciones()
     {
@@ -386,10 +396,10 @@ class Parte
     /**
      * Add avisos
      *
-     * @param \AppBundle\Entity\AvisoParte $avisos
+     * @param AvisoParte $avisos
      * @return Parte
      */
-    public function addAviso(\AppBundle\Entity\AvisoParte $avisos)
+    public function addAviso(AvisoParte $avisos)
     {
         $this->avisos[] = $avisos;
 
@@ -399,9 +409,9 @@ class Parte
     /**
      * Remove avisos
      *
-     * @param \AppBundle\Entity\AvisoParte $avisos
+     * @param AvisoParte $avisos
      */
-    public function removeAviso(\AppBundle\Entity\AvisoParte $avisos)
+    public function removeAviso(AvisoParte $avisos)
     {
         $this->avisos->removeElement($avisos);
     }
@@ -409,10 +419,56 @@ class Parte
     /**
      * Get avisos
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getAvisos()
     {
         return $this->avisos;
+    }
+
+    /**
+     * Set prescrito
+     *
+     * @param boolean $prescrito
+     * @return Parte
+     */
+    public function setPrescrito($prescrito)
+    {
+        $this->prescrito = $prescrito;
+
+        return $this;
+    }
+
+    /**
+     * Get prescrito
+     *
+     * @return boolean 
+     */
+    public function getPrescrito()
+    {
+        return $this->prescrito;
+    }
+
+    /**
+     * Set tramo
+     *
+     * @param TramoParte $tramo
+     * @return Parte
+     */
+    public function setTramo(TramoParte $tramo = null)
+    {
+        $this->tramo = $tramo;
+
+        return $this;
+    }
+
+    /**
+     * Get tramo
+     *
+     * @return TramoParte
+     */
+    public function getTramo()
+    {
+        return $this->tramo;
     }
 }

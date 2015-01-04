@@ -21,6 +21,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\ActitudFamiliaParte;
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\AvisoSancion;
 use AppBundle\Entity\Medida;
@@ -63,7 +64,7 @@ class Sancion
     protected $fecha_sancion;
     /**
      * @ORM\Column(type="boolean", nullable=false)
-     * @var bool
+     * @var boolean
      */
     protected $comunicado;
     /**
@@ -71,6 +72,25 @@ class Sancion
      * @var \DateTime
      */
     protected $fecha_comunicado;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $medidasEfectivas;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $reclamacion;
+    /**
+     * @ORM\Column(type="text")
+     * @var string
+     */
+    protected $motivosNoAplicacion;
+    /**
+     * @ORM\ManyToOne(targetEntity="ActitudFamiliaSancion")
+     */
+    protected $actitudFamilia;
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="sancion")
      */
@@ -221,10 +241,10 @@ class Sancion
     /**
      * Set usuario
      *
-     * @param \AppBundle\Entity\Usuario $usuario
+     * @param Usuario $usuario
      * @return Sancion
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    public function setUsuario(Usuario $usuario = null)
     {
         $this->usuario = $usuario;
 
@@ -234,7 +254,7 @@ class Sancion
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return Usuario
      */
     public function getUsuario()
     {
@@ -244,10 +264,10 @@ class Sancion
     /**
      * Add partes
      *
-     * @param \AppBundle\Entity\Parte $partes
+     * @param Parte $partes
      * @return Sancion
      */
-    public function addParte(\AppBundle\Entity\Parte $partes)
+    public function addParte(Parte $partes)
     {
         $this->partes[] = $partes;
 
@@ -257,9 +277,9 @@ class Sancion
     /**
      * Remove partes
      *
-     * @param \AppBundle\Entity\Parte $partes
+     * @param Parte $partes
      */
-    public function removeParte(\AppBundle\Entity\Parte $partes)
+    public function removeParte(Parte $partes)
     {
         $this->partes->removeElement($partes);
     }
@@ -277,10 +297,10 @@ class Sancion
     /**
      * Add medidas
      *
-     * @param \AppBundle\Entity\Medida $medidas
+     * @param Medida $medidas
      * @return Sancion
      */
-    public function addMedida(\AppBundle\Entity\Medida $medidas)
+    public function addMedida(Medida $medidas)
     {
         $this->medidas[] = $medidas;
 
@@ -290,9 +310,9 @@ class Sancion
     /**
      * Remove medidas
      *
-     * @param \AppBundle\Entity\Medida $medidas
+     * @param Medida $medidas
      */
-    public function removeMedida(\AppBundle\Entity\Medida $medidas)
+    public function removeMedida(Medida $medidas)
     {
         $this->medidas->removeElement($medidas);
     }
@@ -310,10 +330,10 @@ class Sancion
     /**
      * Add avisos
      *
-     * @param \AppBundle\Entity\AvisoSancion $avisos
+     * @param AvisoSancion $avisos
      * @return Sancion
      */
-    public function addAviso(\AppBundle\Entity\AvisoSancion $avisos)
+    public function addAviso(AvisoSancion $avisos)
     {
         $this->avisos[] = $avisos;
 
@@ -323,9 +343,9 @@ class Sancion
     /**
      * Remove avisos
      *
-     * @param \AppBundle\Entity\AvisoSancion $avisos
+     * @param AvisoSancion $avisos
      */
-    public function removeAviso(\AppBundle\Entity\AvisoSancion $avisos)
+    public function removeAviso(AvisoSancion $avisos)
     {
         $this->avisos->removeElement($avisos);
     }
@@ -338,5 +358,97 @@ class Sancion
     public function getAvisos()
     {
         return $this->avisos;
+    }
+
+    /**
+     * Set medidasEfectivas
+     *
+     * @param boolean $medidasEfectivas
+     * @return Sancion
+     */
+    public function setMedidasEfectivas($medidasEfectivas)
+    {
+        $this->medidasEfectivas = $medidasEfectivas;
+
+        return $this;
+    }
+
+    /**
+     * Get medidasEfectivas
+     *
+     * @return boolean 
+     */
+    public function getMedidasEfectivas()
+    {
+        return $this->medidasEfectivas;
+    }
+
+    /**
+     * Set reclamacion
+     *
+     * @param boolean $reclamacion
+     * @return Sancion
+     */
+    public function setReclamacion($reclamacion)
+    {
+        $this->reclamacion = $reclamacion;
+
+        return $this;
+    }
+
+    /**
+     * Get reclamacion
+     *
+     * @return boolean 
+     */
+    public function getReclamacion()
+    {
+        return $this->reclamacion;
+    }
+
+    /**
+     * Set motivosNoAplicacion
+     *
+     * @param string $motivosNoAplicacion
+     * @return Sancion
+     */
+    public function setMotivosNoAplicacion($motivosNoAplicacion)
+    {
+        $this->motivosNoAplicacion = $motivosNoAplicacion;
+
+        return $this;
+    }
+
+    /**
+     * Get motivosNoAplicacion
+     *
+     * @return string 
+     */
+    public function getMotivosNoAplicacion()
+    {
+        return $this->motivosNoAplicacion;
+    }
+
+    /**
+     * Set actitudFamilia
+     *
+     * @param ActitudFamiliaSancion $actitudFamilia
+     * @return Sancion
+     */
+    public function setActitudFamilia(ActitudFamiliaSancion $actitudFamilia = null)
+    {
+        $this->actitudFamilia = $actitudFamilia;
+
+        return $this;
+    }
+
+    /**
+     * Get actitudFamilia
+     *
+     * @return ActitudFamiliaSancion
+     */
+    public function getActitudFamilia()
+    {
+        return $this->actitudFamilia;
     }
 }
