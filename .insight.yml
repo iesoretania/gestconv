@@ -1,21 +1,15 @@
 pre_composer_script: |
     #!/bin/bash
-    cp app/config/parameters_default.yml app/config/parameters.yml
-    sed -i -e "s/database_driver:.*/database_driver: pdo_mysql/" app/config/parameters.yml
-    sed -i -e "s/database_host:.*/database_host: localhost/" app/config/parameters.yml
-    sed -i -e "s/database_name:.*/database_name: gestconv/" app/config/parameters.yml
-    sed -i -e "s/database_user:.*/database_user: root/" app/config/parameters.yml
-    sed -i -e "s/database_password:.*/database_password: ~/" app/config/parameters.yml
-    sed -i -e "s/secret:.*/secret: 1083dc7bfd20cc8c2bd10148631513ecf7/" app/config/parameters.yml
-    sed -i -e "s/assetic_watcher_enabled:.*/assetic_watcher_enabled: true/" app/config/parameters.yml
+    cp app/config/parameters.yml.dist app/config/parameters.yml
 
 post_composer_script: |
     #!/bin/bash
-    ./app/console cache:warmup --no-interaction
+    #echo "    doctrine.server_version: 5.6" >> app/config/parameters.yml
+    #./app/console cache:warmup --no-interaction
     ./app/console doctrine:database:create --no-interaction
     ./app/console doctrine:schema:update --force --no-interaction
-    ./app/console doctrine:migrations:status --no-interaction
-    ./app/console doctrine:migrations:migrate --no-interaction
+    #./app/console doctrine:migrations:status --no-interaction
+    #./app/console doctrine:migrations:migrate --no-interaction
     ./app/console assets:install web --symlink --no-interaction
     ./app/console assetic:dump --no-interaction
     #./app/console doctrine:fixtures:load --no-interaction
