@@ -1,11 +1,11 @@
 pre_composer_script: |
     #!/bin/bash
     cp app/config/parameters_default.yml app/config/parameters.yml
-    sed -i -e "s/database_driver:.*/database_driver: pdo_sqlite/" app/config/parameters.yml
+    sed -i -e "s/database_driver:.*/database_driver: pdo_mysql/" app/config/parameters.yml
     sed -i -e "s/database_host:.*/database_host: localhost/" app/config/parameters.yml
-    sed -i -e "s/database_name:.*/database_name: apnet_symfony2/" app/config/parameters.yml
+    sed -i -e "s/database_name:.*/database_name: gestconv/" app/config/parameters.yml
     sed -i -e "s/database_user:.*/database_user: root/" app/config/parameters.yml
-    sed -i -e "s/database_password:.*/database_password: Secr3t/" app/config/parameters.yml
+    sed -i -e "s/database_password:.*/database_password: ~/" app/config/parameters.yml
     sed -i -e "s/secret:.*/secret: 1083dc7bfd20cc8c2bd10148631513ecf7/" app/config/parameters.yml
     sed -i -e "s/assetic_watcher_enabled:.*/assetic_watcher_enabled: true/" app/config/parameters.yml
 
