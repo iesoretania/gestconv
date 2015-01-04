@@ -27,11 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="alumno",
- *              uniqueConstraints={
- *                  @ORM\UniqueConstraint(columns={"nie"})
- *              }
- *          )
+ * @ORM\Table
  */
 class Alumno
 {
@@ -64,7 +60,7 @@ class Alumno
     protected $grupo;
     
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, unique=true)
      * @var string
      */
     protected $nie;

@@ -27,7 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="curso")
+ * @ORM\Table
  */
 class Curso
 {
@@ -46,7 +46,7 @@ class Curso
 
     /**
      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="curso")
-     * @var Grupo[]
+     * @var Collection
      */
     protected $grupos = null;
     

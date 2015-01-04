@@ -22,7 +22,6 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Parte;
-use AppBundle\Entity\Sancion;
 use AppBundle\Entity\TipoConducta;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -41,7 +40,7 @@ class Conducta
 
     /**
      * @ORM\ManyToOne(targetEntity="Parte", inversedBy="conductas")
-     * @var Sancion
+     * @var Parte
      */
     protected $parte;
 
@@ -93,10 +92,10 @@ class Conducta
     /**
      * Set parte
      *
-     * @param \AppBundle\Entity\Parte $parte
+     * @param Parte $parte
      * @return Conducta
      */
-    public function setParte(\AppBundle\Entity\Parte $parte = null)
+    public function setParte(Parte $parte = null)
     {
         $this->parte = $parte;
 
@@ -106,7 +105,7 @@ class Conducta
     /**
      * Get parte
      *
-     * @return \AppBundle\Entity\Parte 
+     * @return Parte
      */
     public function getParte()
     {
@@ -116,10 +115,10 @@ class Conducta
     /**
      * Set tipo
      *
-     * @param \AppBundle\Entity\TipoConducta $tipo
+     * @param TipoConducta $tipo
      * @return Conducta
      */
-    public function setTipo(\AppBundle\Entity\TipoConducta $tipo = null)
+    public function setTipo(TipoConducta $tipo = null)
     {
         $this->tipo = $tipo;
 
@@ -129,7 +128,7 @@ class Conducta
     /**
      * Get tipo
      *
-     * @return \AppBundle\Entity\TipoConducta 
+     * @return TipoConducta
      */
     public function getTipo()
     {

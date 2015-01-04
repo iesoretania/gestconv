@@ -28,7 +28,7 @@ use AppBundle\Entity\Grupo;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="usuario")
+ * @ORM\Table
  */
 class Usuario
 {
@@ -77,7 +77,7 @@ class Usuario
     
     /**
      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="tutor")
-     * @var Grupo[]
+     * @var Collection
      */
     protected $tutorias = null;
 

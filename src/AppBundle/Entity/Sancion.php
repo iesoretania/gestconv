@@ -30,7 +30,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="sancion")
+ * @ORM\Table
  */
 class Sancion
 {

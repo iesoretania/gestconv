@@ -33,7 +33,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="parte")
+ * @ORM\Table
  */
 class Parte
 {
@@ -225,7 +225,7 @@ class Parte
     /**
      * Set avisado
      *
-     * @param integer $avisado
+     * @param boolean $avisado
      * @return Parte
      */
     public function setAvisado($avisado)
@@ -238,7 +238,7 @@ class Parte
     /**
      * Get avisado
      *
-     * @return integer 
+     * @return boolean
      */
     public function getAvisado()
     {

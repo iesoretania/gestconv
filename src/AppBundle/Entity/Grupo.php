@@ -58,7 +58,7 @@ class Grupo
 
     /**
      * @ORM\OneToMany(targetEntity="Alumno", mappedBy="grupo")
-     * @var Alumno[]
+     * @var Collection
      */
     protected $alumnado=null;
 
