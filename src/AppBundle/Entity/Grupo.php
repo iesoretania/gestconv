@@ -96,21 +96,6 @@ class Grupo
 
         return $this;
     }
-    
-    /**
-     *
-     * @return Curso
-     */
-    public function getCurso()
-    {
-        return $this->curso;
-    }
-
-    public function setCurso($curso)
-    {
-        $curso->incorporarGrupo($this);
-        $this->curso = $curso;
-    }
 
     /**
      *
@@ -174,5 +159,28 @@ class Grupo
     public function getTutor()
     {
         return $this->tutor;
+    }
+
+    /**
+     * Set curso
+     *
+     * @param Curso $curso
+     * @return Grupo
+     */
+    public function setCurso(Curso $curso = null)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso
+     *
+     * @return Curso
+     */
+    public function getCurso()
+    {
+        return $this->curso;
     }
 }
