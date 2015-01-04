@@ -110,29 +110,6 @@ class Grupo
         $curso->incorporarGrupo($this);
         $this->curso = $curso;
     }
-    
-    /**
-     *
-     * @return Curso
-     */
-    public function getTutor()
-    {
-        return $this->tutor;
-    }
-    
-    /**
-     *
-     * @param Usuario $tutor
-     * @return Grupo
-     */
-    public function setTutor($tutor)
-    {
-        $tutor->asignarTutoria($this);
-        $this->tutor = $tutor;
-
-        return $this;
-    }
-
 
     /**
      *
@@ -173,5 +150,28 @@ class Grupo
     public function getAlumnado()
     {
         return $this->alumnado;
+    }
+
+    /**
+     * Set tutor
+     *
+     * @param Usuario $tutor
+     * @return Grupo
+     */
+    public function setTutor(Usuario $tutor = null)
+    {
+        $this->tutor = $tutor;
+
+        return $this;
+    }
+
+    /**
+     * Get tutor
+     *
+     * @return Usuario
+     */
+    public function getTutor()
+    {
+        return $this->tutor;
     }
 }
