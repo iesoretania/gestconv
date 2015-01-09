@@ -39,7 +39,7 @@ class Medida
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="sanciones")
+     * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="medidas")
      * @var Sancion
      */
     protected $sancion;

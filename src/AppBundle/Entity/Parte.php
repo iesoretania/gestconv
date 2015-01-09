@@ -81,6 +81,7 @@ class Parte
     protected $fecha_creacion;
     /**
      * @ORM\ManyToOne(targetEntity="TramoParte")
+     * @var TramoParte
      */
     protected $tramo;
     /**
@@ -100,18 +101,22 @@ class Parte
     protected $prescrito;
     /**
      * @ORM\OneToMany(targetEntity="Conducta", mappedBy="parte")
+     * @var Collection
      */
     protected $conductas = null;
     /**
      * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="partes")
+     * @var Sancion
      */
     protected $sancion;
     /**
      * @ORM\OneToMany(targetEntity="ObservacionParte", mappedBy="parte")
+     * @var Collection
      */
     protected $observaciones = null;
     /**
      * @ORM\OneToMany(targetEntity="AvisoParte", mappedBy="parte")
+     * @var Collection
      */
     protected $avisos = null;
 
@@ -120,6 +125,7 @@ class Parte
      */
     public function __construct()
     {
+        $this->conductas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->observaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
     }
