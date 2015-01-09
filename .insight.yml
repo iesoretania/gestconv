@@ -1,6 +1,7 @@
 pre_composer_script: |
     #!/bin/bash
     cp app/config/parameters.yml.dist app/config/parameters.yml
+    sed -i -e "s/secret:.*/secret: fec3dc7bfd20cc8c2bd10148631513ec89/" app/config/parameters.yml
 
 post_composer_script: |
     #!/bin/bash
