@@ -46,13 +46,13 @@ class Grupo
     protected $descripcion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\ManyToOne(targetEntity="Curso", inversedBy="grupos")
      * @var Curso
      */
     protected $curso;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="tutorias")
      * @var Usuario
      */
     protected $tutor;
@@ -164,7 +164,7 @@ class Grupo
     /**
      * Set curso
      *
-     * @param Curso $curso
+     * @param Curs  o $curso
      * @return Grupo
      */
     public function setCurso(Curso $curso = null)

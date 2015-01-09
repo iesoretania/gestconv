@@ -94,7 +94,7 @@ class Sancion
      */
     protected $partes = null;
     /**
-     * @ORM\OneToMany(targetEntity="Medida", mappedBy="parte")
+     * @ORM\OneToMany(targetEntity="Medida", mappedBy="sancion")
      */
     protected $medidas = null;
     /**

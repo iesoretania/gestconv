@@ -23,6 +23,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\AvisoParte;
+use AppBundle\Entity\Conducta;
 use AppBundle\Entity\ObservacionParte;
 use AppBundle\Entity\Sancion;
 use AppBundle\Entity\TramoParte;
@@ -97,6 +98,10 @@ class Parte
      * @var boolean
      */
     protected $prescrito;
+    /**
+     * @ORM\OneToMany(targetEntity="Conducta", mappedBy="parte")
+     */
+    protected $conductas = null;
     /**
      * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="partes")
      */
@@ -470,4 +475,38 @@ class Parte
     {
         return $this->tramo;
     }
+
+    /**
+     * Add conductas
+     *
+     * @param Conducta $conductas
+     * @return Parte
+     */
+    public function addConducta(Conducta $conductas)
+    {
+        $this->conductas[] = $conductas;
+
+        return $this;
+    }
+
+    /**
+     * Remove conductas
+     *
+     * @param Conducta $conductas
+     */
+    public function removeConducta(Conducta $conductas)
+    {
+        $this->conductas->removeElement($conductas);
+    }
+
+    /**
+     * Get conductas
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConductas()
+    {
+        return $this->conductas;
+    }
+
 }

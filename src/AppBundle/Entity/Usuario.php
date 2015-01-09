@@ -22,6 +22,7 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Parte;
+use AppBundle\Entity\Sancion;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\Grupo;
@@ -87,10 +88,22 @@ class Usuario
      */
     protected $partes = null;
 
-    public function __construct() {
+    /**
+     * @ORM\OneToMany(targetEntity="Sancion", mappedBy="usuario")
+     * @var Collection
+     */
+    protected $sanciones = null;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
         $this->tutorias = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sanciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      *
      * @return int
@@ -311,5 +324,38 @@ class Usuario
         $this->esRevisor = $esRevisor;
 
         return $this;
+    }
+
+    /**
+     * Add sanciones
+     *
+     * @param Sancion $sanciones
+     * @return Usuario
+     */
+    public function addSancion(Sancion $sanciones)
+    {
+        $this->sanciones[] = $sanciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove sanciones
+     *
+     * @param Sancion $sanciones
+     */
+    public function removeSancion(Sancion $sanciones)
+    {
+        $this->sanciones->removeElement($sanciones);
+    }
+
+    /**
+     * Get sanciones
+     *
+     * @return Collection
+     */
+    public function getSanciones()
+    {
+        return $this->sanciones;
     }
 }
