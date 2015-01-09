@@ -17,4 +17,6 @@ parameters:
     locale:            es
 
     # A secret key that's used to generate certain security-related tokens
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            n^qznoo7q%$-5rexccvy!4u)7ivs-480sqhlk70uy7x=jho6i0
+
+    session_name:      gestconv
