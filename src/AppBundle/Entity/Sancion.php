@@ -26,6 +26,7 @@ use AppBundle\Entity\AvisoSancion;
 use AppBundle\Entity\Medida;
 use AppBundle\Entity\Parte;
 use AppBundle\Entity\Usuario;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -88,18 +89,22 @@ class Sancion
     protected $motivosNoAplicacion;
     /**
      * @ORM\ManyToOne(targetEntity="ActitudFamiliaSancion")
+     * @var Collection
      */
     protected $actitudFamilia;
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="sancion")
+     * @var Collection
      */
     protected $partes = null;
     /**
      * @ORM\OneToMany(targetEntity="Medida", mappedBy="sancion")
+     * @var Collection
      */
     protected $medidas = null;
     /**
      * @ORM\OneToMany(targetEntity="AvisoSancion", mappedBy="sancion")
+     * @var Collection
      */
     protected $avisos = null;
     /**
