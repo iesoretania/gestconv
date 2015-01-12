@@ -89,7 +89,7 @@ class Sancion
     protected $motivosNoAplicacion;
     /**
      * @ORM\ManyToOne(targetEntity="ActitudFamiliaSancion")
-     * @var Collection
+     * @var ActitudFamiliaSancion
      */
     protected $actitudFamilia;
     /**
@@ -466,7 +466,7 @@ class Sancion
      * Add observaciones
      *
      * @param ObservacionSancion $observaciones
-     * @return Parte
+     * @return Sancion
      */
     public function addObservacion(ObservacionSancion $observaciones)
     {
