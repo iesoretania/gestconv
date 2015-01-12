@@ -21,40 +21,41 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Parte;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table
  */
-class AvisoParte extends Aviso
+class ObservacionSancion extends Observacion
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Parte", inversedBy="avisos")
+     * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="observaciones")
      * @ORM\JoinColumn(nullable=false)
      */
-    protected $parte;
+    protected $sancion;
 
     /**
-     * Get parte
+     * Set sancion
      *
-     * @return Parte
+     * @param Sancion $sancion
+     * @return ObservacionSancion
      */
-    public function getParte()
+    public function setSancion(Sancion $sancion = null)
     {
-        return $this->parte;
-    }
-
-    /**
-     * Set parte
-     *
-     * @param Parte $parte
-     * @return AvisoParte
-     */
-    public function setParte(Parte $parte = null)
-    {
-        $this->parte = $parte;
+        $this->sancion = $sancion;
 
         return $this;
     }
 
+    /**
+     * Get sancion
+     *
+     * @return Sancion
+     */
+    public function getSancion()
+    {
+        return $this->sancion;
+    }
 }

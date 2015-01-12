@@ -46,11 +46,13 @@ class Parte
     protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="partes")
+     * @ORM\JoinColumn(nullable=false)
      * @var Usuario
      */
     protected $usuario;
     /**
      * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="partes")
+     * @ORM\JoinColumn(nullable=false)
      * @var Alumno
      */
     protected $alumno;
@@ -81,6 +83,7 @@ class Parte
     protected $fecha_creacion;
     /**
      * @ORM\ManyToOne(targetEntity="TramoParte")
+     * @ORM\JoinColumn(nullable=false)
      * @var TramoParte
      */
     protected $tramo;

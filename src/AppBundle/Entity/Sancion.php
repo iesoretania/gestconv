@@ -42,6 +42,7 @@ class Sancion
     protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="sanciones")
+     * @ORM\JoinColumn(nullable=false)
      * @var Usuario
      */
     protected $usuario;
@@ -51,12 +52,12 @@ class Sancion
      */
     protected $tipo;
     /**
-     * @ORM\Column(type="text", nullable=false)
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $anotacion;
     /**
-     * @ORM\Column(type="datetime", nullable=false)
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $fecha_sancion;
@@ -66,22 +67,22 @@ class Sancion
      */
     protected $comunicado;
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
     protected $fecha_comunicado;
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     protected $medidasEfectivas;
     /**
-     * @ORM\Column(type="boolean", nullable=false)
+     * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
     protected $reclamacion;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $motivosNoAplicacion;
@@ -102,6 +103,11 @@ class Sancion
      */
     protected $avisos = null;
     /**
+     * @ORM\OneToMany(targetEntity="ObservacionSancion", mappedBy="sancion")
+     * @var Collection
+     */
+    protected $observaciones = null;
+    /**
      * Constructor
      */
     public function __construct()
@@ -109,6 +115,7 @@ class Sancion
         $this->partes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->medidas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->observaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -448,5 +455,38 @@ class Sancion
     public function getActitudFamilia()
     {
         return $this->actitudFamilia;
+    }
+
+    /**
+     * Add observaciones
+     *
+     * @param ObservacionSancion $observaciones
+     * @return Parte
+     */
+    public function addObservacion(ObservacionSancion $observaciones)
+    {
+        $this->observaciones[] = $observaciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove observaciones
+     *
+     * @param ObservacionSancion $observaciones
+     */
+    public function removeObservacion(ObservacionSancion $observaciones)
+    {
+        $this->observaciones->removeElement($observaciones);
+    }
+
+    /**
+     * Get observaciones
+     *
+     * @return Collection
+     */
+    public function getObservaciones()
+    {
+        return $this->observaciones;
     }
 }

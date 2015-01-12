@@ -36,11 +36,13 @@ class Aviso
     protected $id;
     /**
      * @ORM\ManyToOne(targetEntity="CategoriaAviso")
+     * @ORM\JoinColumn(nullable=false)
      * @var CategoriaAviso
      */
     protected $tipo;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $usuario;
     /**

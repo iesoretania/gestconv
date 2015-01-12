@@ -47,6 +47,7 @@ class Grupo
 
     /**
      * @ORM\ManyToOne(targetEntity="Curso", inversedBy="grupos")
+     * @ORM\JoinColumn(nullable=false)
      * @var Curso
      */
     protected $curso;

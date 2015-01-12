@@ -38,6 +38,7 @@ class TipoConducta
 
     /**
      * @ORM\ManyToOne(targetEntity="CategoriaConducta")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $categoria;
 

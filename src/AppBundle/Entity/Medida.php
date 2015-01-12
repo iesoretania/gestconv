@@ -40,18 +40,20 @@ class Medida
 
     /**
      * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="medidas")
+     * @ORM\JoinColumn(nullable=false)
      * @var Sancion
      */
     protected $sancion;
 
     /**
      * @ORM\ManyToOne(targetEntity="TipoMedida")
+     * @ORM\JoinColumn(nullable=false)
      * @var TipoMedida
      */
     protected $tipo;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      */
     protected $anotacion;

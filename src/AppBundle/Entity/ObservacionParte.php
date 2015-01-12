@@ -28,45 +28,13 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table
  */
-class ObservacionParte
+class ObservacionParte extends Observacion
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Parte", inversedBy="observaciones")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $parte;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     */
-    protected $usuario;
-    /**
-     * @ORM\Column(type="datetime", nullable=false)
-     * @var \DateTime
-     */
-    protected $fecha;
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $anotacion;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set parte
@@ -89,74 +57,5 @@ class ObservacionParte
     public function getParte()
     {
         return $this->parte;
-    }
-
-    /**
-     * Set usuario
-     *
-     * @param \AppBundle\Entity\Usuario $usuario
-     * @return ObservacionParte
-     */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
-    {
-        $this->usuario = $usuario;
-
-        return $this;
-    }
-
-    /**
-     * Get usuario
-     *
-     * @return \AppBundle\Entity\Usuario 
-     */
-    public function getUsuario()
-    {
-        return $this->usuario;
-    }
-
-    /**
-     * Set fecha
-     *
-     * @param \DateTime $fecha
-     * @return ObservacionParte
-     */
-    public function setFecha($fecha)
-    {
-        $this->fecha = $fecha;
-
-        return $this;
-    }
-
-    /**
-     * Get fecha
-     *
-     * @return \DateTime 
-     */
-    public function getFecha()
-    {
-        return $this->fecha;
-    }
-
-    /**
-     * Set anotacion
-     *
-     * @param string $anotacion
-     * @return ObservacionParte
-     */
-    public function setAnotacion($anotacion)
-    {
-        $this->anotacion = $anotacion;
-
-        return $this;
-    }
-
-    /**
-     * Get anotacion
-     *
-     * @return string 
-     */
-    public function getAnotacion()
-    {
-        return $this->anotacion;
     }
 }

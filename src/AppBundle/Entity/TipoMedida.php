@@ -39,6 +39,7 @@ class TipoMedida
 
     /**
      * @ORM\ManyToOne(targetEntity="CategoriaMedida")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $categoria;
 

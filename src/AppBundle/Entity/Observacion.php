@@ -22,14 +22,12 @@
 namespace AppBundle\Entity;
 
 use AppBundle\Entity\Parte;
-use AppBundle\Entity\TipoConducta;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\MappedSuperclass
  */
-class Conducta
+class Observacion
 {
     /**
      * @ORM\Id
@@ -39,21 +37,17 @@ class Conducta
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Parte", inversedBy="conductas")
+     * @ORM\ManyToOne(targetEntity="Usuario")
      * @ORM\JoinColumn(nullable=false)
-     * @var Parte
      */
-    protected $parte;
-
+    protected $usuario;
     /**
-     * @ORM\ManyToOne(targetEntity="TipoConducta")
-     * @ORM\JoinColumn(nullable=false)
-     * @var TipoConducta
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
      */
-    protected $tipo;
-
+    protected $fecha;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", nullable=false)
      * @var string
      */
     protected $anotacion;
@@ -69,10 +63,56 @@ class Conducta
     }
 
     /**
+     * Set usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     * @return ObservacionParte
+     */
+    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \AppBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
+    }
+
+    /**
+     * Set fecha
+     *
+     * @param \DateTime $fecha
+     * @return ObservacionParte
+     */
+    public function setFecha($fecha)
+    {
+        $this->fecha = $fecha;
+
+        return $this;
+    }
+
+    /**
+     * Get fecha
+     *
+     * @return \DateTime 
+     */
+    public function getFecha()
+    {
+        return $this->fecha;
+    }
+
+    /**
      * Set anotacion
      *
      * @param string $anotacion
-     * @return Conducta
+     * @return ObservacionParte
      */
     public function setAnotacion($anotacion)
     {
@@ -89,51 +129,5 @@ class Conducta
     public function getAnotacion()
     {
         return $this->anotacion;
-    }
-
-    /**
-     * Set parte
-     *
-     * @param Parte $parte
-     * @return Conducta
-     */
-    public function setParte(Parte $parte = null)
-    {
-        $this->parte = $parte;
-
-        return $this;
-    }
-
-    /**
-     * Get parte
-     *
-     * @return Parte
-     */
-    public function getParte()
-    {
-        return $this->parte;
-    }
-
-    /**
-     * Set tipo
-     *
-     * @param TipoConducta $tipo
-     * @return Conducta
-     */
-    public function setTipo(TipoConducta $tipo = null)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return TipoConducta
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
     }
 }

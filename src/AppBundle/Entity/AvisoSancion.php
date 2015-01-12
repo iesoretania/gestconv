@@ -30,6 +30,7 @@ class AvisoSancion extends Aviso
 {
     /**
      * @ORM\ManyToOne(targetEntity="Sancion", inversedBy="avisos")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $sancion;
 
