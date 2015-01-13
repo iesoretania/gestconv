@@ -64,6 +64,12 @@ class Alumno
     protected $apellido2;
 
     /**
+     * @ORM\Column(type="date")
+     * @var \DateTime
+     */
+    protected $fechaNacimiento;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
@@ -458,5 +464,28 @@ class Alumno
     public function getNotaTelefono2()
     {
         return $this->notaTelefono2;
+    }
+
+    /**
+     * Set fechaNacimiento
+     *
+     * @param \DateTime $fechaNacimiento
+     * @return Alumno
+     */
+    public function setFechaNacimiento($fechaNacimiento)
+    {
+        $this->fechaNacimiento = $fechaNacimiento;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaNacimiento
+     *
+     * @return \DateTime
+     */
+    public function getFechaNacimiento()
+    {
+        return $this->fechaNacimiento;
     }
 }
