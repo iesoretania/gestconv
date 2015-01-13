@@ -22,6 +22,7 @@ namespace AppBundle\Entity;
 
 use AppBundle\Entity\Grupo;
 use AppBundle\Entity\Parte;
+use AppBundle\Entity\Sancion;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -37,42 +38,89 @@ class Alumno
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
+    /**
+     * @ORM\Column(type="integer", unique=true)
+     * @var int
+     */
+    protected $nie;
+
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     protected $nombre;
     
     /**
      * @ORM\Column(type="string")
+     * @var string
      */
     protected $apellido1;
     
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @var string
      */
     protected $apellido2;
-    
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $tutor1;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $tutor2;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $telefono1;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $telefono2;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $notaTelefono1;
+
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    protected $notaTelefono2;
+
     /**
      * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="alumnado")
      * @ORM\JoinColumn(nullable=false)
      * @var Grupo
      */
     protected $grupo;
-    
-    /**
-     * @ORM\Column(type="string", length=10, unique=true)
-     * @var string
-     */
-    protected $nie;
 
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="alumno")
+     * @var Collection
      */
     protected $partes = null;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Sancion", mappedBy="alumno")
+     * @var Collection
+     */
+    protected $sanciones = null;
+
     public function __construct() {
         $this->partes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->sanciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -219,6 +267,39 @@ class Alumno
     }
 
     /**
+     * Add sanciones
+     *
+     * @param Sancion $sanciones
+     * @return Alumno
+     */
+    public function addSanciones(Sancion $sanciones)
+    {
+        $this->sanciones[] = $sanciones;
+
+        return $this;
+    }
+
+    /**
+     * Remove sanciones
+     *
+     * @param Sancion $sanciones
+     */
+    public function removeSancion(Sancion $sanciones)
+    {
+        $this->sanciones->removeElement($sanciones);
+    }
+
+    /**
+     * Get sanciones
+     *
+     * @return Collection
+     */
+    public function getSanciones()
+    {
+        return $this->sanciones;
+    }
+
+    /**
      * Set grupo
      *
      * @param Grupo $grupo
@@ -239,5 +320,143 @@ class Alumno
     public function getGrupo()
     {
         return $this->grupo;
+    }
+
+    /**
+     * Set tutor1
+     *
+     * @param string $tutor1
+     * @return Alumno
+     */
+    public function setTutor1($tutor1)
+    {
+        $this->tutor1 = $tutor1;
+
+        return $this;
+    }
+
+    /**
+     * Get tutor1
+     *
+     * @return string 
+     */
+    public function getTutor1()
+    {
+        return $this->tutor1;
+    }
+
+    /**
+     * Set tutor2
+     *
+     * @param string $tutor2
+     * @return Alumno
+     */
+    public function setTutor2($tutor2)
+    {
+        $this->tutor2 = $tutor2;
+
+        return $this;
+    }
+
+    /**
+     * Get tutor2
+     *
+     * @return string 
+     */
+    public function getTutor2()
+    {
+        return $this->tutor2;
+    }
+
+    /**
+     * Set telefono1
+     *
+     * @param string $telefono1
+     * @return Alumno
+     */
+    public function setTelefono1($telefono1)
+    {
+        $this->telefono1 = $telefono1;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono1
+     *
+     * @return string 
+     */
+    public function getTelefono1()
+    {
+        return $this->telefono1;
+    }
+
+    /**
+     * Set telefono2
+     *
+     * @param string $telefono2
+     * @return Alumno
+     */
+    public function setTelefono2($telefono2)
+    {
+        $this->telefono2 = $telefono2;
+
+        return $this;
+    }
+
+    /**
+     * Get telefono2
+     *
+     * @return string 
+     */
+    public function getTelefono2()
+    {
+        return $this->telefono2;
+    }
+
+    /**
+     * Set notaTelefono1
+     *
+     * @param string $notaTelefono1
+     * @return Alumno
+     */
+    public function setNotaTelefono1($notaTelefono1)
+    {
+        $this->notaTelefono1 = $notaTelefono1;
+
+        return $this;
+    }
+
+    /**
+     * Get notaTelefono1
+     *
+     * @return string 
+     */
+    public function getNotaTelefono1()
+    {
+        return $this->notaTelefono1;
+    }
+
+    /**
+     * Set notaTelefono2
+     *
+     * @param string $notaTelefono2
+     * @return Alumno
+     */
+    public function setNotaTelefono2($notaTelefono2)
+    {
+        $this->notaTelefono2 = $notaTelefono2;
+
+        return $this;
+    }
+
+    /**
+     * Get notaTelefono2
+     *
+     * @return string 
+     */
+    public function getNotaTelefono2()
+    {
+        return $this->notaTelefono2;
     }
 }

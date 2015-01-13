@@ -51,7 +51,7 @@ class Parte
      */
     protected $usuario;
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="partes")
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="sanciones")
      * @ORM\JoinColumn(nullable=false)
      * @var Alumno
      */
