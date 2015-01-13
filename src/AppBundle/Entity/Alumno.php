@@ -176,7 +176,7 @@ class Alumno
     
     /**
      *
-     * @return string
+     * @return int
      */
     public function getNie()
     {
@@ -185,7 +185,7 @@ class Alumno
     
     /**
      *
-     * @param string $valor
+     * @param int $valor
      * @return Alumno
      */
     public function setNie($valor)
@@ -272,7 +272,7 @@ class Alumno
      * @param Sancion $sanciones
      * @return Alumno
      */
-    public function addSanciones(Sancion $sanciones)
+    public function addSancion(Sancion $sanciones)
     {
         $this->sanciones[] = $sanciones;
 
