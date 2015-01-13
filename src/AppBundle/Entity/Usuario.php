@@ -39,43 +39,67 @@ class Usuario
      * @ORM\GeneratedValue
      */
     protected $id;
-    
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $nombreUsuario;
+
+    /**
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $password;
+
     /**
      * @ORM\Column(type="string")
      * @var string
      */
     protected $nombre;
-    
+
     /**
      * @ORM\Column(type="string")
      * @var string
      */
     protected $apellido1;
-    
+
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $apellido2;
-    
+
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $email;
-    
+
     /**
      * @ORM\Column(type="boolean", options={"default": false})
      * @var boolean
      */
     protected $esAdministrador;
-    
+
     /**
      * @ORM\Column(type="boolean", options={"default": false})
      * @var boolean
      */
     protected $esRevisor;
-    
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     * @var boolean
+     */
+    protected $estaActivo;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * @var boolean
+     */
+    protected $estaBloqueado;
+
     /**
      * @ORM\OneToMany(targetEntity="Grupo", mappedBy="tutor")
      * @var Collection
@@ -112,7 +136,7 @@ class Usuario
     {
         return $this->id;
     }
-    
+
     /**
      *
      * @return string
@@ -121,7 +145,7 @@ class Usuario
     {
         return $this->apellido1;
     }
-    
+
     /**
      *
      * @param string $valor
@@ -133,7 +157,7 @@ class Usuario
 
         return $this;
     }
-    
+
     /**
      *
      * @return string
@@ -142,7 +166,7 @@ class Usuario
     {
         return $this->apellido2;
     }
-     
+
     /**
      *
      * @param string $valor
@@ -154,7 +178,7 @@ class Usuario
 
         return $this;
     }
-    
+
     /**
      *
      * @return string
@@ -163,7 +187,7 @@ class Usuario
     {
         return $this->email;
     }
-    
+
     /**
      *
      * @param string $valor
@@ -201,7 +225,7 @@ class Usuario
     {
         return $this->nombre;
     }
-    
+
     /**
      *
      * @param string $valor
@@ -357,5 +381,97 @@ class Usuario
     public function getSanciones()
     {
         return $this->sanciones;
+    }
+
+    /**
+     * Set nombreUsuario
+     *
+     * @param string $nombreUsuario
+     * @return Usuario
+     */
+    public function setNombreUsuario($nombreUsuario)
+    {
+        $this->nombreUsuario = $nombreUsuario;
+
+        return $this;
+    }
+
+    /**
+     * Get nombreUsuario
+     *
+     * @return string
+     */
+    public function getNombreUsuario()
+    {
+        return $this->nombreUsuario;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return Usuario
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set estaActivo
+     *
+     * @param boolean $estaActivo
+     * @return Usuario
+     */
+    public function setEstaActivo($estaActivo)
+    {
+        $this->estaActivo = $estaActivo;
+
+        return $this;
+    }
+
+    /**
+     * Get estaActivo
+     *
+     * @return boolean
+     */
+    public function getEstaActivo()
+    {
+        return $this->estaActivo;
+    }
+
+    /**
+     * Set estaBloqueado
+     *
+     * @param boolean $estaBloqueado
+     * @return Usuario
+     */
+    public function setEstaBloqueado($estaBloqueado)
+    {
+        $this->estaBloqueado = $estaBloqueado;
+
+        return $this;
+    }
+
+    /**
+     * Get estaBloqueado
+     *
+     * @return boolean
+     */
+    public function getEstaBloqueado()
+    {
+        return $this->estaBloqueado;
     }
 }
