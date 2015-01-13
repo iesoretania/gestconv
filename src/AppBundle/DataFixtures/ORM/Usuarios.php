@@ -49,6 +49,18 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
             $usuario->setApellido2($nombre['apellido2']);
         }
 
+        $username = $nombre['nombre'][0] . mb_substr($nombre['apellido1'], 0, 3, 'UTF-8') .
+            mb_substr($nombre['apellido2'], 0, 3, 'UTF-8');
+        $username = mb_strtolower($username, 'UTF-8');
+        $username .= rand(0, 9) . rand(0, 9) . rand(0, 9);
+
+        $busqueda = ['á', 'é', 'í', 'ó', 'ú', 'ñ'];
+        $cambiarPor = ['a', 'e', 'i', 'o', 'u', 'n'];
+        $username = str_replace($busqueda, $cambiarPor, $username);
+
+        $usuario->setNombreUsuario($username);
+        $usuario->setPassword(password_hash($username, PASSWORD_DEFAULT));
+
         return $usuario;
     }
 
@@ -60,25 +72,35 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $usuario = new Usuario();
+        $usuario->setNombreUsuario('admin');
+        $usuario->setPassword(password_hash('admin', PASSWORD_DEFAULT));
         $usuario->setNombre('Administrador');
         $usuario->setApellido1('Admin');
         $usuario->setEsAdministrador(true);
         $usuario->setEsRevisor(false);
+        $usuario->setEstaActivo(true);
+        $usuario->setEstaBloqueado(false);
+
         $manager->persist($usuario);
 
         $usuario = new Usuario();
+        $usuario->setNombreUsuario('comisario');
+        $usuario->setPassword(password_hash('comisario', PASSWORD_DEFAULT));
         $usuario->setNombre('Comisión');
         $usuario->setApellido1('Convivencia');
         $usuario->setEsAdministrador(false);
         $usuario->setEsRevisor(true);
+        $usuario->setEstaActivo(true);
+        $usuario->setEstaBloqueado(false);
         $manager->persist($usuario);
 
 
-        for ($i = 0; $i < rand(20, 40); $i++) {
+        for ($i = 0; $i < rand(30, 45); $i++) {
             $usuario = self::generateUsuario();
             $usuario->setEsAdministrador(false);
             $usuario->setEsRevisor(rand(1, 20) > 19);
-
+            $usuario->setEstaActivo(true);
+            $usuario->setEstaBloqueado(false);
             $manager->persist($usuario);
         }
         $manager->flush();
