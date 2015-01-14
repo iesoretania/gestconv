@@ -102,6 +102,23 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
         return $alumno;
     }
 
+    /**
+     * Crea un grupos de alumnos aleatorio y lo asigna al grupo
+     *
+     * @param $manager EntityManager de Doctrine
+     * @param n Número de alumnos a crear
+     * @param $grupo Grupo al que pertenecerá el alumno
+     * @param $anio Año de nacimiento aproximado
+     */
+    static function createAlumnos($manager, $n, $grupo, $anio)
+    {
+        for ($k = 0; $k < $n; $k++) {
+            $alumno = self::generateAlumno($anio);
+            $alumno->setGrupo($grupo);
+            $manager->persist($alumno);
+        }
+    }
+
     public function getOrder()
     {
         return 50;
@@ -124,11 +141,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
                     $grupo->setDescripcion($nivel . '-' . chr(65 + $i));
                     $manager->persist($grupo);
 
-                    for ($k = 0; $k < rand(15, 20); $k++) {
-                        $alumno = self::generateAlumno($anio);
-                        $alumno->setGrupo($grupo);
-                        $manager->persist($alumno);
-                    }
+                    self::createAlumno($manager, rand(15, 20), $grupo, $anio);
                 }
             }
             else {
@@ -137,11 +150,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
                 $grupo->setDescripcion($nivel);
                 $manager->persist($grupo);
 
-                for ($k = 0; $k < rand(22, 30); $k++) {
-                    $alumno = self::generateAlumno($anio);
-                    $alumno->setGrupo($grupo);
-                    $manager->persist($alumno);
-                }
+                self::createAlumno($manager, rand(22, 30), $grupo, $anio);
             }
             $anio--;
         }
