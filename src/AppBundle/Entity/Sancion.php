@@ -50,7 +50,7 @@ class Sancion
     /**
      * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="sanciones")
      * @ORM\JoinColumn(nullable=false)
-     * @var Usuario
+     * @var Alumno
      */
     protected $alumno;
     /**
@@ -280,7 +280,7 @@ class Sancion
     /**
      * Set alumno
      *
-     * @param Alumno $usuario
+     * @param Alumno $alumno
      * @return Sancion
      */
     public function setAlumno(Alumno $alumno = null)
