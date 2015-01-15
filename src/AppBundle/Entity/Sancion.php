@@ -48,6 +48,12 @@ class Sancion
      */
     protected $usuario;
     /**
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="sanciones")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Usuario
+     */
+    protected $alumno;
+    /**
      * @ORM\Column(type="integer", nullable=false)
      * @var int
      */
@@ -269,6 +275,29 @@ class Sancion
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set alumno
+     *
+     * @param Alumno $usuario
+     * @return Sancion
+     */
+    public function setAlumno(Alumno $alumno = null)
+    {
+        $this->alumno = $alumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumno
+     *
+     * @return Alumno
+     */
+    public function getAlumno()
+    {
+        return $this->alumno;
     }
 
     /**
