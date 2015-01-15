@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef44f5198b7a995e846861d918a499a3",
+    "hash": "f7330decb13de953af1c1ae8d9f50921",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -291,24 +291,24 @@
         },
         {
             "name": "doctrine/data-fixtures",
-            "version": "dev-master",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/data-fixtures.git",
-                "reference": "ac36ccc812454e057aec564e0725509e74ce6b35"
+                "reference": "b4a135c7db56ecc4602b54a2184368f440cac33e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/ac36ccc812454e057aec564e0725509e74ce6b35",
-                "reference": "ac36ccc812454e057aec564e0725509e74ce6b35",
+                "url": "https://api.github.com/repos/doctrine/data-fixtures/zipball/b4a135c7db56ecc4602b54a2184368f440cac33e",
+                "reference": "b4a135c7db56ecc4602b54a2184368f440cac33e",
                 "shasum": ""
             },
             "require": {
-                "doctrine/common": "~2.2",
+                "doctrine/common": ">=2.2,<2.5-dev",
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "doctrine/orm": "~2.2"
+                "doctrine/orm": ">=2.2,<2.5-dev"
             },
             "suggest": {
                 "doctrine/mongodb-odm": "For loading MongoDB ODM fixtures",
@@ -333,7 +333,9 @@
             "authors": [
                 {
                     "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
+                    "email": "jonwage@gmail.com",
+                    "homepage": "http://www.jwage.com/",
+                    "role": "Creator"
                 }
             ],
             "description": "Data Fixtures for all Doctrine Object Managers",
@@ -341,7 +343,7 @@
             "keywords": [
                 "database"
             ],
-            "time": "2014-08-18 12:52:16"
+            "time": "2013-07-10 17:04:07"
         },
         {
             "name": "doctrine/dbal",
@@ -579,17 +581,17 @@
         },
         {
             "name": "doctrine/doctrine-fixtures-bundle",
-            "version": "dev-master",
+            "version": "v2.2.0",
             "target-dir": "Doctrine/Bundle/FixturesBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineFixturesBundle.git",
-                "reference": "9a5b5289eb22079ec139ba1eb06043d4b89c6677"
+                "reference": "c811f96f0cf83b997e3a3ed037cac729bbe3e803"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/9a5b5289eb22079ec139ba1eb06043d4b89c6677",
-                "reference": "9a5b5289eb22079ec139ba1eb06043d4b89c6677",
+                "url": "https://api.github.com/repos/doctrine/DoctrineFixturesBundle/zipball/c811f96f0cf83b997e3a3ed037cac729bbe3e803",
+                "reference": "c811f96f0cf83b997e3a3ed037cac729bbe3e803",
                 "shasum": ""
             },
             "require": {
@@ -601,7 +603,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.2.x-dev"
+                    "dev-master": "2.1.x-dev"
                 }
             },
             "autoload": {
@@ -615,16 +617,18 @@
             ],
             "authors": [
                 {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
                 },
                 {
                     "name": "Doctrine Project",
                     "homepage": "http://www.doctrine-project.org"
-                },
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony DoctrineFixturesBundle",
@@ -633,7 +637,7 @@
                 "Fixture",
                 "persistence"
             ],
-            "time": "2014-09-16 05:03:04"
+            "time": "2013-09-05 11:23:37"
         },
         {
             "name": "doctrine/inflector",
@@ -1670,16 +1674,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.16.3",
+            "version": "v1.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af"
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
-                "reference": "6dc11a1e8ecfc30e2c68aaeb218148409d8e68af",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
+                "reference": "2493970fa4d587eca73f77e6d8bd48a8bdd4c608",
                 "shasum": ""
             },
             "require": {
@@ -1688,7 +1692,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.16-dev"
+                    "dev-master": "1.17-dev"
                 }
             },
             "autoload": {
@@ -1723,7 +1727,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-12-25 19:58:19"
+            "time": "2015-01-14 10:15:49"
         }
     ],
     "packages-dev": [
@@ -1778,10 +1782,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "doctrine/doctrine-fixtures-bundle": 20,
-        "doctrine/data-fixtures": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
