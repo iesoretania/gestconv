@@ -1,0 +1,20 @@
+{
+  "name": "gestconv",
+  "version": "1.0.0",
+  "homepage": "https://github.com/iesoretania/gestconv",
+  "authors": [
+    "Luis Ramón López <lrlopez@gmail.com>"
+  ],
+  "description": "Gestión de la convivencia en centros educativos",
+  "license": "AGPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}
