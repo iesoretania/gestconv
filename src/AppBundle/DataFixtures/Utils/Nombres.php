@@ -41,7 +41,8 @@ class Nombres
         'López', 'López', 'Moreno', 'Heredia', 'Fernández', 'Santiago', 'Muñoz', 'Fajardo', 'Torres', 'Sánchez',
         'Martínez', 'Martínez', 'Díaz', 'Díaz', 'García', 'García', 'García', 'Ojeda', 'Rodríguez', 'Vera', 'León',
         'Romero', 'Serrano', 'González', 'González', 'Aguilar', 'Pérez', 'Pérez', 'Gómez', 'Cuevas', 'Rivero', 'Soler',
-        'Vázquez', 'Gallardo', 'Romero', 'Casado', 'Martín', 'Pardo', 'Valverde', 'Merino', 'Velasco', 'Rentero'
+        'Vázquez', 'Gallardo', 'Romero', 'Casado', 'Martín', 'Pardo', 'Valverde', 'Merino', 'Velasco', 'Rentero',
+        'Molina', 'Gallego', 'Hervás', 'Godoy', 'Palomares', 'Herrera', 'Jiménez', 'Rascón', 'Blanco'
     ];
 
     /**
