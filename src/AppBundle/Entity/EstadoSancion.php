@@ -27,7 +27,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table
  */
-class ActitudFamiliaSancion
+class EstadoSancion
 {
     /**
      * @ORM\Id
@@ -57,7 +57,7 @@ class ActitudFamiliaSancion
      * Set descripcion
      *
      * @param string $descripcion
-     * @return ActitudFamiliaSancion
+     * @return EstadoSancion
      */
     public function setDescripcion($descripcion)
     {

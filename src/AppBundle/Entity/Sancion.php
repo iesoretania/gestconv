@@ -69,6 +69,11 @@ class Sancion
      */
     protected $fecha_sancion;
     /**
+     * @ORM\ManyToOne(targetEntity="EstadoSancion")
+     * @var EstadoSancion
+     */
+    protected $estadoSancion;
+    /**
      * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
@@ -77,7 +82,7 @@ class Sancion
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
-    protected $fecha_comunicado;
+    protected $fechaComunicado;
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
@@ -466,6 +471,29 @@ class Sancion
     public function getMotivosNoAplicacion()
     {
         return $this->motivosNoAplicacion;
+    }
+
+    /**
+     * Set estadoSancion
+     *
+     * @param EstadoSancion $estadoSancion
+     * @return Sancion
+     */
+    public function setEstadoSancion(EstadoSancion $estadoSancion = null)
+    {
+        $this->estadoSancion = $actitudFamilia;
+
+        return $this;
+    }
+
+    /**
+     * Get estadoSancion
+     *
+     * @return EstadoSancion
+     */
+    public function getEstadoSancion()
+    {
+        return $this->estadoSancion;
     }
 
     /**
