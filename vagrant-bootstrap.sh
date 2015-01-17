@@ -3,7 +3,7 @@
 apt-get -q update
 export DEBIAN_FRONTEND=noninteractive
 echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections
-apt-get -q -y install apache2 php5 mysql-server mysql-client phpmyadmin wget php5-intl php5-mcrypt php5-xdebug
+apt-get -q -y install apache2 php5 mysql-server mysql-client phpmyadmin wget php5-intl php5-mcrypt php5-xdebug php5-curl
 service apache2 stop
 sed -i -e "s/www\-data/vagrant/" /etc/apache2/envvars
 sed -i -e "s/var\/www\/html/vagrant\/web/" /etc/apache2/sites-available/000-default.conf
