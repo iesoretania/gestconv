@@ -481,7 +481,7 @@ class Sancion
      */
     public function setEstadoSancion(EstadoSancion $estadoSancion = null)
     {
-        $this->estadoSancion = $actitudFamilia;
+        $this->estadoSancion = $estadoSancion;
 
         return $this;
     }
