@@ -25,6 +25,7 @@ use AppBundle\Entity\ActitudFamiliaSancion;
 use AppBundle\Entity\CategoriaAviso;
 use AppBundle\Entity\CategoriaConducta;
 use AppBundle\Entity\CategoriaMedida;
+use AppBundle\Entity\EstadoSancion;
 use AppBundle\Entity\TipoConducta;
 use AppBundle\Entity\TipoMedida;
 use AppBundle\Entity\TramoParte;
@@ -178,6 +179,21 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
         }
     }
 
+    public function generateEstadoSancion(ObjectManager $manager)
+    {
+        $estados = [
+            "Se aplica correción/medida disciplinaria",
+            "No se aplica correción/medida disciplinaria",
+            "Pendiente de sanción"
+        ];
+
+        foreach($estados as $descripcion) {
+            $estado = new EstadoSancion();
+            $estado->setDescripcion($descripcion);
+            $manager->persist($estado);
+        }
+    }
+
     public function getOrder()
     {
         return 10;
@@ -187,6 +203,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
     {
         self::generateTramoParte($manager);
         self::generateActitudFamilia($manager);
+        self::generateEstadoSancion($manager);
         self::generateCategoriasAviso($manager);
         self::generateTiposConducta($manager);
         self::generateTiposMedida($manager);
