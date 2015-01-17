@@ -21,6 +21,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\ActitudFamiliaSancion;
 use AppBundle\Entity\CategoriaAviso;
 use AppBundle\Entity\CategoriaConducta;
 use AppBundle\Entity\CategoriaMedida;
@@ -162,6 +163,21 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
         }
     }
 
+    public function generateActitudFamilia(ObjectManager $manager)
+    {
+        $actitudes = [
+            "Colabora",
+            "No colabora",
+            "Impide la corrección"
+        ];
+
+        foreach($actitudes as $descripcion) {
+            $actitud = new ActitudFamiliaSancion();
+            $actitud->setDescripcion($descripcion);
+            $manager->persist($actitud);
+        }
+    }
+
     public function getOrder()
     {
         return 10;
@@ -170,6 +186,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         self::generateTramoParte($manager);
+        self::generateActitudFamilia($manager);
         self::generateCategoriasAviso($manager);
         self::generateTiposConducta($manager);
         self::generateTiposMedida($manager);
