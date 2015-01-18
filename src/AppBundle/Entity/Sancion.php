@@ -244,7 +244,7 @@ class Sancion
      */
     public function setFechaComunicado($fechaComunicado)
     {
-        $this->fecha_comunicado = $fechaComunicado;
+        $this->fechaComunicado = $fechaComunicado;
 
         return $this;
     }
@@ -256,7 +256,7 @@ class Sancion
      */
     public function getFechaComunicado()
     {
-        return $this->fecha_comunicado;
+        return $this->fechaComunicado;
     }
 
     /**
