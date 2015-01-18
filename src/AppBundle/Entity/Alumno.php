@@ -478,4 +478,14 @@ class Alumno
 
         return $this;
     }
+
+    /**
+     * Get fechaNacimiento
+     *
+     * @return \DateTime
+     */
+    public function getFechaNacimiento()
+    {
+        return $this->fechaNacimiento;
+    }
 }

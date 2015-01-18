@@ -305,29 +305,6 @@ class Parte
     }
 
     /**
-     * Set alumno
-     *
-     * @param Alumno $alumno
-     * @return Parte
-     */
-    public function setAlumno(Alumno $alumno = null)
-    {
-        $this->alumno = $alumno;
-
-        return $this;
-    }
-
-    /**
-     * Get alumno
-     *
-     * @return Alumno
-     */
-    public function getAlumno()
-    {
-        return $this->alumno;
-    }
-
-    /**
      * Set profesor_guardia
      *
      * @param Usuario $profesorGuardia
