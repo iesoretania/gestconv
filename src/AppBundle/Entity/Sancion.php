@@ -81,6 +81,11 @@ class Sancion
      */
     protected $fechaComunicado;
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    protected $fechaRegistro;
+    /**
      * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
      */
@@ -234,7 +239,7 @@ class Sancion
     }
 
     /**
-     * Set fecha_comunicado
+     * Set fechaComunicado
      *
      * @param \DateTime $fechaComunicado
      * @return Sancion
@@ -247,13 +252,36 @@ class Sancion
     }
 
     /**
-     * Get fecha_comunicado
+     * Get fechaComunicado
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFechaComunicado()
     {
         return $this->fechaComunicado;
+    }
+
+    /**
+     * Set fechaRegistro
+     *
+     * @param \DateTime $fechaRegistro
+     * @return Sancion
+     */
+    public function setFechaRegistro($fechaRegistro)
+    {
+        $this->fechaRegistro = $fechaRegistro;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRegistro
+     *
+     * @return \DateTime
+     */
+    public function getFechaRegistro()
+    {
+        return $this->fechaRegistro;
     }
 
     /**
