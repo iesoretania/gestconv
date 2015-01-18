@@ -56,6 +56,31 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
         }
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @param $items Array de categorías. Cada categoría es un array de ítems
+     * @param $claseCategoria Clase correspondiente a la categoría
+     * @param $claseItems Clase correspondiente a los ítems
+     */
+    public function createItemsCategoria(ObjectManager $manager, $items, $claseCategoria, $claseItems)
+    {
+        $refCategoria = '\\AppBundle\\Entity\\' . $claseCategoria;
+        $refItems = '\\AppBundle\\Entity\\' . $claseItems;
+
+        foreach($items as $descripcionCategoria => $tipos) {
+            $categoria = new $refCategoria;
+            $categoria->setDescripcion($descripcionCategoria);
+            $manager->persist($categoria);
+
+            foreach($tipos as $descripcionTipo) {
+                $tipo = new $refItems;
+                $tipo->setDescripcion($descripcionTipo);
+                $tipo->setCategoria($categoria);
+                $manager->persist($tipo);
+            }
+        }
+    }
+
     public function generateTiposConducta(ObjectManager $manager)
     {
         $conductas = [
@@ -89,18 +114,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                 ]
         ];
 
-        foreach($conductas as $descripcionCategoria => $tipos) {
-            $categoria = new CategoriaConducta();
-            $categoria->setDescripcion($descripcionCategoria);
-            $manager->persist($categoria);
-
-            foreach($tipos as $descripcionTipo) {
-                $tipo = new TipoConducta();
-                $tipo->setDescripcion($descripcionTipo);
-                $tipo->setCategoria($categoria);
-                $manager->persist($tipo);
-            }
-        }
+        self::createItemsCategoria($manager, $conductas, 'CategoriaConducta', 'TipoConducta');
     }
 
     public function generateTiposMedida(ObjectManager $manager)
@@ -133,17 +147,21 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                 ]
         ];
 
-        foreach($medidas as $descripcionCategoria => $tipos) {
-            $categoria = new CategoriaMedida();
-            $categoria->setDescripcion($descripcionCategoria);
-            $manager->persist($categoria);
+        self::createItemsCategoria($manager, $medidas, 'CategoriaMedida', 'TipoMedida');
+    }
 
-            foreach($tipos as $descripcionTipo) {
-                $tipo = new TipoMedida();
-                $tipo->setDescripcion($descripcionTipo);
-                $tipo->setCategoria($categoria);
-                $manager->persist($tipo);
-            }
+    /**
+     * @param ObjectManager $manager
+     * @param Array $items
+     * @param string $clase
+     */
+    public function createItems(ObjectManager $manager, $items, $clase)
+    {
+        $ref = '\\AppBundle\\Entity\\' . $clase;
+        foreach($items as $descripcion) {
+            $estado = new $ref;
+            $estado->setDescripcion($descripcion);
+            $manager->persist($estado);
         }
     }
 
@@ -157,11 +175,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
             "Otro (detallar)"
         ];
 
-        foreach($categorias as $descripcion) {
-            $aviso = new CategoriaAviso();
-            $aviso->setDescripcion($descripcion);
-            $manager->persist($aviso);
-        }
+        self::createItems($manager, $categorias, 'CategoriaAviso');
     }
 
     public function generateActitudFamilia(ObjectManager $manager)
@@ -172,11 +186,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
             "Impide la corrección"
         ];
 
-        foreach($actitudes as $descripcion) {
-            $actitud = new ActitudFamiliaSancion();
-            $actitud->setDescripcion($descripcion);
-            $manager->persist($actitud);
-        }
+        self::createItems($manager, $actitudes, 'ActitudFamiliaSancion');
     }
 
     public function generateEstadoSancion(ObjectManager $manager)
@@ -187,11 +197,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
             "Pendiente de sanción"
         ];
 
-        foreach($estados as $descripcion) {
-            $estado = new EstadoSancion();
-            $estado->setDescripcion($descripcion);
-            $manager->persist($estado);
-        }
+        self::createItems($manager, $estados, 'EstadoSancion');
     }
 
     public function getOrder()
