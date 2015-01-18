@@ -51,11 +51,10 @@ class Parte
      */
     protected $usuario;
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="partes")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Alumno
+     * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="partes")
+     * @var Collection
      */
-    protected $alumno;
+    protected $alumnos;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @var Usuario
@@ -131,6 +130,7 @@ class Parte
         $this->conductas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->observaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -511,11 +511,44 @@ class Parte
     /**
      * Get conductas
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getConductas()
     {
         return $this->conductas;
     }
 
+
+    /**
+     * Add alumnos
+     *
+     * @param Alumno $alumnos
+     * @return Parte
+     */
+    public function addAlumno(Alumno $alumnos)
+    {
+        $this->alumnos[] = $alumnos;
+
+        return $this;
+    }
+
+    /**
+     * Remove alumnos
+     *
+     * @param Alumno $alumnos
+     */
+    public function removeAlumno(Alumno $alumnos)
+    {
+        $this->alumnos->removeElement($alumnos);
+    }
+
+    /**
+     * Get alumnos
+     *
+     * @return Collection
+     */
+    public function getAlumnos()
+    {
+        return $this->alumnos;
+    }
 }

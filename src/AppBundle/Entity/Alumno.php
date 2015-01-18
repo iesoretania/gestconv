@@ -113,7 +113,7 @@ class Alumno
     protected $grupo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Parte", mappedBy="alumno")
+     * @ORM\ManyToMany(targetEntity="Parte", inversedBy="alumnos")
      * @var Collection
      */
     protected $partes = null;
@@ -477,15 +477,5 @@ class Alumno
         $this->fechaNacimiento = $fechaNacimiento;
 
         return $this;
-    }
-
-    /**
-     * Get fechaNacimiento
-     *
-     * @return \DateTime
-     */
-    public function getFechaNacimiento()
-    {
-        return $this->fechaNacimiento;
     }
 }
