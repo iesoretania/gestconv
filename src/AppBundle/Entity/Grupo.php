@@ -165,7 +165,7 @@ class Grupo
     /**
      * Set curso
      *
-     * @param Curs  o $curso
+     * @param Curso $curso
      * @return Grupo
      */
     public function setCurso(Curso $curso = null)
