@@ -85,10 +85,10 @@ class TipoConducta
     /**
      * Set categoria
      *
-     * @param \AppBundle\Entity\CategoriaConducta $categoria
+     * @param CategoriaConducta $categoria
      * @return TipoConducta
      */
-    public function setCategoria(\AppBundle\Entity\CategoriaConducta $categoria = null)
+    public function setCategoria(CategoriaConducta $categoria = null)
     {
         $this->categoria = $categoria;
 
@@ -98,7 +98,7 @@ class TipoConducta
     /**
      * Get categoria
      *
-     * @return \AppBundle\Entity\CategoriaConducta 
+     * @return CategoriaConducta
      */
     public function getCategoria()
     {

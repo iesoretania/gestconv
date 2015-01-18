@@ -21,7 +21,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\CategoriaMedida;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -86,10 +86,10 @@ class TipoMedida
     /**
      * Set categoria
      *
-     * @param \AppBundle\Entity\CategoriaMedida $categoria
+     * @param CategoriaMedida $categoria
      * @return TipoMedida
      */
-    public function setCategoria(\AppBundle\Entity\CategoriaMedida $categoria = null)
+    public function setCategoria(CategoriaMedida $categoria = null)
     {
         $this->categoria = $categoria;
 
@@ -99,7 +99,7 @@ class TipoMedida
     /**
      * Get categoria
      *
-     * @return \AppBundle\Entity\CategoriaMedida 
+     * @return CategoriaMedida
      */
     public function getCategoria()
     {

@@ -21,7 +21,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Sancion;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

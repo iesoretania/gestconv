@@ -64,10 +64,10 @@ class Observacion
     /**
      * Set usuario
      *
-     * @param \AppBundle\Entity\Usuario $usuario
+     * @param Usuario $usuario
      * @return ObservacionParte
      */
-    public function setUsuario(\AppBundle\Entity\Usuario $usuario = null)
+    public function setUsuario(Usuario $usuario = null)
     {
         $this->usuario = $usuario;
 
@@ -77,7 +77,7 @@ class Observacion
     /**
      * Get usuario
      *
-     * @return \AppBundle\Entity\Usuario 
+     * @return Usuario
      */
     public function getUsuario()
     {

@@ -20,9 +20,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Grupo;
-use AppBundle\Entity\Parte;
-use AppBundle\Entity\Sancion;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -125,8 +124,8 @@ class Alumno
     protected $sanciones = null;
 
     public function __construct() {
-        $this->partes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->sanciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partes = new ArrayCollection();
+        $this->sanciones = new ArrayCollection();
     }
     
     /**

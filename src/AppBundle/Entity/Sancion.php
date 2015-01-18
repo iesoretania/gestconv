@@ -21,11 +21,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\ActitudFamiliaSancion;
-use AppBundle\Entity\AvisoSancion;
-use AppBundle\Entity\Medida;
-use AppBundle\Entity\Parte;
-use AppBundle\Entity\Usuario;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -128,10 +125,10 @@ class Sancion
      */
     public function __construct()
     {
-        $this->partes = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->medidas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->observaciones = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partes = new ArrayCollection();
+        $this->medidas = new ArrayCollection();
+        $this->avisos = new ArrayCollection();
+        $this->observaciones = new ArrayCollection();
     }
 
     /**

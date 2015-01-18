@@ -20,11 +20,10 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\Usuario;
-use AppBundle\Entity\Curso;
-use AppBundle\Entity\Alumno;
+
 
 /**
  * @ORM\Entity
@@ -65,7 +64,7 @@ class Grupo
     protected $alumnado=null;
 
     public function __construct() {
-        $this->alumnado = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->alumnado = new ArrayCollection();
     }
     
     /**

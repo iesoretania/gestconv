@@ -21,13 +21,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Alumno;
-use AppBundle\Entity\AvisoParte;
-use AppBundle\Entity\Conducta;
-use AppBundle\Entity\ObservacionParte;
-use AppBundle\Entity\Sancion;
-use AppBundle\Entity\TramoParte;
-use AppBundle\Entity\Usuario;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -127,10 +122,10 @@ class Parte
      */
     public function __construct()
     {
-        $this->conductas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->observaciones = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->avisos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->alumnos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->conductas = new ArrayCollection();
+        $this->observaciones = new ArrayCollection();
+        $this->avisos = new ArrayCollection();
+        $this->alumnos = new ArrayCollection();
     }
 
     /**

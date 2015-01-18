@@ -21,8 +21,7 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Parte;
-use AppBundle\Entity\TipoConducta;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**

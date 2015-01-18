@@ -21,7 +21,8 @@
 
 namespace AppBundle\Entity;
 
-use AppBundle\Entity\Grupo;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -55,7 +56,7 @@ class Curso
      */
     public function __construct()
     {
-        $this->grupos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->grupos = new ArrayCollection();
     }
     
     /**
