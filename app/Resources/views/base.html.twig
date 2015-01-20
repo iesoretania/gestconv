@@ -2,12 +2,17 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}¡Bienvenido!{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('bundles/app/vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/app/vendor/fontawesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/app/css/gestconv.css') }}">
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
         {% block body %}{% endblock %}
+        <script src="{{ asset('bundles/app/vendor/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('bundles/app/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
