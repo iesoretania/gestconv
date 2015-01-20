@@ -1,0 +1,89 @@
+body {
+    padding-top: 70px;
+}
+
+.tile {
+    position: relative;
+    display: block;
+    float: left;
+    margin: 5px;
+    height: 100%;
+    color: #FFF;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-clip: padding-box;
+}
+
+.tile-col-12 {
+    width: 96%;
+}
+
+.tile-col-9 {
+    width: 72%;
+}
+
+.tile-col-6 {
+    width: 48%;
+}
+
+.tile-col-4 {
+    width: 32%;
+}
+
+.tile-col-3 {
+    width: 24%;
+}
+
+.tile-orange {
+    background-color: #f09609 !important;
+}
+
+.tile-blue {
+    background-color: #2e8bcc !important;
+}
+
+.tile-bluedark {
+    background-color: #1b486f !important;
+}
+
+.tile-green {
+    background-color: #339933 !important;
+}
+
+.tile-red {
+    background-color: #e51400 !important;
+}
+
+.tile-lime {
+    background-color: #8cbf26 !important;
+}
+
+.tile-icon-holder {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    vertical-align: middle;
+    padding: 22%;
+    font-size: 40px;
+}
+
+.text-holder {
+    position: absolute;
+    bottom: 0;
+    text-align: justify;
+    text-overflow: ellipsis;
+    padding: 10px;
+    width: 100%;
+    height: 25%;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+
+}
+
+.tile-row {
+    margin-top: 20px;
+    height: 400px;
+}
