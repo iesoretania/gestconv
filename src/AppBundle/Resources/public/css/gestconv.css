@@ -20,6 +20,7 @@ body {
     -webkit-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    2px 2px 5px 0px rgba(50, 50, 50, 0.75);
     box-shadow:         2px 2px 5px 0px rgba(50, 50, 50, 0.75);
+    padding: 0;
 }
 
 .tile-col-12 {
@@ -71,7 +72,7 @@ body {
     height: 100%;
     width: 100%;
     vertical-align: middle;
-    padding: 22%;
+    padding-top: 22%;
     font-size: 40px;
     color: #ffffff;
 }
@@ -83,7 +84,7 @@ body {
 .text-holder {
     position: absolute;
     bottom: 0;
-    text-align: justify;
+    text-align: left;
     text-overflow: ellipsis;
     padding: 10px;
     width: 100%;
