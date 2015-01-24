@@ -82,6 +82,42 @@ body {
     background-color: #8cbf26 !important;
 }
 
+.tile-yellow {
+    background-color: #ffc40d !important;
+}
+
+.tile-orange {
+    background-color: #f09609 !important;
+}
+
+.tile-pink {
+    background-color: #E671B8 !important;
+}
+
+.tile-purple {
+    background-color: #7B4F9D !important;
+}
+
+.tile-magenta {
+    background-color: #ff0097 !important;
+}
+
+.tile-teal {
+    background-color: #00aba9 !important;
+}
+
+.tile-gray {
+    background-color: #555 !important;
+}
+
+.tile-graylight {
+    background-color: #999 !important;
+}
+
+.tile-greendark {
+    background-color: #008641 !important;
+}
+
 .tile-icon-holder {
     text-align: center;
     height: 100%;
