@@ -54,12 +54,7 @@ class Parte
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @var Usuario
      */
-    protected $profesor_guardia;
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @var int
-     */
-    protected $tipo;
+    protected $profesorGuardia;
     /**
      * @ORM\Column(type="text", nullable=false)
      * @var string
@@ -74,7 +69,12 @@ class Parte
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
      */
-    protected $fecha_creacion;
+    protected $fechaCreacion;
+    /**
+     * @ORM\Column(type="datetime", nullable=false)
+     * @var \DateTime
+     */
+    protected $fechaSuceso;
     /**
      * @ORM\ManyToOne(targetEntity="TramoParte")
      * @ORM\JoinColumn(nullable=false)
@@ -82,15 +82,10 @@ class Parte
      */
     protected $tramo;
     /**
-     * @ORM\Column(type="boolean", nullable=false)
-     * @var boolean
-     */
-    protected $avisado;
-    /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
-    protected $fecha_aviso;
+    protected $fechaAviso;
     /**
      * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
@@ -136,29 +131,6 @@ class Parte
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set tipo
-     *
-     * @param integer $tipo
-     * @return Parte
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return integer 
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
     }
 
     /**
@@ -208,72 +180,72 @@ class Parte
     }
 
     /**
-     * Set fecha_creacion
+     * Set fechaCreacion
      *
      * @param \DateTime $fechaCreacion
      * @return Parte
      */
     public function setFechaCreacion($fechaCreacion)
     {
-        $this->fecha_creacion = $fechaCreacion;
+        $this->fechaCreacion = $fechaCreacion;
 
         return $this;
     }
 
     /**
-     * Get fecha_creacion
+     * Get fechaCreacion
      *
      * @return \DateTime 
      */
     public function getFechaCreacion()
     {
-        return $this->fecha_creacion;
+        return $this->fechaCreacion;
     }
 
     /**
-     * Set avisado
+     * Set fechaSuceso
      *
-     * @param boolean $avisado
+     * @param \DateTime $fechaSuceso
      * @return Parte
      */
-    public function setAvisado($avisado)
+    public function setFechaSuceso($fechaSuceso)
     {
-        $this->avisado = $avisado;
+        $this->fechaSuceso = $fechaSuceso;
 
         return $this;
     }
 
     /**
-     * Get avisado
+     * Get fechaSuceso
      *
-     * @return boolean
+     * @return \DateTime
      */
-    public function getAvisado()
+    public function getFechaSuceso()
     {
-        return $this->avisado;
+        return $this->fechaSuceso;
     }
 
     /**
-     * Set fecha_aviso
+     * Set fechaAviso
      *
      * @param \DateTime $fechaAviso
      * @return Parte
      */
     public function setFechaAviso($fechaAviso)
     {
-        $this->fecha_aviso = $fechaAviso;
+        $this->fechaAviso = $fechaAviso;
 
         return $this;
     }
 
     /**
-     * Get fecha_aviso
+     * Get fechaAviso
      *
      * @return \DateTime 
      */
     public function getFechaAviso()
     {
-        return $this->fecha_aviso;
+        return $this->fechaAviso;
     }
 
     /**
@@ -300,26 +272,26 @@ class Parte
     }
 
     /**
-     * Set profesor_guardia
+     * Set profesorGuardia
      *
      * @param Usuario $profesorGuardia
      * @return Parte
      */
     public function setProfesorGuardia(Usuario $profesorGuardia = null)
     {
-        $this->profesor_guardia = $profesorGuardia;
+        $this->profesorGuardia = $profesorGuardia;
 
         return $this;
     }
 
     /**
-     * Get profesor_guardia
+     * Get profesorGuardia
      *
      * @return Usuario
      */
     public function getProfesorGuardia()
     {
-        return $this->profesor_guardia;
+        return $this->profesorGuardia;
     }
 
     /**

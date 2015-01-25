@@ -205,7 +205,7 @@ class Alumno
      * @return string
      */
     public function __toString() {
-        return $this->getApellidos() . ', ' . $this->getNombre();
+        return $this->getApellidos() . ', ' . $this->getNombre() . ' (' . $this->getGrupo()->getDescripcion() . ')';
     }
 
     /**
