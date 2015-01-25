@@ -7,7 +7,11 @@
                 <a class="navbar-brand" href="#">
                     Gestconv
                 </a>
-                {% block navbarcontent %}<p class="navbar-text navbar-right">¡Bienvenido Juan Nadie!</p>{% endblock %}
+                {% block navbarcontent %}
+                {% if is_granted('ROLE_USUARIO') %}
+                <p class="navbar-text navbar-right">¡Bienvenido {{ app.user.nombre }}!</p>
+                {% endif %}
+                {% endblock %}
             </div>
         </div>
     </nav>

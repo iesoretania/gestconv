@@ -1,3 +1,16 @@
+root:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:redirect
+        route: portada
+        permanent: true
+
 app:
     resource: @AppBundle/Controller/
     type:     annotation
+
+usuario_comprobar:
+    path:     /comprobar
+
+usuario_salir:
+    path:     /salir

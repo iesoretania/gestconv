@@ -2,10 +2,10 @@
 
 {% block content %}
     <div class="container">
-        <h1>¡Bienvenido!</h1>
+        <h1>¡Bienvenido {{ app.user.nombre }}!</h1>
         <section class="row tile-row">
             <article class="col-md-4 tile tile-col-4 tile-red">
-                <a class="tile-link" href="{{ url('nuevo-parte') }}">
+                <a class="tile-link" href="{{ url('nuevo_parte') }}">
                     <div class="tile-icon-holder">
                         <i class="fa fa-edit fa-4x"></i>
                     </div>
@@ -45,6 +45,17 @@
                     <div class="text-holder">
                         <h4>Gestionar mis partes</h4>
                         <p>Permite modificarlos o añadir observaciones</p>
+                    </div>
+                </a>
+            </article>
+            <article class="col-md-4 tile tile-col-4 tile-bluedark">
+                <a class="tile-link" href="{{ url('usuario_salir') }}">
+                    <div class="tile-icon-holder">
+                        <i class="fa fa-power-off fa-4x"></i>
+                    </div>
+                    <div class="text-holder">
+                        <h4>Desconectar</h4>
+                        <p>Salir de la aplicación</p>
                     </div>
                 </a>
             </article>

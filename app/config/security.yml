@@ -3,20 +3,17 @@
 security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
-        Symfony\Component\Security\Core\User\User: bcrypt
+        AppBundle\Entity\Usuario: bcrypt
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN:       ROLE_USUARIO
+        ROLE_SUPER_ADMIN: [ROLE_USUARIO, ROLE_ADMIN, ROLE_PERMITE_IMPERSONAR]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-    #                user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-    #                admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        usuarios:
+            entity: { class: AppBundle\Entity\Usuario, property: nombreUsuario }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -26,21 +23,21 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         # the login page has to be accessible for everybody
-        demo_login:
-            pattern:  ^/demo/secured/login$
+        entrar:
+            pattern:  ^/entrar$
             security: false
 
         # secures part of the application
-        demo_secured_area:
-            pattern:    ^/demo/secured/
+        area_protegida:
+            pattern:    ^/
             # it's important to notice that in this case _demo_security_check and _demo_login
             # are route names and that they are specified in the AcmeDemoBundle
             form_login:
-                check_path: _demo_security_check
-                login_path: _demo_login
+                check_path: usuario_comprobar
+                login_path: usuario_entrar
             logout:
-                path:   _demo_logout
-                target: _demo
+                path:   usuario_salir
+                target: usuario_entrar
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"

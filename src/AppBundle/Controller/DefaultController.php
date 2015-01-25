@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="portada",methods={"GET"})
+     * @Route("/portada", name="portada",methods={"GET"})
      */
     public function indexAction()
     {
@@ -16,7 +16,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/entrar", name="entrar",methods={"GET", "POST"})
+     * @Route("/entrar", name="usuario_entrar",methods={"GET", "POST"})
      */
     public function entrarAction()
     {
