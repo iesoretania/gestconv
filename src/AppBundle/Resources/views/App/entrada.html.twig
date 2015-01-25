@@ -5,18 +5,25 @@
         <div class="panel panel-primary atica-panel-login">
             <div class="panel-heading">Acceder a la aplicación &mdash; Gestconv</div>
             <div class="panel-body">
+                {% if error %}
+                    <div class="alert alert-danger alert-dismissable">
+                        {{ error.message | trans }}
+                    </div>
+                {% endif %}
                 <form method="post" action="{{ url('usuario_comprobar') }}">
                     <fieldset>
                         <legend>Introduzca los datos de acceso</legend>
                         <div class="form-group">
                             <label for="username">Nombre de usuario</label>
-                            <input type="text" class="form-control" name="_username" autofocus="1" autocorrect="off"
+                            <input type="text" class="form-control" name="_username"
+                                   {% if not last_username %}autofocus="1" {% endif %} autocorrect="off"
                                    autocapitalize="off" placeholder="El mismo utilizado para acceder a Séneca"
                                    value="{{ last_username | default('') }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Contraseña</label>
                             <input type="password" class="form-control" name="_password"
+                                   {% if last_username %}autofocus="1" {% endif %}
                                    placeholder="Contraseña de acceso">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Entrar en la aplicación</button>
