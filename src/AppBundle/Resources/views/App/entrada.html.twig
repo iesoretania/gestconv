@@ -1,0 +1,31 @@
+{% extends '::layout.html.twig' %}
+{% block navbarcontent '' %}
+{% block content %}
+    <div class="container col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-primary atica-panel-login">
+            <div class="panel-heading">Acceder a la aplicación &mdash; Gestconv</div>
+            <div class="panel-body">
+                <form method="post" action="entrar">
+                    <fieldset>
+                        <legend>Introduzca los datos de acceso</legend>
+                        <div class="form-group">
+                            <label for="username">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="_username" autofocus="1" autocorrect="off"
+                                   autocapitalize="off" placeholder="El mismo utilizado para acceder a Séneca"
+                                   value="{{ last_username | default('') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Contraseña</label>
+                            <input type="password" class="form-control" name="_password"
+                                   placeholder="Contraseña de acceso">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Entrar en la aplicación</button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="panel-footer text-muted text-center thin">Consulte con el coordinador TIC si tiene problemas de
+                acceso
+            </div>
+        </div>
+    </div>
+{% endblock %}

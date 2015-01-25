@@ -14,4 +14,12 @@ class DefaultController extends Controller
     {
         return $this->render('AppBundle:App:portada.html.twig');
     }
+
+    /**
+     * @Route("/entrar", name="entrar",methods={"GET", "POST"})
+     */
+    public function entrarAction()
+    {
+        return $this->render('AppBundle:App:entrada.html.twig');
+    }
 }
