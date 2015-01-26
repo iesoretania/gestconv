@@ -25,6 +25,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -43,11 +44,15 @@ class Parte
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="partes")
      * @ORM\JoinColumn(nullable=false)
      * @var Usuario
+     *
+     * @Assert\NotBlank()
      */
     protected $usuario;
     /**
      * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="partes")
      * @var Collection
+     *
+     * @Assert\Count(groups={"nuevo"}, min="1", minMessage="parte.alumnos.min")
      */
     protected $alumnos;
     /**
@@ -58,11 +63,15 @@ class Parte
     /**
      * @ORM\Column(type="text", nullable=false)
      * @var string
+     *
+     * @Assert\Length(min="10", minMessage="parte.anotacion.min_length")
      */
     protected $anotacion;
     /**
      * @ORM\Column(type="text")
      * @var string
+     *
+     * @Assert\NotBlank(groups={"expulsion"}, message="parte.actividades.expulsion")
      */
     protected $actividades;
     /**
@@ -73,12 +82,16 @@ class Parte
     /**
      * @ORM\Column(type="datetime", nullable=false)
      * @var \DateTime
+     *
+     * @Assert\NotBlank(groups={"nuevo"}, message="parte.fecha_suceso.not_blank")
      */
     protected $fechaSuceso;
     /**
      * @ORM\ManyToOne(targetEntity="TramoParte")
      * @ORM\JoinColumn(nullable=false)
      * @var TramoParte
+     *
+     * @Assert\NotBlank(groups={"nuevo"}, message="parte.tramo.not_blank")
      */
     protected $tramo;
     /**
