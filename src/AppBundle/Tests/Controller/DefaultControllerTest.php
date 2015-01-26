@@ -6,12 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+    public function testIndexNoUser()
     {
         $client = static::createClient();
+        $client->followRedirects();
 
         $crawler = $client->request('GET', '/');
 
-        $this->assertTrue($crawler->filter('html:contains("Introduzca los datos de acceso")')->count() > 0);
+        $this->assertTrue($crawler->filter('html form input[name=_password]')->count() > 0);
     }
 }
