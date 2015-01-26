@@ -555,18 +555,20 @@ class Usuario implements AdvancedUserInterface
      */
     public function getRoles()
     {
-        $roles = ['ROLE_USUARIO'];
+        // realmente new Role() no es necesario, pero para que el valor
+        // devuelto se corresponda con la anotación lo hacemos así
+        $roles = [new Role('ROLE_USUARIO')];
 
         if ($this->getEsAdministrador()) {
-            $roles[] = 'ROLE_ADMIN';
+            $roles[] = new Role('ROLE_ADMIN');
         }
 
         if ($this->getEsRevisor()) {
-            $roles[] = 'ROLE_REVISOR';
+            $roles[] = new Role('ROLE_REVISOR');
         }
 
         if ($this->getTutorias()->count() > 0) {
-            $roles[] = 'ROLE_TUTOR';
+            $roles[] = new Role('ROLE_TUTOR');
         }
 
         return $roles;
