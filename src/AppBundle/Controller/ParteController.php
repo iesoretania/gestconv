@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ParteController extends Controller
 {
     /**
-     * @Route("/parte/nuevo", name="nuevo_parte",methods={"GET"})
+     * @Route("/parte/nuevo", name="nuevo_parte",methods={"GET", "POST"})
      */
     public function nuevoAction(Request $peticion)
     {

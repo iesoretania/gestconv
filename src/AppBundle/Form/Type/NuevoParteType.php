@@ -4,8 +4,8 @@ namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class NuevoParteType extends AbstractType
 {
@@ -43,35 +43,39 @@ class NuevoParteType extends AbstractType
             ])
             ->add('anotacion', 'textarea', [
                 'label' => 'Detalle de lo acontecido',
+                'required' => false,
                 'attr' => ['rows' => '8']
 
             ])
             ->add('actividades', 'textarea', [
                 'label' => 'Actividades a realizar',
+                'required' => false,
                 'attr' => ['rows' => '5']
             ])
             ->add('fechaAviso', null, [
                 'label' => 'Fecha de aviso a las familias'
             ])
             ->add('prescrito', null, [
+                'required' => false,
                 'label' => '¿Ha prescrito?'
             ])
             ->add('profesorGuardia', null, [
                 'label' => 'Profesor de guardia'
             ])
+            ->add('enviar', 'submit', [
+                'label' => 'Crear parte'
+            ]);
         ;
     }
 
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::configureOptions($resolver);
-
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Parte',
-            'admin' => false
+            'validate_groups' => ['nuevo']
         ));
     }
 
