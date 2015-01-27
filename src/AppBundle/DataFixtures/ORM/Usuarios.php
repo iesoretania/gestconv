@@ -59,7 +59,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $username = str_replace($busqueda, $cambiarPor, $username);
 
         $usuario->setNombreUsuario($username);
-        $usuario->setPassword(password_hash($username, PASSWORD_DEFAULT));
+        $usuario->setPassword(password_hash('12345', PASSWORD_DEFAULT));
 
         return $usuario;
     }
@@ -84,8 +84,8 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $manager->persist($usuario);
 
         $usuario = new Usuario();
-        $usuario->setNombreUsuario('comisario');
-        $usuario->setPassword(password_hash('comisario', PASSWORD_DEFAULT));
+        $usuario->setNombreUsuario('comisionario');
+        $usuario->setPassword(password_hash('comisionario', PASSWORD_DEFAULT));
         $usuario->setNombre('Comisión');
         $usuario->setApellido1('Convivencia');
         $usuario->setEsAdministrador(false);

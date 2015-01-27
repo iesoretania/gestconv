@@ -7,6 +7,7 @@ use AppBundle\Form\Type\NuevoParteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ParteController extends Controller
 {
@@ -21,9 +22,29 @@ class ParteController extends Controller
         $parte->setFechaCreacion(new \DateTime());
         $parte->setFechaSuceso(new \DateTime());
         $parte->setUsuario($usuario);
-        $formulario = $this->createForm(new NuevoParteType(), $parte);
+        $parte->setPrescrito(false);
+
+        $formulario = $this->createForm(new NuevoParteType(), $parte, [
+            'admin' => $usuario->getEsAdministrador()
+        ]);
 
         $formulario->handleRequest($peticion);
+        if (!$usuario->getEsAdministrador()) {
+            $parte->setUsuario($usuario);
+        }
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            // crear el parte y guardarlo en la base de datos
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($parte);
+            $em->flush();
+
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('portada')
+            );
+        }
 
         $vista = $formulario->createView();
 

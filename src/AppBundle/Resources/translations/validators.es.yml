@@ -1,5 +1,8 @@
 parte.alumnos.min: Debe seleccionar al menos un alumno.
+parte.conductas.min: Debe seleccionar al menos una conducta.
 parte.anotacion.min_length: Debe explicar con detalle lo ocurrido.
 parte.actividades.expulsion: Si hay expulsión es necesario indicar las actividades a realizar.
-parte.fecha_suceso.not_blank: Debe indicarse cuándo tuvo lugar el suceso
+parte.profesor-guardia.expulsion: Si hay expulsión debe indicar qué profesor atendió al alumnado.
+parte.fecha_suceso.not_blank: Debe indicarse cuándo tuvo lugar el suceso.
+parte.fecha_suceso.max: No puede suceder en el futuro. Introduzca una fecha y hora anteriores.
 parte.tramo.not_blank: Debe indicarse dónde ocurrió el suceso.

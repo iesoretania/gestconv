@@ -26,6 +26,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
+
 
 /**
  * @ORM\Entity
@@ -52,12 +54,13 @@ class Parte
      * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="partes")
      * @var Collection
      *
-     * @Assert\Count(groups={"nuevo"}, min="1", minMessage="parte.alumnos.min")
+     * @Assert\Count(min="1", minMessage="parte.alumnos.min")
      */
-    protected $alumnos;
+    protected $alumnos = null;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @var Usuario
+     * @Assert\NotBlank(groups={"expulsion"}, message="parte.profesor-guardia.expulsion")
      */
     protected $profesorGuardia;
     /**
@@ -68,7 +71,7 @@ class Parte
      */
     protected $anotacion;
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      * @var string
      *
      * @Assert\NotBlank(groups={"expulsion"}, message="parte.actividades.expulsion")
@@ -84,6 +87,7 @@ class Parte
      * @var \DateTime
      *
      * @Assert\NotBlank(groups={"nuevo"}, message="parte.fecha_suceso.not_blank")
+     * @AssertDateRange(max="now", maxMessage="parte.fecha_suceso.max")
      */
     protected $fechaSuceso;
     /**
@@ -105,8 +109,15 @@ class Parte
      */
     protected $prescrito;
     /**
-     * @ORM\OneToMany(targetEntity="Conducta", mappedBy="parte")
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $hayExpulsion;
+    /**
+     * @ORM\ManyToMany(targetEntity="TipoConducta")
      * @var Collection
+     *
+     * @Assert\Count(min="1", minMessage="parte.conductas.min")
      */
     protected $conductas = null;
     /**
@@ -420,6 +431,29 @@ class Parte
     }
 
     /**
+     * Set hayExpulsion
+     *
+     * @param boolean $hayExpulsion
+     * @return Parte
+     */
+    public function setHayExpulsion($hayExpulsion)
+    {
+        $this->hayExpulsion = $hayExpulsion;
+
+        return $this;
+    }
+
+    /**
+     * Get hayExpulsion
+     *
+     * @return boolean
+     */
+    public function getHayExpulsion()
+    {
+        return $this->hayExpulsion;
+    }
+
+    /**
      * Set tramo
      *
      * @param TramoParte $tramo
@@ -445,10 +479,10 @@ class Parte
     /**
      * Add conductas
      *
-     * @param Conducta $conductas
+     * @param TipoConducta $conductas
      * @return Parte
      */
-    public function addConducta(Conducta $conductas)
+    public function addConducta(TipoConducta $conductas)
     {
         $this->conductas[] = $conductas;
 
@@ -458,9 +492,9 @@ class Parte
     /**
      * Remove conductas
      *
-     * @param Conducta $conductas
+     * @param TipoConducta $conductas
      */
-    public function removeConducta(Conducta $conductas)
+    public function removeConducta(TipoConducta $conductas)
     {
         $this->conductas->removeElement($conductas);
     }

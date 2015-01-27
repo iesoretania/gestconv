@@ -27,52 +27,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table
  */
-class CategoriaAviso
+class CategoriaAviso extends Categoria
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
-    
-    /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $descripcion;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     * @return CategoriaAviso
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string 
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
-    }
 }

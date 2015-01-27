@@ -59,17 +59,20 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
     /**
      * @param ObjectManager $manager
      * @param $items Array de categorías. Cada categoría es un array de ítems
+     * @param $niveles Niveles opcionales a asignar a cada categoría
      * @param $claseCategoria Clase correspondiente a la categoría
      * @param $claseItems Clase correspondiente a los ítems
      */
-    public function createItemsCategoria(ObjectManager $manager, $items, $claseCategoria, $claseItems)
+    public function createItemsCategoria(ObjectManager $manager, $items, $niveles, $claseCategoria, $claseItems)
     {
         $refCategoria = '\\AppBundle\\Entity\\' . $claseCategoria;
         $refItems = '\\AppBundle\\Entity\\' . $claseItems;
 
+        $num = 0;
         foreach($items as $descripcionCategoria => $tipos) {
             $categoria = new $refCategoria;
             $categoria->setDescripcion($descripcionCategoria);
+            $categoria->setNivel(is_null($niveles) ? null : $niveles[$num++]);
             $manager->persist($categoria);
 
             foreach($tipos as $descripcionTipo) {
@@ -83,8 +86,9 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
 
     public function generateTiposConducta(ObjectManager $manager)
     {
+        $niveles = [1, 2, 0];
         $conductas = [
-            'Conductas contrarias [Decreto 327/2010 (art.34) o Decreto 328/2010 (art.33)]' =>
+            'Conductas contrarias' =>
                 [
                     "Perturbación del normal desarrollo de las actividades de clase",
                     "Falta de colaboración sistemática en la realización de las actividades",
@@ -94,7 +98,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                     "Actuaciones incorrectas hacia algún miembro de la comunidad educativa",
                     "Daños en instalaciones o docum. del Centro o en pertenencias de un miembro"
                 ],
-            'Conductas graves [Decreto 327/2010 (art.37) o Decreto 328/2010 (art.36)]' =>
+            'Conductas graves' =>
                 [
                     "Agresión física a un miembro de la comunidad educativa",
                     "Injurias y ofensas contra un miembro de la comunidad educativa",
@@ -108,19 +112,20 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                     "Impedir el normal desarrollo de las actividades del centro",
                     "Incumplimiento de las correcciones impuestas"
                 ],
-            'Otras conductas contrarias no incluidas en el Decreto 327/2010 o en el Decreto 328/2010' =>
+            'Otras conductas contrarias' =>
                 [
-                    'Describirlas con detalle'
+                    'Las descritas con detalle más abajo'
                 ]
         ];
 
-        self::createItemsCategoria($manager, $conductas, 'CategoriaConducta', 'TipoConducta');
+        self::createItemsCategoria($manager, $conductas, $niveles, 'CategoriaConducta', 'TipoConducta');
     }
 
     public function generateTiposMedida(ObjectManager $manager)
     {
+        $niveles = [1, 2, 0];
         $medidas = [
-            'Correciones a las conductas contrarias [Decreto 327/2010 (art.35) o Decreto 328/2010 (art.34)]' =>
+            'Correciones a las conductas contrarias' =>
                 [
                     "Amonestación oral",
                     "Apercibimiento por escrito",
@@ -129,7 +134,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                     "Suspender el derecho de asistencia al centro entre 1 y 3 días",
 
                 ],
-            'Medidas disciplinarias por conductas gravemente perjudiciales [Decreto 327/2010 (art.38) o Decreto 328/2010 (art.37)]' =>
+            'Medidas disciplinarias por conductas gravemente perjudiciales' =>
                 [
                     "Realizar tareas fuera del horario lectivo en el Centro",
                     "Suspender el derecho de participación en actividades extraescolares del Centro",
@@ -147,7 +152,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                 ]
         ];
 
-        self::createItemsCategoria($manager, $medidas, 'CategoriaMedida', 'TipoMedida');
+        self::createItemsCategoria($manager, $medidas, $niveles, 'CategoriaMedida', 'TipoMedida');
     }
 
     /**

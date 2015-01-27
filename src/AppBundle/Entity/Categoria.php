@@ -21,14 +21,12 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\MappedSuperclass
  */
-class Conducta
+class Categoria
 {
     /**
      * @ORM\Id
@@ -36,26 +34,18 @@ class Conducta
      * @ORM\GeneratedValue
      */
     protected $id;
-
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Parte", inversedBy="conductas")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Parte
-     */
-    protected $parte;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="TipoConducta")
-     * @ORM\JoinColumn(nullable=false)
-     * @var TipoConducta
-     */
-    protected $tipo;
-
-    /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string")
      * @var string
      */
-    protected $anotacion;
+    protected $descripcion;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @var int
+     */
+    protected $nivel;
 
     /**
      * Get id
@@ -68,71 +58,48 @@ class Conducta
     }
 
     /**
-     * Set anotacion
+     * Set descripcion
      *
-     * @param string $anotacion
-     * @return Conducta
+     * @param string $descripcion
+     * @return CategoriaConducta
      */
-    public function setAnotacion($anotacion)
+    public function setDescripcion($descripcion)
     {
-        $this->anotacion = $anotacion;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get anotacion
+     * Get descripcion
      *
      * @return string 
      */
-    public function getAnotacion()
+    public function getDescripcion()
     {
-        return $this->anotacion;
+        return $this->descripcion;
     }
 
     /**
-     * Set parte
+     * Set nivel
      *
-     * @param Parte $parte
-     * @return Conducta
+     * @param integer $nivel
+     * @return CategoriaConducta
      */
-    public function setParte(Parte $parte = null)
+    public function setNivel($nivel)
     {
-        $this->parte = $parte;
+        $this->nivel = $nivel;
 
         return $this;
     }
 
     /**
-     * Get parte
+     * Get nivel
      *
-     * @return Parte
+     * @return integer|null
      */
-    public function getParte()
+    public function getNivel()
     {
-        return $this->parte;
-    }
-
-    /**
-     * Set tipo
-     *
-     * @param TipoConducta $tipo
-     * @return Conducta
-     */
-    public function setTipo(TipoConducta $tipo = null)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return TipoConducta
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
+        return $this->nivel;
     }
 }
