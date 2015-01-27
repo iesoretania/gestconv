@@ -16,8 +16,11 @@ class ParteController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $parte = new Parte();
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+
         $parte->setFechaCreacion(new \DateTime());
         $parte->setFechaSuceso(new \DateTime());
+        $parte->setUsuario($usuario);
         $formulario = $this->createForm(new NuevoParteType(), $parte);
 
         $formulario->handleRequest($peticion);

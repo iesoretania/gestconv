@@ -63,13 +63,13 @@ class NuevoParteType extends AbstractType
                 'label' => 'Profesor de guardia'
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Crear parte'
+                'label' => 'Crear parte',
+                'attr' => ['class' => 'btn btn-info']
             ]);
-        ;
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
