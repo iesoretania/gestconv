@@ -11,9 +11,26 @@ namespace AppBundle\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class DateRangeValidator extends ConstraintValidator
 {
+
+    /**
+     * @param string $message Violation message
+     * @param array $parameters Message parameters
+     */
+    protected function addViolation($message, $parameters)
+    {
+        $context = $this->context->buildViolation($message);
+
+        foreach($parameters as $name => $value) {
+            $context = $context->setParameter($name, $value);
+        };
+
+        $context->addViolation();
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -24,25 +41,24 @@ class DateRangeValidator extends ConstraintValidator
         }
 
         if (!($value instanceof \DateTime)) {
-            $this->context->addViolation($constraint->invalidMessage, array(
-                '{{ value }}' => $this->formatDate($value),
-            ));
+            $this->addViolation($constraint->invalidMessage,
+                ['{{ value }}' => $value]);
 
             return;
         }
 
         if (null !== $constraint->max && $value > $constraint->max) {
-            $this->context->addViolation($constraint->maxMessage, array(
+            $this->addViolation($constraint->maxMessage, [
                 '{{ value }}' => $this->formatDate($value),
-                '{{ limit }}' => $this->formatDate($constraint->max),
-            ));
+                '{{ limit }}' => $this->formatDate($constraint->max)
+            ]);
         }
 
         if (null !== $constraint->min && $value < $constraint->min) {
-            $this->context->addViolation($constraint->minMessage, array(
+            $this->addViolation($constraint->minMessage, [
                 '{{ value }}' => $this->formatDate($value),
-                '{{ limit }}' => $this->formatDate($constraint->min),
-            ));
+                '{{ limit }}' => $this->formatDate($constraint->min)
+            ]);
         }
     }
 

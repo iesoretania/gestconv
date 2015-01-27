@@ -40,6 +40,8 @@ class ParteController extends Controller
             $em->persist($parte);
             $em->flush();
 
+            $this->addFlash('success', sprintf('Parte #%d creado correctamente', $parte->getId()));
+
             // redireccionar a la portada
             return new RedirectResponse(
                 $this->generateUrl('portada')

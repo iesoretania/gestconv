@@ -18,7 +18,7 @@ class NuevoParteType extends AbstractType
     {
         $builder
             ->add('usuario', null, [
-                'label' => 'Docente*',
+                'label' => 'Docente u ordenanza*',
                 'disabled' => !$options['admin']
             ])
             ->add('fechaSuceso', null, [
@@ -52,22 +52,22 @@ class NuevoParteType extends AbstractType
 
             ])
             ->add('hayExpulsion', null, [
-                'label' => 'Se expulsó al alumnado del aula*',
+                'label' => 'Marcar si se expulsó al alumnado implicado del aula',
                 'required' => false
             ])
             ->add('actividades', 'textarea', [
-                'label' => 'Actividades a realizar por el alumnado',
+                'label' => 'Actividades a realizar por el alumnado expulsado del aula',
                 'required' => false,
                 'attr' => ['rows' => '5']
             ])
             ->add('profesorGuardia', null, [
                 'label' => 'Profesor de guardia que atendió al alumnado',
                 'required' => false,
-                'placeholder' => 'No fue atendido por un profesor de guardia'
+                'placeholder' => 'No aplicable'
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Crear parte',
-                'attr' => ['class' => 'btn btn-info']
+                'attr' => ['class' => 'btn btn-success']
             ]);
     }
 
