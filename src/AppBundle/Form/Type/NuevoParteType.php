@@ -81,7 +81,7 @@ class NuevoParteType extends AbstractType
             'admin' => false,
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
-                if ($data->getHayExpulsion() == true)
+                if ($data->getHayExpulsion() === true)
                     return ['Default', 'expulsion'];
                 else
                     return ['Default'];

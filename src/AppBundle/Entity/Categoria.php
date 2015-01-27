@@ -61,7 +61,7 @@ class Categoria
      * Set descripcion
      *
      * @param string $descripcion
-     * @return CategoriaConducta
+     * @return Categoria
      */
     public function setDescripcion($descripcion)
     {
@@ -84,7 +84,7 @@ class Categoria
      * Set nivel
      *
      * @param integer $nivel
-     * @return CategoriaConducta
+     * @return Categoria
      */
     public function setNivel($nivel)
     {
