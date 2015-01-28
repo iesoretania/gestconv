@@ -2,9 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Parte;
-use AppBundle\Form\Model\CambioPassword;
-use AppBundle\Form\Type\CambiarPasswordType;
 use AppBundle\Form\Type\ModificarUsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
