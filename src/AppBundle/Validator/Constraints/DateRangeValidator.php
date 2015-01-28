@@ -9,6 +9,7 @@
 
 namespace AppBundle\Validator\Constraints;
 
+use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -21,13 +22,18 @@ class DateRangeValidator extends ConstraintValidator
      */
     protected function addViolation($message, $parameters)
     {
-        $context = $this->context->buildViolation($message);
+        if ($this->context instanceof Symfony\Component\Validator\Context\ExecutionContext) {
+            $context = $this->context->buildViolation($message);
 
-        foreach($parameters as $name => $value) {
-            $context = $context->setParameter($name, $value);
-        };
+            foreach ($parameters as $name => $value) {
+                $context = $context->setParameter($name, $value);
+            };
 
-        $context->addViolation();
+            $context->addViolation();
+        }
+        else {
+            throw new LogicException('Context API not 2.5 compatible');
+        }
     }
 
     /**
