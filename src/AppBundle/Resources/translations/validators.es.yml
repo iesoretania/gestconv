@@ -6,3 +6,7 @@ parte.profesor-guardia.expulsion: Si hay expulsión debe indicar qué profesor a
 parte.fecha_suceso.not_blank: Debe indicarse cuándo tuvo lugar el suceso.
 parte.fecha_suceso.max: Introduzca una fecha y hora anteriores al momento actual.
 parte.tramo.not_blank: Debe indicarse dónde ocurrió el suceso.
+
+password.min_length: La contraseña debe tener como mínimo {{ limit }} caracteres.
+password.bad: La contraseña anterior no es correcta.
+password.no_match: Las nuevas contraseñas no coinciden.

@@ -16,11 +16,14 @@ class NuevoParteType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($options['admin']) {
+            $builder
+                ->add('usuario', null, [
+                    'label' => 'Docente u ordenanza*'
+                ]);
+        }
+
         $builder
-            ->add('usuario', null, [
-                'label' => 'Docente u ordenanza*',
-                'disabled' => !$options['admin']
-            ])
             ->add('fechaSuceso', null, [
                 'label' => 'Fecha y hora del suceso*',
                 'required'  => true
