@@ -5,7 +5,7 @@
         <h1 class="well">¡Bienvenido {{ app.user.nombre }}!</h1>
         <section class="row tile-row">
             <article class="col-md-4 tile tile-col-4 tile-red">
-                <a class="tile-link" href="{{ path('nuevo_parte') }}">
+                <a class="tile-link" href="{{ path('parte_nuevo') }}">
                     <div class="tile-icon-holder">
                         <i class="fa fa-edit fa-4x"></i>
                     </div>
@@ -17,7 +17,7 @@
             </article>
             {% if partes_pendientes %}
             <article class="col-md-4 tile tile-col-4 tile-orange">
-                <a class="tile-link" href="{{ path('notificar_parte') }}">
+                <a class="tile-link" href="{{ path('parte_listado_notificar') }}">
                     <div class="tile-icon-holder">
                         <i class="fa fa-phone fa-4x"></i>
                     </div>

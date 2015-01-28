@@ -5,44 +5,66 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li class="active">Listado de partes pendientes de notificar</li>
+            <li><a href="{{ path('parte_listado_notificar') }}">Listado de partes pendientes de notificar</a></li>
+            <li class="active">Notificación de partes a las familias</li>
         </ol>
 
-        <h1>Listado de partes pendientes de notificar</h1>
+        <h1 class="well">Notificación de partes a las familias</h1>
 
-        <table class="table table-bordered table-hover table-striped table-responsive listado">
-            <thead>
-            <tr>
-                <th class="col-md-1">Núm.</th>
-                <th class="col-md-1">Fecha y hora</th>
-                <th class="col-md-4">Alumnado implicado</th>
-                <th class="col-md-6">Detalle del incidente</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for parte in partes %}
-                <tr>
-                    <td>{{ parte.id }}</td>
-                    <td>{{ parte.fechaSuceso | date('d/m/Y H:i') }}</td>
-                    <td>
-                        {% for alumno in parte.alumnos %}
-                            {{ alumno }}{% if not loop.last %}; {% endif %}
-                        {% endfor %}
-                    </td>
-                    <td>
-                        {{ (parte.anotacion |length > 210 ? parte.anotacion|slice(0, 200)|striptags ~ ' ...' : parte.anotacion) | nl2br }}
-                    </td>
-                    <td>
-                        <a href="{{ path('notificar_parte') }}" class="btn btn-warning">Notificar</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">No hay partes pendientes</td>
-                </tr>
+        {% if not pendientes %}
+            <div class="alert alert-warning alert-dismissable">
+                <strong>Advertencia: </strong>El parte está marcado como notificado y por tanto puede
+                ser objeto de revisión por la Comisión de Convivencia en cualquier momento
+            </div>
+        {% endif %}
+        
+        <form class="form-inline">
+            {% for alumno in parte.alumnos %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ alumno }}</h3>
+                    </div>
+                    <ul class="list-group">
+                        {% if alumno.tutor1 %}
+                            <li class="list-group-item"><strong>Tutor 1: </strong>{{ alumno.tutor1 }}</li>
+                        {% endif %}
+                        {% if alumno.tutor2 %}
+                            <li class="list-group-item"><strong>Tutor 2: </strong>{{ alumno.tutor2 }}</li>
+                        {% endif %}
+                        {% if alumno.telefono1 %}
+                            <li class="list-group-item">
+                                <strong>Teléfono 1: </strong>{{ alumno.telefono1 }}
+                                {{ alumno.notaTelefono1 ? '-' ~ alumno.notaTelefono1 }}
+                            </li>
+                        {% endif %}
+                        {% if alumno.telefono2 %}
+                            <li class="list-group-item">
+                                <strong>Teléfono 2: </strong>{{ alumno.telefono2 }}
+                                {{ alumno.notaTelefono2 ? '-' ~ alumno.notaTelefono2 }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <div class="panel-footer">
+
+                        <div class="form-group">
+                            <label for="_metodo">Método de notificación: </label>
+                            <select name="_metodo" class="form-control" data-placeholder="Escoja una opción...">
+                                <option value="1">SMS</option>
+                                <option value="2" selected>Llamada telefónica</option>
+                                <option value="3">Correo electrónico</option>
+                                <option value="4">Entrevista personal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="sr-only" for="_observaciones">Email address</label>
+                            <input type="text" class="form-control" id="_observaciones" placeholder="Observaciones...">
+                        </div>
+                        <button type="submit" class="btn btn-success">Familia notificada</button>
+                        <button type="submit" class="btn btn-warning">Familia no notificada</button>
+
+                    </div>
+                </div>
             {% endfor %}
-            </tbody>
-        </table>
+        </form>
     </div>
 {% endblock %}

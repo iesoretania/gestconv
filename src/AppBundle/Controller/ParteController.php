@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class ParteController extends Controller
 {
     /**
-     * @Route("/parte/nuevo", name="nuevo_parte",methods={"GET", "POST"})
+     * @Route("/parte/nuevo", name="parte_nuevo",methods={"GET", "POST"})
      */
     public function nuevoAction(Request $peticion)
     {
@@ -56,9 +56,9 @@ class ParteController extends Controller
     }
 
     /**
-     * @Route("/parte/notificar", name="notificar_parte",methods={"GET"})
+     * @Route("/parte/notificar", name="parte_listado_notificar",methods={"GET"})
      */
-    public function notificarAction()
+    public function listadoNotificarAction()
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
@@ -72,10 +72,26 @@ class ParteController extends Controller
             ->getQuery()
             ->getResult();
 
-        return $this->render('AppBundle:Parte:notificar.html.twig',
+        return $this->render('AppBundle:Parte:listado_notificar.html.twig',
             [
                 'usuario' => $usuario,
                 'partes' => $partes
+            ]);
+    }
+
+    /**
+     * @Route("/parte/notificar/{id}", name="parte_notificar",methods={"GET", "POST"})
+     */
+    public function notificarAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $parte = $em->getRepository('AppBundle:Parte')->find($id);
+
+        return $this->render('AppBundle:Parte:notificar.html.twig',
+            [
+                'parte' => $parte,
+                'pendientes' => []
             ]);
     }
 }
