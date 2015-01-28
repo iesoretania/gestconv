@@ -12,6 +12,7 @@ namespace AppBundle\Validator\Constraints;
 use Symfony\Component\Process\Exception\LogicException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Context\ExecutionContext;
 
 class DateRangeValidator extends ConstraintValidator
 {
@@ -22,7 +23,7 @@ class DateRangeValidator extends ConstraintValidator
      */
     protected function addViolation($message, $parameters)
     {
-        if ($this->context instanceof Symfony\Component\Validator\Context\ExecutionContext) {
+        if ($this->context instanceof ExecutionContext) {
             $context = $this->context->buildViolation($message);
 
             foreach ($parameters as $name => $value) {
