@@ -48,13 +48,10 @@ class ParteController extends Controller
             );
         }
 
-        $vista = $formulario->createView();
-
-        dump($parte);
         return $this->render('AppBundle:Parte:nuevo.html.twig',
             [
                 'parte' => $parte,
-                'formulario' => $vista
+                'formulario' => $formulario->createView()
             ]);
     }
 
