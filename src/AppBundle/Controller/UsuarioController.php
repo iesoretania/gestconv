@@ -52,28 +52,4 @@ class UsuarioController extends Controller
                 'formulario' => $formulario->createView()
             ]);
     }
-
-    /**
-     * @Route("/parte/notificar", name="notificar_parte",methods={"GET"})
-     */
-    public function notificarAction(Request $peticion)
-    {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-
-        $partes = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
-            ->where('p.fechaAviso IS NULL')
-            ->andWhere('p.usuario = :usuario')
-            ->setParameter('usuario', $usuario)
-            ->orderBy('p.fechaSuceso', 'ASC')
-            ->getQuery()
-            ->getResult();
-
-        return $this->render('AppBundle:Parte:notificar.html.twig',
-            [
-                'usuario' => $usuario,
-                'partes' => $partes
-            ]);
-    }
 }
