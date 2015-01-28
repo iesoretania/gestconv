@@ -58,7 +58,7 @@ class ParteController extends Controller
     /**
      * @Route("/parte/notificar", name="notificar_parte",methods={"GET"})
      */
-    public function notificarAction(Request $peticion)
+    public function notificarAction()
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();

@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Form\Type\ModificarUsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -31,7 +32,8 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             // Si es solicitado, cambiar la contraseña
-            if ($formulario->get('cambiarPassword')->isClicked()) {
+            $passwordSubmit = $formulario->get('cambiarPassword');
+            if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
                 $encoder = $this->container->get('security.password_encoder');
                 $password = $encoder->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
                 $usuario->setPassword($password);
