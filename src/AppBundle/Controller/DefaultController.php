@@ -14,7 +14,30 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:App:portada.html.twig');
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $partesPendientes = $em->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->where('p.fechaAviso IS NULL')
+            ->andWhere('p.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $partesTotales = $em->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->andWhere('p.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        return $this->render('AppBundle:App:portada.html.twig', [
+            'partes_pendientes' => $partesPendientes,
+            'partes_totales' => $partesTotales
+        ]);
     }
 
     /**
@@ -31,6 +54,7 @@ class DefaultController extends Controller
             $error = $sesion->get(Security::AUTHENTICATION_ERROR);
             $sesion->remove(Security::AUTHENTICATION_ERROR);
         }
+
         return $this->render('AppBundle:App:entrada.html.twig',
             [
                 'last_username' => $sesion->get(Security::LAST_USERNAME),

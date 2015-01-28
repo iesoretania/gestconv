@@ -153,3 +153,7 @@ body {
     padding-left: 15%;
     padding-right: 15%;
 }
+
+table.listado tr td {
+    vertical-align: middle;
+}

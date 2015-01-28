@@ -51,7 +51,7 @@ class Parte
      */
     protected $usuario;
     /**
-     * @ORM\ManyToMany(targetEntity="Alumno", mappedBy="partes")
+     * @ORM\ManyToMany(targetEntity="Alumno", inversedBy="partes")
      * @var Collection
      *
      * @Assert\Count(min="1", minMessage="parte.alumnos.min")
@@ -527,10 +527,13 @@ class Parte
      * Remove alumnos
      *
      * @param Alumno $alumnos
+     * @return Parte
      */
     public function removeAlumno(Alumno $alumnos)
     {
         $this->alumnos->removeElement($alumnos);
+
+        return $this;
     }
 
     /**

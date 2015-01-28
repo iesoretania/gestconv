@@ -112,7 +112,7 @@ class Alumno
     protected $grupo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Parte", inversedBy="alumnos")
+     * @ORM\ManyToMany(targetEntity="Parte", mappedBy="alumnos")
      * @var Collection
      */
     protected $partes = null;
@@ -247,6 +247,7 @@ class Alumno
     public function addParte(Parte $partes)
     {
         $this->partes[] = $partes;
+        $partes->addAlumno($this);
 
         return $this;
     }
@@ -259,6 +260,7 @@ class Alumno
     public function removeParte(Parte $partes)
     {
         $this->partes->removeElement($partes);
+        $partes->removeAlumno($this);
     }
 
     /**
