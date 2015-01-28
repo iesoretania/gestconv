@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ModificarUsuarioType extends AbstractType
 {
@@ -16,11 +17,13 @@ class ModificarUsuarioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($options['es_admin']) {
+            $builder
+                ->add('nombreUsuario', null, [
+                    'label' => 'Nombre de usuario'
+                ]);
+        }
         $builder
-            ->add('nombreUsuario', null, [
-                'label' => 'Nombre de usuario',
-                'disabled' => !$options['admin']
-            ])
             ->add('nombre', null, [
                 'label' => 'Nombre*',
                 'required'  => true
@@ -36,14 +39,14 @@ class ModificarUsuarioType extends AbstractType
             ->add('email', 'email', [
                 'label' => 'Correo electrónico',
                 'required' => false
-
             ]);
 
-        if ($options['admin']) {
+        if ($options['es_admin']) {
             $builder
                 ->add('esAdministrador', null, [
                     'label' => 'Es administrador',
-                    'required' => false
+                    'required' => false,
+                    'disabled' => $options['es_propio']
                 ])
                 ->add('esRevisor', null, [
                     'label' => 'Pertenece a la comisión de convivencia',
@@ -57,36 +60,46 @@ class ModificarUsuarioType extends AbstractType
                 'attr' => ['class' => 'btn btn-success']
             ]);
 
-        if (!$options['admin']) {
+        if (!$options['es_admin']) {
             $builder
-                ->add('oldPassword', null, [
+                ->add('oldPassword', 'password', [
                     'label' => 'Contraseña antigua',
                     'required' => false,
                     'mapped' => false,
                     'constraints' => new UserPassword([
-                        'message' => 'password.bad',
-                        'groups' => 'password'
+                        'groups' => ['password']
                     ])
                 ]);
         }
 
         $builder
             ->add('newPassword', 'repeated', [
-                'first_options' => ['label' => 'Contraseña nueva'],
-                'second_options' => ['label' => 'Repita contraseña nueva'],
+                'label' => 'Correo electrónico',
+                'required' => false,
+                'type' => 'password',
                 'mapped' => false,
-                'required'  => false,
-                'validation_groups' => 'password',
                 'invalid_message' => 'password.no_match',
-                'constraints' => new Length([
-                    'min' => 7,
-                    'minMessage' => 'password.min_length',
-                    'groups' => 'password'
-                ])
+                'first_options' => [
+                    'label' => 'Nueva contraseña',
+                    'constraints' => [
+                        new Length([
+                            'min' => 7,
+                            'minMessage' => 'password.min_length',
+                            'groups' => ['password']
+                        ]),
+                        new NotNull([
+                            'groups' => ['password']
+                        ])
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Repita nueva contraseña'
+                ]
             ])
-            ->add('cambiar_password', 'submit', [
+            ->add('cambiarPassword', 'submit', [
                 'label' => 'Guardar los cambios y cambiar la contraseña',
-                'attr' => ['class' => 'btn btn-success']
+                'attr' => ['class' => 'btn btn-success'],
+                'validation_groups' => ['Default', 'password']
             ]);
     }
 
@@ -97,7 +110,9 @@ class ModificarUsuarioType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Usuario',
-            'admin' => false
+            'cascade_validation' => true,
+            'es_admin' => false,
+            'es_propio' => false
         ));
     }
 
