@@ -100,6 +100,29 @@ class Aviso
     }
 
     /**
+     * Set tipo
+     *
+     * @param CategoriaAviso $tipo
+     * @return Aviso
+     */
+    public function setTipo(CategoriaAviso $tipo = null)
+    {
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get tipo
+     *
+     * @return CategoriaAviso
+     */
+    public function getTipo()
+    {
+        return $this->tipo;
+    }
+
+    /**
      * Set usuario
      *
      * @param Usuario $usuario
