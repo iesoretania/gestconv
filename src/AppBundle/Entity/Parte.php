@@ -22,11 +22,11 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
 
 
 /**
@@ -51,12 +51,11 @@ class Parte
      */
     protected $usuario;
     /**
-     * @ORM\ManyToMany(targetEntity="Alumno", inversedBy="partes")
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="partes")
+     * @ORM\JoinColumn(nullable=false)
      * @var Collection
-     *
-     * @Assert\Count(min="1", minMessage="parte.alumnos.min")
      */
-    protected $alumnos = null;
+    protected $alumno = null;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @var Usuario
