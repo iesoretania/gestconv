@@ -112,7 +112,7 @@ class Alumno
     protected $grupo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Parte", mappedBy="alumnos")
+     * @ORM\OneToMany(targetEntity="Parte", mappedBy="alumno")
      * @var Collection
      */
     protected $partes = null;
