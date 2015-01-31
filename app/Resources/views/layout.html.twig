@@ -4,13 +4,22 @@
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-principal">
+                    <span class="sr-only">Desplegar</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
                 <a class="navbar-brand" href="{{ path('portada') }}">
                     Gestconv
                 </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-principal">
                 {% block navbarcontent %}
-                {% if is_granted('ROLE_USUARIO') %}
-                <p class="navbar-text navbar-right">¡Bienvenido {{ app.user.nombre }}!</p>
-                {% endif %}
+                    {% if is_granted('ROLE_USUARIO') %}
+                        <p class="navbar-text navbar-right"></p>
+                        <p class="navbar-text navbar-right">¡Bienvenido {{ app.user.nombre }}!</p>
+                    {% endif %}
                 {% endblock %}
             </div>
         </div>
