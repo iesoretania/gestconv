@@ -20,10 +20,10 @@ class ParteController extends Controller
         $parte = new Parte();
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
 
-        $parte->setFechaCreacion(new \DateTime());
-        $parte->setFechaSuceso(new \DateTime());
-        $parte->setUsuario($usuario);
-        $parte->setPrescrito(false);
+        $parte->setFechaCreacion(new \DateTime())
+            ->setFechaSuceso(new \DateTime())
+            ->setUsuario($usuario)
+            ->setPrescrito(false);
 
         $formulario = $this->createForm(new NuevoParteType(), $parte, [
             'admin' => $usuario->getEsAdministrador()
@@ -47,7 +47,9 @@ class ParteController extends Controller
 
             $em->flush();
 
-            $this->addFlash('success', (count($alumnos) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($alumnos) . ' partes con éxito');
+            $this->addFlash('success', (count($alumnos) == 1)
+                ? 'Se ha creado un parte con éxito'
+                : 'Se han creado ' . count($alumnos) . ' partes con éxito');
 
             // redireccionar a la portada
             return new RedirectResponse(
