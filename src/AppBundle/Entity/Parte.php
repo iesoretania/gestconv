@@ -143,7 +143,6 @@ class Parte
         $this->conductas = new ArrayCollection();
         $this->observaciones = new ArrayCollection();
         $this->avisos = new ArrayCollection();
-        $this->alumnos = new ArrayCollection();
     }
 
     /**

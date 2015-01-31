@@ -47,9 +47,7 @@ class ParteController extends Controller
 
             $em->flush();
 
-            $this->addFlash('success', (count($alumnos) == 1)
-                ? 'Se ha creado un parte con éxito'
-                : 'Se han creado ' . count($alumnos) . ' partes con éxito');
+            $this->addFlash('success', (count($alumnos) == 1) ? 'Se ha creado un parte con éxito' : 'Se han creado ' . count($alumnos) . ' partes con éxito');
 
             // redireccionar a la portada
             return new RedirectResponse(
@@ -75,12 +73,7 @@ class ParteController extends Controller
         if ($request->getMethod() == 'POST') {
             if (($request->request->get('noNotificada')) || ($request->request->get('notificada'))) {
 
-                if ($request->request->get('notificada')) {
-                    $id = $request->request->get('notificada');
-                }
-                else {
-                    $id = $request->request->get('noNotificada');
-                }
+                $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 
                 $partes = $em->getRepository('AppBundle:Parte')
                     ->createQueryBuilder('p')

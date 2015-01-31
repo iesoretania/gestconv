@@ -119,7 +119,6 @@ class Alumno
 
     public function __construct() {
         $this->partes = new ArrayCollection();
-        $this->sanciones = new ArrayCollection();
     }
     
     /**
