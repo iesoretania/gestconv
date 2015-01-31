@@ -5,66 +5,102 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li><a href="{{ path('parte_listado_notificar') }}">Listado de partes pendientes de notificar</a></li>
             <li class="active">Notificación de partes a las familias</li>
         </ol>
 
         <h1 class="well">Notificación de partes a las familias</h1>
 
-        {% if not pendientes %}
-            <div class="alert alert-warning alert-dismissable">
-                <strong>Advertencia: </strong>El parte está marcado como notificado y por tanto puede
-                ser objeto de revisión por la Comisión de Convivencia en cualquier momento
-            </div>
-        {% endif %}
-        
-        <form class="form-inline">
-            {% for alumno in parte.alumnos %}
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ alumno }}</h3>
-                    </div>
-                    <ul class="list-group">
-                        {% if alumno.tutor1 %}
-                            <li class="list-group-item"><strong>Tutor 1: </strong>{{ alumno.tutor1 }}</li>
-                        {% endif %}
-                        {% if alumno.tutor2 %}
-                            <li class="list-group-item"><strong>Tutor 2: </strong>{{ alumno.tutor2 }}</li>
-                        {% endif %}
-                        {% if alumno.telefono1 %}
-                            <li class="list-group-item">
-                                <strong>Teléfono 1: </strong>{{ alumno.telefono1 }}
-                                {{ alumno.notaTelefono1 ? '-' ~ alumno.notaTelefono1 }}
-                            </li>
-                        {% endif %}
-                        {% if alumno.telefono2 %}
-                            <li class="list-group-item">
-                                <strong>Teléfono 2: </strong>{{ alumno.telefono2 }}
-                                {{ alumno.notaTelefono2 ? '-' ~ alumno.notaTelefono2 }}
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <div class="panel-footer">
 
+        {% for alumno in alumnos %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ alumno }}</h3>
+                </div>
+                <ul class="list-group">
+                    {% if alumno.tutor1 %}
+                        <li class="list-group-item"><strong>Tutor 1: </strong>{{ alumno.tutor1 }}</li>
+                    {% endif %}
+                    {% if alumno.tutor2 %}
+                        <li class="list-group-item"><strong>Tutor 2: </strong>{{ alumno.tutor2 }}</li>
+                    {% endif %}
+                    {% if alumno.telefono1 %}
+                        <li class="list-group-item">
+                            <strong>Teléfono 1: </strong>{{ alumno.telefono1 }}
+                            {{ alumno.notaTelefono1 ? '-' ~ alumno.notaTelefono1 }}
+                        </li>
+                    {% endif %}
+                    {% if alumno.telefono2 %}
+                        <li class="list-group-item">
+                            <strong>Teléfono 2: </strong>{{ alumno.telefono2 }}
+                            {{ alumno.notaTelefono2 ? '-' ~ alumno.notaTelefono2 }}
+                        </li>
+                    {% endif %}
+                </ul>
+                {% for parte in alumno.partes %}
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Parte #{{ parte.id }}
+                            - {{ parte.fechaSuceso | date('d/m/Y H:i') }}</h3>
+                        <ul>
+                            {% for conducta in parte.conductas %}
+                                <li>{{ conducta.descripcion }} - {{ conducta.categoria.descripcion }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="alert alert-warning">
+                            {{ parte.anotacion | nl2br }}
+                        </div>
+                    </div>
+                    {% if (parte.avisos | length) > 0 %}
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Avisos anteriores</h3>
+                        </div>
+                        <table class="table table-hover table-striped table-condensed table-responsive listado">
+                            <thead>
+                            <tr>
+                                <th class="col-md-2">Fecha y hora</th>
+                                <th class="col-md-2">Tipo</th>
+                                <th class="col-md-4">Por</th>
+                                <th class="col-md-4">Observaciones</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for aviso in parte.avisos %}
+                                <tr>
+                                    <td>{{ aviso.fecha | date('d/m/Y H:i') }}</td>
+                                    <td>{{ aviso.tipo.descripcion }}</td>
+                                    <td>{{ aviso.usuario }}</td>
+                                    <td>{{ aviso.anotacion | nl2br }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                {% endfor %}
+
+                <div class="panel-footer">
+                    <form class="form-inline" method="post">
                         <div class="form-group">
-                            <label for="_metodo">Método de notificación: </label>
-                            <select name="_metodo" class="form-control" data-placeholder="Escoja una opción...">
-                                <option value="1">SMS</option>
-                                <option value="2" selected>Llamada telefónica</option>
-                                <option value="3">Correo electrónico</option>
-                                <option value="4">Entrevista personal</option>
+                            <label for="tipo">Método de notificación: </label>
+                            <select name="tipo" class="form-control"
+                                    data-placeholder="Escoja una opción...">
+                                {% for tipo in tipos %}
+                                    <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+                                {% endfor %}
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="sr-only" for="_observaciones">Email address</label>
-                            <input type="text" class="form-control" id="_observaciones" placeholder="Observaciones...">
+                            <label class="sr-only" for="anotacion">Observaciones</label>
+                            <input type="text" class="form-control" name="anotacion"
+                                   placeholder="Observaciones...">
                         </div>
-                        <button type="submit" class="btn btn-success">Familia notificada</button>
-                        <button type="submit" class="btn btn-warning">Familia no notificada</button>
-
-                    </div>
+                        <button type="submit" class="btn btn-success" name="notificada" value="{{ alumno.id }}">Familia
+                            notificada
+                        </button>
+                        <button type="submit" class="btn btn-warning" name="noNotificada" value="{{ alumno.id }}">
+                            Familia no notificada
+                        </button>
+                    </form>
                 </div>
-            {% endfor %}
-        </form>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

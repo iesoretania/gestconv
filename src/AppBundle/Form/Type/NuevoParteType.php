@@ -32,8 +32,11 @@ class NuevoParteType extends AbstractType
                 'label' => 'Dónde ha sucedido*',
                 'required'  => true
             ])
-            ->add('alumnos', null, [
+            ->add('alumnos', 'entity', [
                 'label' => 'Alumnado implicado*',
+                'class' => 'AppBundle\Entity\Alumno',
+                'mapped' => false,
+                'multiple' => true,
                 'attr' => ['data-placeholder' => 'Escriba parte del nombre o el grupo al que pertenece'],
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')

@@ -45,12 +45,6 @@ class Sancion
      */
     protected $usuario;
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="sanciones")
-     * @ORM\JoinColumn(nullable=false)
-     * @var Alumno
-     */
-    protected $alumno;
-    /**
      * @ORM\Column(type="integer", nullable=false)
      * @var int
      */

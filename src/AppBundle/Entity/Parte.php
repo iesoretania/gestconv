@@ -22,11 +22,11 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
 
 
 /**
@@ -51,12 +51,11 @@ class Parte
      */
     protected $usuario;
     /**
-     * @ORM\ManyToMany(targetEntity="Alumno", inversedBy="partes")
-     * @var Collection
-     *
-     * @Assert\Count(min="1", minMessage="parte.alumnos.min")
+     * @ORM\ManyToOne(targetEntity="Alumno", inversedBy="partes")
+     * @ORM\JoinColumn(nullable=false)
+     * @var Alumno
      */
-    protected $alumnos = null;
+    protected $alumno;
     /**
      * @ORM\ManyToOne(targetEntity="Usuario")
      * @var Usuario
@@ -296,6 +295,29 @@ class Parte
     }
 
     /**
+     * Set alumno
+     *
+     * @param Alumno $alumno
+     * @return Parte
+     */
+    public function setAlumno(Alumno $alumno = null)
+    {
+        $this->alumno = $alumno;
+
+        return $this;
+    }
+
+    /**
+     * Get alumno
+     *
+     * @return Alumno
+     */
+    public function getAlumno()
+    {
+        return $this->alumno;
+    }
+
+    /**
      * Set profesorGuardia
      *
      * @param Usuario $profesorGuardia
@@ -509,40 +531,4 @@ class Parte
         return $this->conductas;
     }
 
-
-    /**
-     * Add alumnos
-     *
-     * @param Alumno $alumnos
-     * @return Parte
-     */
-    public function addAlumno(Alumno $alumnos)
-    {
-        $this->alumnos[] = $alumnos;
-
-        return $this;
-    }
-
-    /**
-     * Remove alumnos
-     *
-     * @param Alumno $alumnos
-     * @return Parte
-     */
-    public function removeAlumno(Alumno $alumnos)
-    {
-        $this->alumnos->removeElement($alumnos);
-
-        return $this;
-    }
-
-    /**
-     * Get alumnos
-     *
-     * @return Collection
-     */
-    public function getAlumnos()
-    {
-        return $this->alumnos;
-    }
 }

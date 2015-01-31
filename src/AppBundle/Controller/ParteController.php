@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\AvisoParte;
 use AppBundle\Entity\Parte;
 use AppBundle\Form\Type\NuevoParteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -35,12 +36,20 @@ class ParteController extends Controller
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
-            // crear el parte y guardarlo en la base de datos
+            // crear un parte por alumno y guardarlo en la base de datos
             $em = $this->getDoctrine()->getManager();
-            $em->persist($parte);
+            $alumnos = $formulario->get('alumnos')->getData();
+            foreach($alumnos as $alumno) {
+                $nuevoParte = clone $parte;
+                $nuevoParte->setAlumno($alumno);
+                $em->persist($nuevoParte);
+            }
+
             $em->flush();
 
-            $this->addFlash('success', sprintf('Parte #%d creado correctamente', $parte->getId()));
+            $this->addFlash('success', (count($alumnos) == 1)
+                ? 'Se ha creado un parte con éxito'
+                : 'Se han creado ' . count($alumnos) . ' partes con éxito');
 
             // redireccionar a la portada
             return new RedirectResponse(
@@ -56,42 +65,68 @@ class ParteController extends Controller
     }
 
     /**
-     * @Route("/parte/notificar", name="parte_listado_notificar",methods={"GET"})
+     * @Route("/parte/notificar", name="parte_listado_notificar",methods={"GET", "POST"})
      */
-    public function listadoNotificarAction()
+    public function listadoNotificarAction(Request $request)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $partes = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
+        if ($request->getMethod() == 'POST') {
+            if (($request->request->get('noNotificada')) || ($request->request->get('notificada'))) {
+
+                if ($request->request->get('notificada')) {
+                    $id = $request->request->get('notificada');
+                }
+                else {
+                    $id = $request->request->get('noNotificada');
+                }
+
+                $partes = $em->getRepository('AppBundle:Parte')
+                    ->createQueryBuilder('p')
+                    ->innerJoin('p.alumno', 'a')
+                    ->where('p.fechaAviso IS NULL')
+                    ->andWhere('p.usuario = :usuario')
+                    ->andWhere('p.alumno = :alumno')
+                    ->setParameter('usuario', $usuario)
+                    ->setParameter('alumno', $id)
+                    ->getQuery()
+                    ->getResult();
+
+                foreach($partes as $parte) {
+                    $avisoParte = new AvisoParte();
+                    $avisoParte->setUsuario($usuario)
+                        ->setAnotacion($request->request->get('anotacion'))
+                        ->setFecha(new \DateTime())
+                        ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
+                        ->setParte($parte);
+                    $em->persist($avisoParte);
+
+                    if ($request->request->get('notificada')) {
+                        $parte->setFechaAviso(new \DateTime());
+                    }
+                }
+                $em->flush();
+            }
+        }
+        $alumnos = $em->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->innerJoin('AppBundle:Parte', 'p')
             ->where('p.fechaAviso IS NULL')
             ->andWhere('p.usuario = :usuario')
+            ->andWhere('p.alumno = a')
             ->setParameter('usuario', $usuario)
-            ->orderBy('p.fechaSuceso', 'ASC')
+            ->orderBy('a.apellido1', 'ASC')
+            ->addOrderBy('a.apellido2', 'ASC')
+            ->addOrderBy('a.nombre', 'ASC')
             ->getQuery()
             ->getResult();
 
-        return $this->render('AppBundle:Parte:listado_notificar.html.twig',
-            [
-                'usuario' => $usuario,
-                'partes' => $partes
-            ]);
-    }
-
-    /**
-     * @Route("/parte/notificar/{id}", name="parte_notificar",methods={"GET", "POST"})
-     */
-    public function notificarAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $parte = $em->getRepository('AppBundle:Parte')->find($id);
-
         return $this->render('AppBundle:Parte:notificar.html.twig',
             [
-                'parte' => $parte,
-                'pendientes' => []
+                'usuario' => $usuario,
+                'alumnos' => $alumnos,
+                'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
             ]);
     }
 }

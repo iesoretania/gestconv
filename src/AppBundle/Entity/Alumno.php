@@ -112,16 +112,10 @@ class Alumno
     protected $grupo;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Parte", mappedBy="alumnos")
+     * @ORM\OneToMany(targetEntity="Parte", mappedBy="alumno")
      * @var Collection
      */
     protected $partes = null;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Sancion", mappedBy="alumno")
-     * @var Collection
-     */
-    protected $sanciones = null;
 
     public function __construct() {
         $this->partes = new ArrayCollection();
@@ -236,74 +230,6 @@ class Alumno
         $this->nombre = $valor;
 
         return $this;
-    }
-
-    /**
-     * Add partes
-     *
-     * @param Parte $partes
-     * @return Alumno
-     */
-    public function addParte(Parte $partes)
-    {
-        $this->partes[] = $partes;
-        $partes->addAlumno($this);
-
-        return $this;
-    }
-
-    /**
-     * Remove partes
-     *
-     * @param Parte $partes
-     */
-    public function removeParte(Parte $partes)
-    {
-        $this->partes->removeElement($partes);
-        $partes->removeAlumno($this);
-    }
-
-    /**
-     * Get partes
-     *
-     * @return Collection
-     */
-    public function getPartes()
-    {
-        return $this->partes;
-    }
-
-    /**
-     * Add sanciones
-     *
-     * @param Sancion $sanciones
-     * @return Alumno
-     */
-    public function addSancion(Sancion $sanciones)
-    {
-        $this->sanciones[] = $sanciones;
-
-        return $this;
-    }
-
-    /**
-     * Remove sanciones
-     *
-     * @param Sancion $sanciones
-     */
-    public function removeSancion(Sancion $sanciones)
-    {
-        $this->sanciones->removeElement($sanciones);
-    }
-
-    /**
-     * Get sanciones
-     *
-     * @return Collection
-     */
-    public function getSanciones()
-    {
-        return $this->sanciones;
     }
 
     /**
@@ -488,5 +414,38 @@ class Alumno
     public function getFechaNacimiento()
     {
         return $this->fechaNacimiento;
+    }
+
+    /**
+     * Add partes
+     *
+     * @param Parte $partes
+     * @return Alumno
+     */
+    public function addParte(Parte $partes)
+    {
+        $this->partes[] = $partes;
+
+        return $this;
+    }
+
+    /**
+     * Remove partes
+     *
+     * @param Parte $partes
+     */
+    public function removeParte(Parte $partes)
+    {
+        $this->partes->removeElement($partes);
+    }
+
+    /**
+     * Get partes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPartes()
+    {
+        return $this->partes;
     }
 }

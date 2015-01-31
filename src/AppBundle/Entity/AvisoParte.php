@@ -35,12 +35,6 @@ class AvisoParte extends Aviso
     protected $parte;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Alumno")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $alumno;
-
-    /**
      * Get parte
      *
      * @return Parte
@@ -59,29 +53,6 @@ class AvisoParte extends Aviso
     public function setParte(Parte $parte = null)
     {
         $this->parte = $parte;
-
-        return $this;
-    }
-
-    /**
-     * Get alumno
-     *
-     * @return Alumno
-     */
-    public function getAlumno()
-    {
-        return $this->alumno;
-    }
-
-    /**
-     * Set alumno
-     *
-     * @param Alumno $alumno
-     * @return AvisoParte
-     */
-    public function setAlumno(Alumno $alumno = null)
-    {
-        $this->alumno = $alumno;
 
         return $this;
     }
