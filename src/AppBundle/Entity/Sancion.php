@@ -302,29 +302,6 @@ class Sancion
     }
 
     /**
-     * Set alumno
-     *
-     * @param Alumno $alumno
-     * @return Sancion
-     */
-    public function setAlumno(Alumno $alumno = null)
-    {
-        $this->alumno = $alumno;
-
-        return $this;
-    }
-
-    /**
-     * Get alumno
-     *
-     * @return Alumno
-     */
-    public function getAlumno()
-    {
-        return $this->alumno;
-    }
-
-    /**
      * Add partes
      *
      * @param Parte $partes
