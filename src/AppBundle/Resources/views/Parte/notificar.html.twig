@@ -92,7 +92,7 @@
                             <input type="text" class="form-control" name="anotacion"
                                    placeholder="Observaciones...">
                         </div>
-                        <button type="submit" class="btn btn-success" name="notificada" value="{{ alumno.id }}">Familia
+                        <button type="submit" class="btn btn-success" name="notificada" value="{{ alumno.id }}" onClick="javascript:return confirm('Se marcará el parte como notificado para poder ser estudiado por la Comisión de Convivencia. ¿Desea continuar?');">Familia
                             notificada
                         </button>
                         <button type="submit" class="btn btn-warning" name="noNotificada" value="{{ alumno.id }}">
