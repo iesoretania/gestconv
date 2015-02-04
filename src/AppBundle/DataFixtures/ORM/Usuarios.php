@@ -26,15 +26,18 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Usuario;
+use Faker\Provider\Internet;
 
 class Usuarios extends AbstractFixture implements OrderedFixtureInterface
 {
+    protected $faker;
+
     /**
      * Rellena los datos de un usuario aleatoriamente
      *
      * @return Usuario
      */
-    static function generateUsuario()
+    function generateUsuario()
     {
         $usuario = new Usuario();
         // Generar tipo de alumno (0=H, 1=M)
@@ -59,6 +62,10 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $username = str_replace($busqueda, $cambiarPor, $username);
 
         $usuario->setNombreUsuario($username);
+        if (rand(0, 4)>0) {
+            $usuario->setEmail($this->faker->email);
+        }
+
         $usuario->setPassword(password_hash('12345', PASSWORD_DEFAULT));
 
         return $usuario;
@@ -71,6 +78,8 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
+        $this->faker = \Faker\Factory::create();
+
         $usuario = new Usuario();
         $usuario->setNombreUsuario('admin');
         $usuario->setPassword(password_hash('admin', PASSWORD_DEFAULT));
@@ -94,7 +103,6 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $usuario->setEstaBloqueado(false);
         $manager->persist($usuario);
 
-
         for ($i = 0; $i < rand(30, 45); $i++) {
             $usuario = self::generateUsuario();
             $usuario->setEsAdministrador(false);
@@ -103,6 +111,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
             $usuario->setEstaBloqueado(false);
             $manager->persist($usuario);
         }
+
         $manager->flush();
     }
 }

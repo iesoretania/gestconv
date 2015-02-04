@@ -121,12 +121,17 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
 
     public function getOrder()
     {
-        return 50;
+        return 200;
     }
 
     public function load(ObjectManager $manager)
     {
         $cursos = ['1ºESO' => 2, '2ºESO' => 2, '3ºESO' => 2, '4ºESO' => 1, '1ºBACH' => 2, '2ºBACH' => 1];
+
+        $tutores = $manager->getRepository('AppBundle:Usuario')
+            ->findAll();
+
+        shuffle($tutores);
 
         $anio = 2002;
         foreach ($cursos as $nivel => $grupos) {
@@ -139,6 +144,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
                     $grupo = new Grupo();
                     $grupo->setCurso($curso);
                     $grupo->setDescripcion($nivel . '-' . chr(65 + $i));
+                    $grupo->setTutor(next($tutores));
                     $manager->persist($grupo);
 
                     self::createAlumnos($manager, rand(15, 20), $grupo, $anio);
@@ -148,6 +154,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
                 $grupo = new Grupo();
                 $grupo->setCurso($curso);
                 $grupo->setDescripcion($nivel);
+                $grupo->setTutor(next($tutores));
                 $manager->persist($grupo);
 
                 self::createAlumnos($manager, rand(22, 30), $grupo, $anio);
