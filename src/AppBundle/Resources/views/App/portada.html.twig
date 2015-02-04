@@ -23,7 +23,7 @@
                     </div>
                     <div class="text-holder">
                         <h4>Notificar un parte a la familia</h4>
-                        <p>Tienes {{ partes_pendientes }} partes pendientes</p>
+                        <p>Tienes {{ partes_pendientes }} {{ partes_pendientes == 1 ? 'parte pendiente' : 'partes pendientes' }}</p>
                     </div>
                 </a>
             </article>

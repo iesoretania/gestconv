@@ -95,11 +95,12 @@ class ParteController extends Controller
                         ->setFecha(new \DateTime())
                         ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
                         ->setParte($parte);
-                    $em->persist($avisoParte);
 
                     if ($request->request->get('notificada')) {
                         $parte->setFechaAviso(new \DateTime());
                     }
+
+                    $em->persist($avisoParte);
                 }
                 $em->flush();
             }
