@@ -78,7 +78,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $this->faker = \Faker\Factory::create();
+        $this->faker = \Faker\Factory::create('es_ES');
 
         $usuario = new Usuario();
         $usuario->setNombreUsuario('admin');
