@@ -6,3 +6,8 @@ Aplicación web para la gestión de la convivencia en centros educativos
 
 Este proyecto tiene muchos componentes. Para facilitar el desarrollo se
 proporciona una máquina Vagrant con todas las dependencias incluídas.
+
+## Licencia
+Esta aplicación se ofrece bajo licencia [AGPL versión 3].
+
+[AGPL versión 3]: http://www.gnu.org/licenses/agpl.htmlu.org/licenses/agpl.html
