@@ -11,3 +11,4 @@ proporciona una máquina Vagrant con todas las dependencias incluídas.
 Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 
 [AGPL versión 3]: http://www.gnu.org/licenses/agpl.htmlu.org/licenses/agpl.html
+
