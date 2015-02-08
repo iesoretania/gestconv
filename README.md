@@ -8,7 +8,7 @@ Desde ella se podrán introducir los distintos partes de convivencia, facilitand
 de los mismos a las familias y simplificando su revisión por parte de la Comisión de Convivencia
 del Consejo Escolar del centro.
 
-Este proyecto utiliza [Symfony2] y utiliza muchos componentes que se instalan usando
+Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando
 [Composer].
 
 Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
