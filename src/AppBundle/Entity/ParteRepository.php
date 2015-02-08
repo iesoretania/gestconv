@@ -29,7 +29,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParteRepository extends EntityRepository
 {
-    public function findAllNoNotificadosPorAlumnoYUsuario(Alumno $alumno, Usuario $usuario)
+    public function findAllNoNotificadosPorAlumnoYUsuario($alumno, $usuario)
     {
         return $this->getEntityManager()
             ->getRepository('AppBundle:Parte')
