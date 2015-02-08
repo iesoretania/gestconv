@@ -107,7 +107,7 @@ class Partes extends AbstractFixture implements OrderedFixtureInterface
         $usuarios = $manager->getRepository('AppBundle:Usuario')->findAll();
         shuffle($usuarios);
 
-        for ($i = 0; $i < count($usuarios)/2; $i++) {
+        for ($i = 1; $i < count($usuarios); $i++) {
             $usuario = next($usuarios);
             $cuenta = self::getCuenta();
             for ($j = 0; $j < $cuenta; $j++) {

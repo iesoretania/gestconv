@@ -36,7 +36,7 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% for parte in alumno.partes %}
+                {% for parte in alumno.partes if parte.usuario == usuario %}
                     <div class="panel-heading">
                         <h3 class="panel-title">Parte #{{ parte.id }}
                             - {{ parte.fechaSuceso | date('d/m/Y H:i') }}</h3>
