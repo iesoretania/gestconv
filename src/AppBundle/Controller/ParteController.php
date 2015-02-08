@@ -39,7 +39,7 @@ class ParteController extends Controller
             // crear un parte por alumno y guardarlo en la base de datos
             $em = $this->getDoctrine()->getManager();
             $alumnos = $formulario->get('alumnos')->getData();
-            foreach($alumnos as $alumno) {
+            foreach ($alumnos as $alumno) {
                 $nuevoParte = clone $parte;
                 $nuevoParte->setAlumno($alumno);
                 $em->persist($nuevoParte);
@@ -72,56 +72,34 @@ class ParteController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        if ($request->getMethod() == 'POST') {
-            if (($request->request->get('noNotificada')) || ($request->request->get('notificada'))) {
+        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
 
-                $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
+            $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 
-                $partes = $em->getRepository('AppBundle:Parte')
-                    ->createQueryBuilder('p')
-                    ->innerJoin('p.alumno', 'a')
-                    ->where('p.fechaAviso IS NULL')
-                    ->andWhere('p.usuario = :usuario')
-                    ->andWhere('p.alumno = :alumno')
-                    ->setParameter('usuario', $usuario)
-                    ->setParameter('alumno', $id)
-                    ->getQuery()
-                    ->getResult();
+            $partes = $em->getRepository('AppBundle:Parte')
+                ->findAllNoNotificadosPorAlumnoYUsuario($id, $usuario);
 
-                foreach($partes as $parte) {
-                    $avisoParte = new AvisoParte();
-                    $avisoParte->setUsuario($usuario)
-                        ->setAnotacion($request->request->get('anotacion'))
-                        ->setFecha(new \DateTime())
-                        ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
-                        ->setParte($parte);
+            foreach ($partes as $parte) {
+                $avisoParte = new AvisoParte();
+                $avisoParte->setUsuario($usuario)
+                    ->setAnotacion($request->request->get('anotacion'))
+                    ->setFecha(new \DateTime())
+                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
+                    ->setParte($parte);
 
-                    if ($request->request->get('notificada')) {
-                        $parte->setFechaAviso(new \DateTime());
-                    }
-
-                    $em->persist($avisoParte);
+                if ($request->request->get('notificada')) {
+                    $parte->setFechaAviso(new \DateTime());
                 }
-                $em->flush();
+
+                $em->persist($avisoParte);
             }
+            $em->flush();
         }
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->innerJoin('AppBundle:Parte', 'p')
-            ->where('p.fechaAviso IS NULL')
-            ->andWhere('p.usuario = :usuario')
-            ->andWhere('p.alumno = a')
-            ->setParameter('usuario', $usuario)
-            ->orderBy('a.apellido1', 'ASC')
-            ->addOrderBy('a.apellido2', 'ASC')
-            ->addOrderBy('a.nombre', 'ASC')
-            ->getQuery()
-            ->getResult();
 
         return $this->render('AppBundle:Parte:notificar.html.twig',
             [
                 'usuario' => $usuario,
-                'alumnos' => $alumnos,
+                'alumnos' => $em->getRepository('AppBundle:Alumno')->findAllConPartesAunNoNotificadosPorUsuario($usuario),
                 'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
             ]);
     }
