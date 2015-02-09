@@ -103,6 +103,18 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $usuario->setEstaBloqueado(false);
         $manager->persist($usuario);
 
+        $usuario = new Usuario();
+        $usuario->setNombreUsuario('usuario');
+        $usuario->setPassword(password_hash('usuario', PASSWORD_DEFAULT));
+        $usuario->setNombre('Juan');
+        $usuario->setApellido1('Nadie');
+        $usuario->setApellido2('Nadie');
+        $usuario->setEsAdministrador(false);
+        $usuario->setEsRevisor(false);
+        $usuario->setEstaActivo(true);
+        $usuario->setEstaBloqueado(false);
+        $manager->persist($usuario);
+
         for ($i = 0; $i < rand(30, 45); $i++) {
             $usuario = self::generateUsuario();
             $usuario->setEsAdministrador(false);

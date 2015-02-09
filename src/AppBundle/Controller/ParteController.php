@@ -103,4 +103,19 @@ class ParteController extends Controller
                 'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
             ]);
     }
+
+    /**
+     * @Route("/parte/revisar", name="parte_revisar",methods={"GET", "POST"})
+     */
+    public function nuevaAction()
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        return $this->render('AppBundle:Parte:revisar.html.twig',
+            [
+                'alumnos' => $em->getRepository('AppBundle:Alumno')->findAllConPartesPendientesSancion(),
+                'usuario' => $usuario
+            ]);
+    }
 }

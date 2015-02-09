@@ -50,4 +50,25 @@ class AlumnoRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllConPartesPendientesSancion()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->select('a')
+            ->addSelect('COUNT(p)')
+            ->addSelect('MIN(p.fechaSuceso)')
+            ->addSelect('MAX(p.fechaSuceso)')
+            ->innerJoin('AppBundle:Alumno', 'a')
+            ->where('p.fechaAviso IS NOT NULL')
+            ->andWhere('p.sancion IS NULL')
+            ->andWhere('p.alumno = a')
+            ->groupBy('p.alumno')
+            ->orderBy('a.apellido1', 'ASC')
+            ->addOrderBy('a.apellido2', 'ASC')
+            ->addOrderBy('a.nombre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

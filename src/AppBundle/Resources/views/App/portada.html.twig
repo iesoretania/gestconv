@@ -29,17 +29,30 @@
             </article>
             {% endif %}
             {% if partes_totales %}
-            <article class="col-md-4 tile tile-col-4 tile-lime">
-                <a class="tile-link" href="#">
-                    <div class="tile-icon-holder">
-                        <i class="fa fa-book fa-4x"></i>
-                    </div>
-                    <div class="text-holder">
-                        <h4>Gestionar los partes</h4>
-                        <p>Permite modificarlos o añadir observaciones</p>
-                    </div>
-                </a>
-            </article>
+                <article class="col-md-4 tile tile-col-4 tile-lime">
+                    <a class="tile-link" href="#">
+                        <div class="tile-icon-holder">
+                            <i class="fa fa-book fa-4x"></i>
+                        </div>
+                        <div class="text-holder">
+                            <h4>Gestionar los partes</h4>
+                            <p>Permite modificarlos o añadir observaciones</p>
+                        </div>
+                    </a>
+                </article>
+            {% endif %}
+            {% if is_granted('ROLE_REVISOR') %}
+                <article class="col-md-4 tile tile-col-4 tile-teal">
+                    <a class="tile-link" href="{{ path('parte_revisar') }}">
+                        <div class="tile-icon-holder">
+                            <i class="fa fa-gavel fa-4x"></i>
+                        </div>
+                        <div class="text-holder">
+                            <h4>Revisar y sancionar</h4>
+                            <p>Permite revisar partes y sancionar</p>
+                        </div>
+                    </a>
+                </article>
             {% endif %}
             <article class="col-md-4 tile tile-col-4 tile-purple">
                 <a class="tile-link" href="{{ path('usuario_modificar') }}">

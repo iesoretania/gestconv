@@ -1,0 +1,44 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Alumnado pendiente de sanción' %}
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+            <li class="active">Alumnado pendiente de sanción</li>
+        </ol>
+        <h1 class="well">Partes pendientes de revisar</h1>
+        <table class="table table-bordered table-hover table-striped table-responsive listado">
+            <thead>
+            <tr>
+                <th class="col-md-6">Estudiante</th>
+                <th class="col-md-3">Fechas</th>
+                <th class="col-md-1">Partes a considerar</th>
+                <th class="col-md-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for alumno in alumnos %}
+                <tr>
+                    <td>{{ alumno[0] }}</td>
+                    <td>
+                        {{ alumno[2] | date('d/m/Y') }}
+                        {% if alumno[2] != alumno[3] %}
+                            a {{ alumno[3] | date('d/m/Y') }}
+                        {% endif %}
+                    </td>
+                    <td>{{ alumno[1] }}</td>
+                    <td>
+                        <a href="" class="btn btn-warning">Revisar</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">No hay alumnado con partes pendientes</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+    </div>
+{% endblock %}
