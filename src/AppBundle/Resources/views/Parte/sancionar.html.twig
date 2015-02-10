@@ -1,0 +1,37 @@
+{% extends '::layout.html.twig' %}
+
+{% block title alumno ~ ' - Sancionar' %}
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+            <li><a href="{{ path('parte_pendiente') }}">Alumnado pendiente de sanción</a></li>
+            <li class="active">{{ alumno }}</li>
+        </ol>
+        <h1 class="well">Partes pendientes de revisar de {{ alumno }}</h1>
+        <p>
+            <input type="checkbox" onChange="marcarDesmarcar(this);"> Marcar/desmarcar todos los partes
+        </p>
+        {% set marcar = true %}
+        {% for parte in partes %}
+            <div class="panel panel-default">
+                {% include 'AppBundle:Parte:partial_parte.html.twig' %}
+            </div>
+        {% endfor %}
+
+        <a href="{{ path('parte_pendiente') }}" class="btn btn-info">Volver a la lista de alumnado</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function marcarDesmarcar(e) {
+            if (!$(e).prop('checked')) {
+                $('.casilla').removeAttr('checked');
+            }
+            else {
+                $('.casilla').prop('checked', 'checked');
+            }
+        }
+    </script>
+{% endblock %}

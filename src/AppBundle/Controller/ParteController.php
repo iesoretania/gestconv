@@ -6,14 +6,19 @@ use AppBundle\Entity\AvisoParte;
 use AppBundle\Entity\Parte;
 use AppBundle\Form\Type\NuevoParteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * @Route("/parte")
+ */
 
 class ParteController extends Controller
 {
     /**
-     * @Route("/parte/nuevo", name="parte_nuevo",methods={"GET", "POST"})
+     * @Route("/nuevo", name="parte_nuevo",methods={"GET", "POST"})
      */
     public function nuevoAction(Request $peticion)
     {
@@ -65,7 +70,7 @@ class ParteController extends Controller
     }
 
     /**
-     * @Route("/parte/notificar", name="parte_listado_notificar",methods={"GET", "POST"})
+     * @Route("/notificar", name="parte_listado_notificar",methods={"GET", "POST"})
      */
     public function listadoNotificarAction(Request $request)
     {
@@ -105,14 +110,15 @@ class ParteController extends Controller
     }
 
     /**
-     * @Route("/parte/revisar", name="parte_revisar",methods={"GET", "POST"})
+     * @Route("/pendiente", name="parte_pendiente",methods={"GET"})
+     * @Security("has_role('ROLE_REVISOR')")
      */
-    public function nuevaAction()
+    public function pendienteAction()
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        return $this->render('AppBundle:Parte:revisar.html.twig',
+        return $this->render('AppBundle:Parte:pendiente.html.twig',
             [
                 'alumnos' => $em->getRepository('AppBundle:Alumno')->findAllConPartesPendientesSancion(),
                 'usuario' => $usuario

@@ -7,7 +7,7 @@
             <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
             <li class="active">Alumnado pendiente de sanción</li>
         </ol>
-        <h1 class="well">Partes pendientes de revisar</h1>
+        <h1 class="well">Partes pendientes de sancionar</h1>
         <table class="table table-bordered table-hover table-striped table-responsive listado">
             <thead>
             <tr>
@@ -29,12 +29,12 @@
                     </td>
                     <td>{{ alumno[1] }}</td>
                     <td>
-                        <a href="" class="btn btn-warning">Revisar</a>
+                        <a href="{{ path('parte_sancionar', {'alumno': alumno[0].id }) }}" class="btn btn-warning btn-block">Sancionar</a>
                     </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3">No hay alumnado con partes pendientes</td>
+                    <td colspan="4">No hay alumnado con partes pendientes</td>
                 </tr>
             {% endfor %}
             </tbody>
