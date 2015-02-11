@@ -58,6 +58,11 @@ class NuevaSancionType extends AbstractType
                 'widget' => 'single_text',
                 'required' => false
             ])
+            ->add('sinSancion', 'checkbox', [
+                'label' => 'No se aplica corrección/medida disciplinaria',
+                'mapped' => false,
+                'required' => false
+            ])
             ->add('motivosNoAplicacion', 'textarea', [
                 'label' => 'Motivos de la no aplicación de sanción',
                 'attr' => ['rows' => '8'],
@@ -76,7 +81,13 @@ class NuevaSancionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Sancion',
-            'alumno' => null
+            'alumno' => null,
+            'validation_groups' => function(FormInterface $form) {
+                if ($form->get('sinSancion')->getData() === true)
+                    return ['Default', 'sin_sancion'];
+                else
+                    return ['Default'];
+            }
         ));
     }
 

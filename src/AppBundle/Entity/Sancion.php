@@ -56,11 +56,6 @@ class Sancion
      */
     protected $fechaSancion;
     /**
-     * @ORM\ManyToOne(targetEntity="EstadoSancion")
-     * @var EstadoSancion
-     */
-    protected $estadoSancion;
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
@@ -93,6 +88,8 @@ class Sancion
     /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
+     *
+     * @Assert\NotBlank(groups={"sin_sancion"}, message="sancion.sin_sancion.motivos")
      */
     protected $motivosNoAplicacion;
     /**

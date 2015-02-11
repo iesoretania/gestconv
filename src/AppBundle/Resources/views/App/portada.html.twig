@@ -10,7 +10,7 @@
                         <i class="fa fa-edit fa-4x"></i>
                     </div>
                     <div class="text-holder">
-                        <h4>Crear un nuevo parte</h4>
+                        <h4>Registrar un nuevo parte</h4>
                         <p>Dirigido a uno o varios estudiantes</p>
                     </div>
                 </a>
@@ -23,7 +23,7 @@
                     </div>
                     <div class="text-holder">
                         <h4>Notificar un parte a la familia</h4>
-                        <p>Tienes {{ partes_pendientes }} {{ partes_pendientes == 1 ? 'parte pendiente' : 'partes pendientes' }}</p>
+                        <p>Tienes {{ partes_pendientes }} {{ partes_pendientes == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}</p>
                     </div>
                 </a>
             </article>
@@ -41,7 +41,7 @@
                     </a>
                 </article>
             {% endif %}
-            {% if is_granted('ROLE_REVISOR') %}
+            {% if is_granted('ROLE_REVISOR') and (partes_sancionables > 0) %}
                 <article class="col-md-4 tile tile-col-4 tile-teal">
                     <a class="tile-link" href="{{ path('parte_pendiente') }}">
                         <div class="tile-icon-holder">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="text-holder">
                             <h4>Revisar y sancionar</h4>
-                            <p>Permite revisar partes y sancionar</p>
+                            <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
                         </div>
                     </a>
                 </article>

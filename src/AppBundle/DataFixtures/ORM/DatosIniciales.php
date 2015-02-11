@@ -176,6 +176,7 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
             "Llamada telefónica",
             "Mensaje en el contestador",
             "SMS",
+            "Entrevista personal",
             "Correo electrónico",
             "Otro (detallar)"
         ];
@@ -194,17 +195,6 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
         self::createItems($manager, $actitudes, 'ActitudFamiliaSancion');
     }
 
-    public function generateEstadoSancion(ObjectManager $manager)
-    {
-        $estados = [
-            "Se aplica correción/medida disciplinaria",
-            "No se aplica correción/medida disciplinaria",
-            "Pendiente de sanción"
-        ];
-
-        self::createItems($manager, $estados, 'EstadoSancion');
-    }
-
     public function getOrder()
     {
         return 0;
@@ -214,7 +204,6 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
     {
         self::generateTramoParte($manager);
         self::generateActitudFamilia($manager);
-        self::generateEstadoSancion($manager);
         self::generateCategoriasAviso($manager);
         self::generateTiposConducta($manager);
         self::generateTiposMedida($manager);

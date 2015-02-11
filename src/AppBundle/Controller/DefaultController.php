@@ -34,9 +34,24 @@ class DefaultController extends Controller
             ->getQuery()
             ->getSingleScalarResult();
 
+        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
+            $partesSancionables = $em->getRepository('AppBundle:Parte')
+                ->createQueryBuilder('p')
+                ->select('COUNT(p.id)')
+                ->andWhere('p.sancion IS NULL')
+                ->andWhere('p.fechaAviso IS NOT NULL')
+                ->andWhere('p.prescrito = false')
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
+        else {
+            $partesSancionables = 0;
+        }
+
         return $this->render('AppBundle:App:portada.html.twig', [
             'partes_pendientes' => $partesPendientes,
-            'partes_totales' => $partesTotales
+            'partes_totales' => $partesTotales,
+            'partes_sancionables' => $partesSancionables
         ]);
     }
 
