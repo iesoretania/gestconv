@@ -25,17 +25,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table
  */
-class TipoConducta
+class TipoConducta extends Tipo
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue
-     */
-    protected $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="CategoriaConducta")
      * @ORM\JoinColumn(nullable=false)
@@ -43,50 +35,10 @@ class TipoConducta
     protected $categoria;
 
     /**
-     * @ORM\Column(type="string")
-     * @var string
-     */
-    protected $descripcion;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set descripcion
-     *
-     * @param string $descripcion
-     * @return TipoConducta
-     */
-    public function setDescripcion($descripcion)
-    {
-        $this->descripcion = $descripcion;
-
-        return $this;
-    }
-
-    /**
-     * Get descripcion
-     *
-     * @return string 
-     */
-    public function getDescripcion()
-    {
-        return $this->descripcion;
-    }
-
-    /**
      * Set categoria
      *
      * @param CategoriaConducta $categoria
-     * @return TipoConducta
+     * @return self
      */
     public function setCategoria(CategoriaConducta $categoria = null)
     {

@@ -21,45 +21,57 @@
 
 namespace AppBundle\Entity;
 
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\MappedSuperclass
  */
-class TipoMedida extends Tipo
+class Tipo
 {
     /**
-     * @ORM\ManyToOne(targetEntity="CategoriaMedida")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue
      */
-    protected $categoria;
+    protected $id;
 
     /**
-     * Set categoria
+     * @ORM\Column(type="string")
+     * @var string
+     */
+    protected $descripcion;
+
+
+    /**
+     * Get id
      *
-     * @param CategoriaMedida $categoria
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set descripcion
+     *
+     * @param string $descripcion
      * @return self
      */
-    public function setCategoria(CategoriaMedida $categoria = null)
+    public function setDescripcion($descripcion)
     {
-        $this->categoria = $categoria;
+        $this->descripcion = $descripcion;
 
         return $this;
     }
 
     /**
-     * Get categoria
+     * Get descripcion
      *
-     * @return CategoriaMedida
+     * @return string 
      */
-    public function getCategoria()
+    public function getDescripcion()
     {
-        return $this->categoria;
-    }
-
-    public function __toString()
-    {
-        return $this->getDescripcion() . ' (' . $this->getCategoria()->getDescripcion() . ')';
+        return $this->descripcion;
     }
 }
