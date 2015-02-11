@@ -2,47 +2,45 @@
 
 {% block title alumno ~ ' - Sancionar' %}
 {% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li><a href="{{ path('parte_pendiente') }}">Alumnado pendiente de sanción</a></li>
-            <li class="active">{{ alumno }}</li>
-        </ol>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path('parte_pendiente') }}">Alumnado pendiente de sanción</a></li>
+        <li class="active">{{ alumno }}</li>
+    </ol>
 
-        <h1 class="well">Sanción pendiente de {{ alumno }}</h1>
-        {{ form_start(formulario) }}
-        <div class="form-group {{ formulario.partes.vars.valid ? '' : 'has-error' }}">
-            {{ form_label(formulario.partes) }}
-            <div class="col-md-10">
-                {% if formulario.partes | length > 1 %}
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <input type="checkbox" onChange="marcarDesmarcar(this);"> Marcar/desmarcar todos los partes
-                        </div>
+    <h1 class="well">Sanción pendiente de {{ alumno }}</h1>
+    {{ form_start(formulario) }}
+    <div class="form-group {{ formulario.partes.vars.valid ? '' : 'has-error' }}">
+        {{ form_label(formulario.partes) }}
+        <div class="col-md-10">
+            {% if formulario.partes | length > 1 %}
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <input type="checkbox" onChange="marcarDesmarcar(this);"> Marcar/desmarcar todos los partes
                     </div>
-                {% endif %}
-                {% for fila_parte in formulario.partes %}
-                    {% set marcar = fila_parte.vars %}
-                    {% set parte = partes[fila_parte.vars.value] %}
-                    <div class="panel panel-default">
-                        {% include 'AppBundle:Parte:partial_parte.html.twig' %}
+                </div>
+            {% endif %}
+            {% for fila_parte in formulario.partes %}
+                {% set marcar = fila_parte.vars %}
+                {% set parte = partes[fila_parte.vars.value] %}
+                <div class="panel panel-default">
+                    {% include 'AppBundle:Parte:partial_parte.html.twig' %}
+                </div>
+            {% else %}
+                <div class="panel panel-danger">
+                    <div class="panel-heading">
+                        No hay partes pendientes
                     </div>
-                {% else %}
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            No hay partes pendientes
-                        </div>
-                    </div>
-                {% endfor %}
-                {{ form_errors(formulario.partes) }}
-            </div>
+                </div>
+            {% endfor %}
+            {{ form_errors(formulario.partes) }}
         </div>
-        {% do formulario.partes.setRendered %}
-        {{ form_row(formulario.medidas) }}
-        {{ form_row(formulario.anotacion) }}
-        {{ form_end(formulario) }}
-        <a href="{{ path('parte_pendiente') }}" class="btn btn-info">Volver a la lista de alumnado</a>
     </div>
+    {% do formulario.partes.setRendered %}
+    {{ form_row(formulario.medidas) }}
+    {{ form_row(formulario.anotacion) }}
+    {{ form_end(formulario) }}
+    <a href="{{ path('parte_pendiente') }}" class="btn btn-info">Volver a la lista de alumnado</a>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

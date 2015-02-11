@@ -1,96 +1,94 @@
 {% extends '::layout.html.twig' %}
 
 {% block content %}
-    <div class="container">
-        <h1 class="well">¡Bienvenido {{ app.user.nombre }}!</h1>
-        <section class="row tile-row">
-            <article class="col-md-4 tile tile-col-4 tile-red">
-                <a class="tile-link" href="{{ path('parte_nuevo') }}">
+<h1 class="well">¡Bienvenido {{ app.user.nombre }}!</h1>
+<section class="row tile-row">
+    <article class="col-md-4 tile tile-col-4 tile-red">
+        <a class="tile-link" href="{{ path('parte_nuevo') }}">
+            <div class="tile-icon-holder">
+                <i class="fa fa-edit fa-4x"></i>
+            </div>
+            <div class="text-holder">
+                <h4>Registrar un nuevo parte</h4>
+                <p>Dirigido a uno o varios estudiantes</p>
+            </div>
+        </a>
+    </article>
+    {% if partes_pendientes %}
+    <article class="col-md-4 tile tile-col-4 tile-orange">
+        <a class="tile-link" href="{{ path('parte_listado_notificar') }}">
+            <div class="tile-icon-holder">
+                <i class="fa fa-phone fa-4x"></i>
+            </div>
+            <div class="text-holder">
+                <h4>Notificar un parte a la familia</h4>
+                <p>Tienes {{ partes_pendientes }} {{ partes_pendientes == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}</p>
+            </div>
+        </a>
+    </article>
+    {% endif %}
+    {% if partes_totales %}
+        <article class="col-md-4 tile tile-col-4 tile-lime">
+            <a class="tile-link" href="#">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-book fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Gestionar los partes</h4>
+                    <p>Permite modificarlos o añadir observaciones</p>
+                </div>
+            </a>
+        </article>
+    {% endif %}
+    {% if is_granted('ROLE_REVISOR') %}
+        {% if partes_sancionables > 0 %}
+            <article class="col-md-4 tile tile-col-4 tile-teal">
+                <a class="tile-link" href="{{ path('parte_pendiente') }}">
                     <div class="tile-icon-holder">
-                        <i class="fa fa-edit fa-4x"></i>
+                        <i class="fa fa-gavel fa-4x"></i>
                     </div>
                     <div class="text-holder">
-                        <h4>Registrar un nuevo parte</h4>
-                        <p>Dirigido a uno o varios estudiantes</p>
+                        <h4>Revisar y sancionar</h4>
+                        <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
                     </div>
                 </a>
             </article>
-            {% if partes_pendientes %}
-            <article class="col-md-4 tile tile-col-4 tile-orange">
-                <a class="tile-link" href="{{ path('parte_listado_notificar') }}">
+        {% endif %}
+        {% if sanciones_notificables > 0 %}
+            <article class="col-md-4 tile tile-col-4 tile-blue">
+                <a class="tile-link" href="{{ path('sancion_listado_notificar') }}">
                     <div class="tile-icon-holder">
-                        <i class="fa fa-phone fa-4x"></i>
+                        <i class="fa fa-send fa-4x"></i>
                     </div>
                     <div class="text-holder">
-                        <h4>Notificar un parte a la familia</h4>
-                        <p>Tienes {{ partes_pendientes }} {{ partes_pendientes == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}</p>
+                        <h4>Notificar una sanción a la familia</h4>
+                        <p>Hay {{ sanciones_notificables }} {{ sanciones_notificables == 1 ? 'sanción pendiente' : 'sanciones pendientes' }} de notificar</p>
                     </div>
                 </a>
             </article>
-            {% endif %}
-            {% if partes_totales %}
-                <article class="col-md-4 tile tile-col-4 tile-lime">
-                    <a class="tile-link" href="#">
-                        <div class="tile-icon-holder">
-                            <i class="fa fa-book fa-4x"></i>
-                        </div>
-                        <div class="text-holder">
-                            <h4>Gestionar los partes</h4>
-                            <p>Permite modificarlos o añadir observaciones</p>
-                        </div>
-                    </a>
-                </article>
-            {% endif %}
-            {% if is_granted('ROLE_REVISOR') %}
-                {% if partes_sancionables > 0 %}
-                    <article class="col-md-4 tile tile-col-4 tile-teal">
-                        <a class="tile-link" href="{{ path('parte_pendiente') }}">
-                            <div class="tile-icon-holder">
-                                <i class="fa fa-gavel fa-4x"></i>
-                            </div>
-                            <div class="text-holder">
-                                <h4>Revisar y sancionar</h4>
-                                <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
-                            </div>
-                        </a>
-                    </article>
-                {% endif %}
-                {% if sanciones_notificables > 0 %}
-                    <article class="col-md-4 tile tile-col-4 tile-blue">
-                        <a class="tile-link" href="{{ path('sancion_listado_notificar') }}">
-                            <div class="tile-icon-holder">
-                                <i class="fa fa-send fa-4x"></i>
-                            </div>
-                            <div class="text-holder">
-                                <h4>Notificar una sanción a la familia</h4>
-                                <p>Hay {{ sanciones_notificables }} {{ sanciones_notificables == 1 ? 'sanción pendiente' : 'sanciones pendientes' }} de notificar</p>
-                            </div>
-                        </a>
-                    </article>
-                {% endif %}
-            {% endif %}
-            <article class="col-md-4 tile tile-col-4 tile-purple">
-                <a class="tile-link" href="{{ path('usuario_modificar') }}">
-                    <div class="tile-icon-holder">
-                        <i class="fa fa-cog fa-4x"></i>
-                    </div>
-                    <div class="text-holder">
-                        <h4>Modificar mis datos</h4>
-                        <p>Cambia los datos propios</p>
-                    </div>
-                </a>
-            </article>
-            <article class="col-md-4 tile tile-col-4 tile-bluedark">
-                <a class="tile-link" href="{{ path('usuario_salir') }}">
-                    <div class="tile-icon-holder">
-                        <i class="fa fa-power-off fa-4x"></i>
-                    </div>
-                    <div class="text-holder">
-                        <h4>Desconectar</h4>
-                        <p>Salir de la aplicación</p>
-                    </div>
-                </a>
-            </article>
-        </section>
-    </div>
+        {% endif %}
+    {% endif %}
+    <article class="col-md-4 tile tile-col-4 tile-purple">
+        <a class="tile-link" href="{{ path('usuario_modificar') }}">
+            <div class="tile-icon-holder">
+                <i class="fa fa-cog fa-4x"></i>
+            </div>
+            <div class="text-holder">
+                <h4>Modificar mis datos</h4>
+                <p>Cambia los datos propios</p>
+            </div>
+        </a>
+    </article>
+    <article class="col-md-4 tile tile-col-4 tile-bluedark">
+        <a class="tile-link" href="{{ path('usuario_salir') }}">
+            <div class="tile-icon-holder">
+                <i class="fa fa-power-off fa-4x"></i>
+            </div>
+            <div class="text-holder">
+                <h4>Desconectar</h4>
+                <p>Salir de la aplicación</p>
+            </div>
+        </a>
+    </article>
+</section>
 {% endblock %}

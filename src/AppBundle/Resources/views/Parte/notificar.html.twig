@@ -2,29 +2,26 @@
 
 {% block title 'Notificar parte' %}
 {% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li class="active">Notificación de partes a las familias</li>
-        </ol>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Notificación de partes a las familias</li>
+    </ol>
 
-        <h1 class="well">Notificación de partes a las familias</h1>
+    <h1 class="well">Notificación de partes a las familias</h1>
 
-        {%  set mensaje = 'Se marcará el parte como notificado para poder ser estudiado por la Comisión de Convivencia. ¿Desea continuar?' %}
-        {% for alumno in alumnos %}
-            <div class="panel panel-default">
-                {% include 'AppBundle:Alumno:partial_alumno.html.twig' %}
+    {%  set mensaje = 'Se marcará el parte como notificado para poder ser estudiado por la Comisión de Convivencia. ¿Desea continuar?' %}
+    {% for alumno in alumnos %}
+        <div class="panel panel-default">
+            {% include 'AppBundle:Alumno:partial_alumno.html.twig' %}
 
-                {% set marcar = false %}
-                {% for parte in alumno.partes if parte.usuario == usuario %}
-                    {% include 'AppBundle:Parte:partial_parte.html.twig' %}
-                {% endfor %}
+            {% set marcar = false %}
+            {% for parte in alumno.partes if parte.usuario == usuario %}
+                {% include 'AppBundle:Parte:partial_parte.html.twig' %}
+            {% endfor %}
 
-                {% include 'AppBundle:App:partial_notificar.html.twig' %}
-            </div>
-        {% endfor %}
+            {% include 'AppBundle:App:partial_notificar.html.twig' %}
+        </div>
+    {% endfor %}
 
-        <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
-
-    </div>
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
 {% endblock %}

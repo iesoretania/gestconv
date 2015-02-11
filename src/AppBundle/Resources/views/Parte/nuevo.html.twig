@@ -2,12 +2,10 @@
 
 {% block title 'Nuevo parte' %}
 {% block content %}
-    <div class="container">
-        <ol class="breadcrumb">
-            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li class="active">Crear un nuevo parte</li>
-        </ol>
-        {{ form(formulario) }}
-        <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada sin crear un parte</a>
-    </div>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Crear un nuevo parte</li>
+    </ol>
+    {{ form(formulario) }}
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada sin crear un parte</a>
 {% endblock %}
