@@ -7,5 +7,8 @@ parte.fecha_suceso.not_blank: Debe indicarse cuándo tuvo lugar el suceso.
 parte.fecha_suceso.max: Introduzca una fecha y hora anteriores al momento actual.
 parte.tramo.not_blank: Debe indicarse dónde ocurrió el suceso.
 
+sancion.medidas.min: Debe seleccionar al menos una medida.
+sancion.partes.min: Debe seleccionar al menos un parte.
+
 password.min_length: La contraseña debe tener como mínimo {{ limit }} caracteres.
 password.no_match: Las nuevas contraseñas no coinciden.

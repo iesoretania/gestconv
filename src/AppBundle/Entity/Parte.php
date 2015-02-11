@@ -529,4 +529,9 @@ class Parte
         return $this->conductas;
     }
 
+    public function __toString()
+    {
+        return $this->getId() . ' - ' . $this->alumno . ' - ' . $this->getAnotacion();
+    }
+
 }

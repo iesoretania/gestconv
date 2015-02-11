@@ -25,6 +25,7 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -45,11 +46,6 @@ class Sancion
      */
     protected $usuario;
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @var int
-     */
-    protected $tipo;
-    /**
      * @ORM\Column(type="text", nullable=true)
      * @var string
      */
@@ -58,17 +54,12 @@ class Sancion
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
-    protected $fecha_sancion;
+    protected $fechaSancion;
     /**
      * @ORM\ManyToOne(targetEntity="EstadoSancion")
      * @var EstadoSancion
      */
     protected $estadoSancion;
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     * @var boolean
-     */
-    protected $comunicado;
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
@@ -79,6 +70,16 @@ class Sancion
      * @var \DateTime
      */
     protected $fechaRegistro;
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     */
+    protected $fechaInicioSancion;
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     * @var \DateTime
+     */
+    protected $fechaFinSancion;
     /**
      * @ORM\Column(type="boolean", nullable=true)
      * @var boolean
@@ -102,11 +103,15 @@ class Sancion
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="sancion")
      * @var Collection
+     *
+     * @Assert\Count(min="1", minMessage="sancion.partes.min")
      */
     protected $partes = null;
     /**
-     * @ORM\OneToMany(targetEntity="Medida", mappedBy="sancion")
+     * @ORM\ManyToMany(targetEntity="TipoMedida")
      * @var Collection
+     *
+     * @Assert\Count(min="1", minMessage="sancion.medidas.min")
      */
     protected $medidas = null;
     /**
@@ -141,29 +146,6 @@ class Sancion
     }
 
     /**
-     * Set tipo
-     *
-     * @param integer $tipo
-     * @return Sancion
-     */
-    public function setTipo($tipo)
-    {
-        $this->tipo = $tipo;
-
-        return $this;
-    }
-
-    /**
-     * Get tipo
-     *
-     * @return integer 
-     */
-    public function getTipo()
-    {
-        return $this->tipo;
-    }
-
-    /**
      * Set anotacion
      *
      * @param string $anotacion
@@ -187,49 +169,26 @@ class Sancion
     }
 
     /**
-     * Set fecha_sancion
+     * Set fechaSancion
      *
      * @param \DateTime $fechaSancion
      * @return Sancion
      */
     public function setFechaSancion($fechaSancion)
     {
-        $this->fecha_sancion = $fechaSancion;
+        $this->fechaSancion = $fechaSancion;
 
         return $this;
     }
 
     /**
-     * Get fecha_sancion
+     * Get fechaSancion
      *
      * @return \DateTime 
      */
     public function getFechaSancion()
     {
-        return $this->fecha_sancion;
-    }
-
-    /**
-     * Set comunicado
-     *
-     * @param boolean $comunicado
-     * @return Sancion
-     */
-    public function setComunicado($comunicado)
-    {
-        $this->comunicado = $comunicado;
-
-        return $this;
-    }
-
-    /**
-     * Get comunicado
-     *
-     * @return boolean 
-     */
-    public function getComunicado()
-    {
-        return $this->comunicado;
+        return $this->fechaSancion;
     }
 
     /**
@@ -546,5 +505,51 @@ class Sancion
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+    /**
+     * Set fechaInicioSancion
+     *
+     * @param \DateTime $fechaInicioSancion
+     * @return Sancion
+     */
+    public function setFechaInicioSancion($fechaInicioSancion)
+    {
+        $this->fechaInicioSancion = $fechaInicioSancion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaInicioSancion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaInicioSancion()
+    {
+        return $this->fechaInicioSancion;
+    }
+
+    /**
+     * Set fechaFinSancion
+     *
+     * @param \DateTime $fechaFinSancion
+     * @return Sancion
+     */
+    public function setFechaFinSancion($fechaFinSancion)
+    {
+        $this->fechaFinSancion = $fechaFinSancion;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaFinSancion
+     *
+     * @return \DateTime 
+     */
+    public function getFechaFinSancion()
+    {
+        return $this->fechaFinSancion;
     }
 }

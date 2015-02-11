@@ -105,4 +105,9 @@ class TipoMedida
     {
         return $this->categoria;
     }
+
+    public function __toString()
+    {
+        return $this->getDescripcion() . ' (' . $this->getCategoria()->getDescripcion() . ')';
+    }
 }
