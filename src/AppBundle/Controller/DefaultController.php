@@ -54,6 +54,7 @@ class DefaultController extends Controller
         }
         else {
             $partesSancionables = 0;
+            $sancionesNotificables = 0;
         }
 
         return $this->render('AppBundle:App:portada.html.twig', [
