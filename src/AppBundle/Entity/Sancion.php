@@ -28,8 +28,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\SancionRepository")
  */
 class Sancion
 {
@@ -423,29 +422,6 @@ class Sancion
     public function getMotivosNoAplicacion()
     {
         return $this->motivosNoAplicacion;
-    }
-
-    /**
-     * Set estadoSancion
-     *
-     * @param EstadoSancion $estadoSancion
-     * @return Sancion
-     */
-    public function setEstadoSancion(EstadoSancion $estadoSancion = null)
-    {
-        $this->estadoSancion = $estadoSancion;
-
-        return $this;
-    }
-
-    /**
-     * Get estadoSancion
-     *
-     * @return EstadoSancion
-     */
-    public function getEstadoSancion()
-    {
-        return $this->estadoSancion;
     }
 
     /**

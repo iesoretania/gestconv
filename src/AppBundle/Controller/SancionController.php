@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\AvisoSancion;
 use AppBundle\Entity\Sancion;
 use AppBundle\Form\Type\NuevaSancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -76,4 +77,53 @@ class SancionController extends Controller
                 'usuario' => $usuario
             ]);
     }
+
+    /**
+     * @Route("/notificar", name="sancion_listado_notificar",methods={"GET", "POST"})
+     */
+    public function listadoNotificarAction(Request $request)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
+
+            $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
+
+            $sanciones = $em->getRepository('AppBundle:Sancion')
+                ->findAllNoNotificadosPorAlumno($id);
+
+            foreach ($sanciones as $sancion) {
+                $avisoSancion = new AvisoSancion();
+                $avisoSancion->setUsuario($usuario)
+                    ->setAnotacion($request->request->get('anotacion'))
+                    ->setFecha(new \DateTime())
+                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
+                    ->setSancion($sancion);
+
+                if ($request->request->get('notificada')) {
+                    $sancion->setFechaComunicado(new \DateTime());
+                }
+
+                $em->persist($avisoSancion);
+            }
+            $em->flush();
+        }
+        $alumnos = $em->getRepository('AppBundle:Alumno')
+            ->findAllConSancionesAunNoNotificadas();
+
+        if (count($alumnos) == 0) {
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('portada')
+            );
+        }
+        return $this->render('AppBundle:Sancion:notificar.html.twig',
+            [
+                'usuario' => $usuario,
+                'alumnos' => $alumnos,
+                'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
+            ]);
+    }
+
 }

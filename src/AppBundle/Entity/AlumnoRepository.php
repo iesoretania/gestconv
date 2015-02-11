@@ -71,4 +71,22 @@ class AlumnoRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllConSancionesAunNoNotificadas()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->leftJoin('a.partes', 'p')
+            ->leftJoin('p.sancion', 's')
+            ->where('s.fechaComunicado IS NULL')
+            ->andWhere('s.motivosNoAplicacion IS NULL')
+            ->andWhere('p.alumno = a')
+            ->andWhere('p.sancion = s')
+            ->orderBy('a.apellido1', 'ASC')
+            ->addOrderBy('a.apellido2', 'ASC')
+            ->addOrderBy('a.nombre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

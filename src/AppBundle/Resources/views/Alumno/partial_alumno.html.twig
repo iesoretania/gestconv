@@ -1,0 +1,23 @@
+<div class="panel-heading">
+    <h3 class="panel-title">{{ alumno }}</h3>
+</div>
+<ul class="list-group">
+    {% if alumno.tutor1 %}
+        <li class="list-group-item"><strong>Tutor 1: </strong>{{ alumno.tutor1 }}</li>
+    {% endif %}
+    {% if alumno.tutor2 %}
+        <li class="list-group-item"><strong>Tutor 2: </strong>{{ alumno.tutor2 }}</li>
+    {% endif %}
+    {% if alumno.telefono1 %}
+        <li class="list-group-item">
+            <strong>Teléfono 1: </strong>{{ alumno.telefono1 }}
+            {{ alumno.notaTelefono1 ? '-' ~ alumno.notaTelefono1 }}
+        </li>
+    {% endif %}
+    {% if alumno.telefono2 %}
+        <li class="list-group-item">
+            <strong>Teléfono 2: </strong>{{ alumno.telefono2 }}
+            {{ alumno.notaTelefono2 ? '-' ~ alumno.notaTelefono2 }}
+        </li>
+    {% endif %}
+</ul>

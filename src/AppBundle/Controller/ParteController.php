@@ -100,11 +100,19 @@ class ParteController extends Controller
             }
             $em->flush();
         }
+        $alumnos = $em->getRepository('AppBundle:Alumno')
+            ->findAllConPartesAunNoNotificadosPorUsuario($usuario);
 
+        if (count($alumnos) == 0) {
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('portada')
+            );
+        }
         return $this->render('AppBundle:Parte:notificar.html.twig',
             [
                 'usuario' => $usuario,
-                'alumnos' => $em->getRepository('AppBundle:Alumno')->findAllConPartesAunNoNotificadosPorUsuario($usuario),
+                'alumnos' => $alumnos,
                 'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
             ]);
     }

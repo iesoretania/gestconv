@@ -41,18 +41,33 @@
                     </a>
                 </article>
             {% endif %}
-            {% if is_granted('ROLE_REVISOR') and (partes_sancionables > 0) %}
-                <article class="col-md-4 tile tile-col-4 tile-teal">
-                    <a class="tile-link" href="{{ path('parte_pendiente') }}">
-                        <div class="tile-icon-holder">
-                            <i class="fa fa-gavel fa-4x"></i>
-                        </div>
-                        <div class="text-holder">
-                            <h4>Revisar y sancionar</h4>
-                            <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
-                        </div>
-                    </a>
-                </article>
+            {% if is_granted('ROLE_REVISOR') %}
+                {% if partes_sancionables > 0 %}
+                    <article class="col-md-4 tile tile-col-4 tile-teal">
+                        <a class="tile-link" href="{{ path('parte_pendiente') }}">
+                            <div class="tile-icon-holder">
+                                <i class="fa fa-gavel fa-4x"></i>
+                            </div>
+                            <div class="text-holder">
+                                <h4>Revisar y sancionar</h4>
+                                <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
+                            </div>
+                        </a>
+                    </article>
+                {% endif %}
+                {% if sanciones_notificables > 0 %}
+                    <article class="col-md-4 tile tile-col-4 tile-blue">
+                        <a class="tile-link" href="{{ path('sancion_listado_notificar') }}">
+                            <div class="tile-icon-holder">
+                                <i class="fa fa-send fa-4x"></i>
+                            </div>
+                            <div class="text-holder">
+                                <h4>Notificar una sanción a la familia</h4>
+                                <p>Hay {{ sanciones_notificables }} {{ sanciones_notificables == 1 ? 'sanción pendiente' : 'sanciones pendientes' }} de notificar</p>
+                            </div>
+                        </a>
+                    </article>
+                {% endif %}
             {% endif %}
             <article class="col-md-4 tile tile-col-4 tile-purple">
                 <a class="tile-link" href="{{ path('usuario_modificar') }}">

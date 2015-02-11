@@ -1,0 +1,25 @@
+<div class="panel-footer">
+    <form class="form-inline" method="post">
+        <div class="form-group">
+            <label for="tipo">Método de notificación: </label>
+            <select name="tipo" class="form-control"
+                    data-placeholder="Escoja una opción...">
+                {% for tipo in tipos %}
+                    <option value="{{ tipo.id }}">{{ tipo.descripcion }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="anotacion">Observaciones</label>
+            <input type="text" class="form-control" name="anotacion"
+                   placeholder="Observaciones...">
+        </div>
+        <button type="submit" class="btn btn-success" name="notificada" value="{{ alumno.id }}"
+                {% if mensaje %} onClick="javascript:return confirm('{{ mensaje | e('js') }}');" {% endif %}>
+            Familia notificada
+        </button>
+        <button type="submit" class="btn btn-warning" name="noNotificada" value="{{ alumno.id }}">
+            Familia no notificada
+        </button>
+    </form>
+</div>

@@ -43,6 +43,14 @@ class DefaultController extends Controller
                 ->andWhere('p.prescrito = false')
                 ->getQuery()
                 ->getSingleScalarResult();
+
+            $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
+                ->createQueryBuilder('s')
+                ->select('COUNT(s.id)')
+                ->andWhere('s.fechaComunicado IS NULL')
+                ->andWhere('s.motivosNoAplicacion IS NULL')
+                ->getQuery()
+                ->getSingleScalarResult();
         }
         else {
             $partesSancionables = 0;
@@ -51,7 +59,8 @@ class DefaultController extends Controller
         return $this->render('AppBundle:App:portada.html.twig', [
             'partes_pendientes' => $partesPendientes,
             'partes_totales' => $partesTotales,
-            'partes_sancionables' => $partesSancionables
+            'partes_sancionables' => $partesSancionables,
+            'sanciones_notificables' => $sancionesNotificables
         ]);
     }
 
