@@ -14,7 +14,7 @@
             </div>
         </a>
     </article>
-    {% if partes_pendientes %}
+    {% if partes_pendientes > 0 %}
     <article class="col-md-4 tile tile-col-4 tile-orange">
         <a class="tile-link" href="{{ path('parte_listado_notificar') }}">
             <div class="tile-icon-holder">
@@ -27,7 +27,7 @@
         </a>
     </article>
     {% endif %}
-    {% if partes_totales %}
+    {% if partes_totales > 0 %}
         <article class="col-md-4 tile tile-col-4 tile-lime">
             <a class="tile-link" href="#">
                 <div class="tile-icon-holder">
@@ -63,6 +63,19 @@
                     <div class="text-holder">
                         <h4>Notificar una sanción a la familia</h4>
                         <p>Hay {{ sanciones_notificables }} {{ sanciones_notificables == 1 ? 'sanción pendiente' : 'sanciones pendientes' }} de notificar</p>
+                    </div>
+                </a>
+            </article>
+        {% endif %}
+        {% if sanciones_totales > 0 %}
+            <article class="col-md-4 tile tile-col-4 tile-greendark">
+                <a class="tile-link" href="#">
+                    <div class="tile-icon-holder">
+                        <i class="fa fa-archive fa-4x"></i>
+                    </div>
+                    <div class="text-holder">
+                        <h4>Gestionar las sanciones</h4>
+                        <p>Permite modificarlas o añadir observaciones</p>
                     </div>
                 </a>
             </article>
