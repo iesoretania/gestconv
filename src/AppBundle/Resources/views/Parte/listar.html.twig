@@ -1,0 +1,43 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Gestionar partes' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Gestionar partes</li>
+    </ol>
+
+    <h1 class="well">Gestionar partes</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-1">#</th>
+            <th class="col-md-2">Fecha</th>
+            <th class="col-md-6">Estudiante</th>
+            <th class="col-md-2">Estado</th>
+            <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for parte in partes %}
+            <tr>
+                <td>{{ parte.id }}</td>
+                <td>{{ parte.fechaSuceso | date('d/m/Y') }}</td>
+                <td>{{ parte.alumno }}</td>
+                <td>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-default btn-block"><i class="fa fa-search"></i> Detalles</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No hay partes que mostrar</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+{% endblock %}

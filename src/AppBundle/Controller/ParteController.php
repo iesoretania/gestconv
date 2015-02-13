@@ -132,4 +132,26 @@ class ParteController extends Controller
                 'usuario' => $usuario
             ]);
     }
+
+    /**
+     * @Route("/listar", name="parte_listar",methods={"GET"})
+     */
+    public function listarAction()
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $partes = $em->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->andWhere('p.usuario = :usuario')
+            ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('AppBundle:Parte:listar.html.twig',
+            [
+                'partes' => $partes,
+                'usuario' => $usuario
+            ]);
+    }
 }
