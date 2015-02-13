@@ -66,11 +66,6 @@ class NuevoParteType extends AbstractType
                 'required' => false,
                 'attr' => ['rows' => '5']
             ])
-            ->add('profesorGuardia', null, [
-                'label' => 'Profesor de guardia que atendió al alumnado',
-                'required' => false,
-                'placeholder' => 'No aplicable'
-            ])
             ->add('enviar', 'submit', [
                 'label' => 'Crear parte',
                 'attr' => ['class' => 'btn btn-success']

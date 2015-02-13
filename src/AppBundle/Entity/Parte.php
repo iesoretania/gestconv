@@ -56,12 +56,6 @@ class Parte
      */
     protected $alumno;
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario")
-     * @var Usuario
-     * @Assert\NotBlank(groups={"expulsion"}, message="parte.profesor-guardia.expulsion")
-     */
-    protected $profesorGuardia;
-    /**
      * @ORM\Column(type="text", nullable=false)
      * @var string
      *
@@ -313,29 +307,6 @@ class Parte
     public function getAlumno()
     {
         return $this->alumno;
-    }
-
-    /**
-     * Set profesorGuardia
-     *
-     * @param Usuario $profesorGuardia
-     * @return Parte
-     */
-    public function setProfesorGuardia(Usuario $profesorGuardia = null)
-    {
-        $this->profesorGuardia = $profesorGuardia;
-
-        return $this;
-    }
-
-    /**
-     * Get profesorGuardia
-     *
-     * @return Usuario
-     */
-    public function getProfesorGuardia()
-    {
-        return $this->profesorGuardia;
     }
 
     /**
