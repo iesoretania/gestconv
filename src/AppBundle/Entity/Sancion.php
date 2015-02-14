@@ -292,10 +292,10 @@ class Sancion
     /**
      * Add medidas
      *
-     * @param Medida $medidas
+     * @param TipoMedida $medidas
      * @return Sancion
      */
-    public function addMedida(Medida $medidas)
+    public function addMedida(TipoMedida $medidas)
     {
         $this->medidas[] = $medidas;
 
@@ -305,9 +305,9 @@ class Sancion
     /**
      * Remove medidas
      *
-     * @param Medida $medidas
+     * @param TipoMedida $medidas
      */
-    public function removeMedida(Medida $medidas)
+    public function removeMedida(TipoMedida $medidas)
     {
         $this->medidas->removeElement($medidas);
     }
