@@ -1,0 +1,64 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Gestionar partes' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Gestionar partes</li>
+    </ol>
+
+    <h1 class="well">Gestionar partes</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-1">#</th>
+            <th class="col-md-2">Fecha suceso/registro</th>
+            <th class="col-md-4">Estudiante</th>
+            <th class="col-md-4">Estado</th>
+            <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for parte in partes %}
+            {% if parte.prescrito %}
+                {% set estado = "danger" %}
+            {% elseif parte.sancion and parte.sancion.fechaSancion %}
+                {% set estado = "success" %}
+            {% elseif parte.fechaAviso %}
+                {% set estado = "warning" %}
+            {% else %}
+                {% set estado = "" %}
+            {% endif %}
+            <tr class="{{ estado }}">
+                <td>{{ parte.id }}</td>
+                <td>{{ parte.fechaSuceso | date('d/m/Y') }} <span class="text-muted small">({{ parte.fechaCreacion | date('d/m/Y') }})</span></td>
+                <td>{{ parte.alumno }}</td>
+                <td>
+                    {% if parte.prescrito %}
+                        Prescrito
+                    {% elseif not parte.fechaAviso %}
+                        Sin notificar
+                    {% else %}
+                        Notificado el {{ parte.fechaAviso | date('d/m/Y') }}.
+                        {% if not parte.sancion %}
+                            Pendiente de sanción
+                        {% else %}
+                            Sancionado el {{ parte.sancion.fechaSancion | date('d/m/Y') }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No hay partes que mostrar</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+{% endblock %}
