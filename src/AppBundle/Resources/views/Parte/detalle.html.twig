@@ -1,0 +1,21 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Detalles de un parte' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path('parte_listar') }}">Gestionar partes</a></li>
+        <li class="active">Parte #{{ parte.id }}</li>
+    </ol>
+
+    <h1 class="well">Detalles del parte</h1>
+
+    {% if parte.sancion %}
+        <div class="alert alert-warning" role="alert">
+            <strong>¡Atención!</strong> El parte ya ha sido sancionado, sólo desde Jefatura de estudios podrá ser modificado.
+        </div>
+    {% endif %}
+    {{ form(formulario) }}
+    <a href="{{ path('parte_listar') }}" class="btn btn-info">Volver al listado sin modificar el parte</a>
+
+{% endblock %}

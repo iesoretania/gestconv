@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AvisoParte;
 use AppBundle\Entity\Parte;
 use AppBundle\Form\Type\NuevoParteType;
+use AppBundle\Form\Type\ParteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,11 +32,11 @@ class ParteController extends Controller
             ->setPrescrito(false);
 
         $formulario = $this->createForm(new NuevoParteType(), $parte, [
-            'admin' => $usuario->getEsAdministrador()
+            'admin' => $this->get('security.context')->isGranted('ROLE_REVISOR')
         ]);
 
         $formulario->handleRequest($peticion);
-        if (!$usuario->getEsAdministrador()) {
+        if (false === $this->get('security.context')->isGranted('ROLE_REVISOR')) {
             $parte->setUsuario($usuario);
         }
 
@@ -151,6 +152,41 @@ class ParteController extends Controller
         return $this->render('AppBundle:Parte:listar.html.twig',
             [
                 'partes' => $partes,
+                'usuario' => $usuario
+            ]);
+    }
+
+    /**
+     * @Route("/detalle/{parte}", name="parte_detalle",methods={"GET", "POST"})
+     */
+    public function detalleAction(Parte $parte, Request $peticion)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $formulario = $this->createForm(new ParteType(), $parte, [
+            'admin' => $this->get('security.context')->isGranted('ROLE_REVISOR'),
+            'bloqueado' => (false === is_null($parte->getSancion()))
+        ]);
+
+        $formulario->handleRequest($peticion);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            $em->flush();
+
+            $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
+
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('parte_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Parte:detalle.html.twig',
+            [
+                'parte' => $parte,
+                'formulario' => $formulario->createView(),
                 'usuario' => $usuario
             ]);
     }
