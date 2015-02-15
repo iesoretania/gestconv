@@ -4,8 +4,11 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Entity\AvisoSancion;
+use AppBundle\Entity\ObservacionSancion;
 use AppBundle\Entity\Sancion;
+use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevaSancionType;
+use AppBundle\Form\Type\SancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -80,15 +83,17 @@ class SancionController extends Controller
 
     /**
      * @Route("/notificar", name="sancion_listado_notificar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR')")
      */
     public function listadoNotificarAction(Request $request)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
+        $notificada = $request->request->get('notificada');
+        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($notificada))) {
 
-            $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
+            $id = $request->request->get(($notificada) ? 'notificada' : 'noNotificada');
 
             $sanciones = $em->getRepository('AppBundle:Sancion')
                 ->findAllNoNotificadosPorAlumno($id);
@@ -101,7 +106,7 @@ class SancionController extends Controller
                     ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
                     ->setSancion($sancion);
 
-                if ($request->request->get('notificada')) {
+                if ($notificada) {
                     $sancion->setFechaComunicado(new \DateTime());
                 }
 
@@ -129,6 +134,7 @@ class SancionController extends Controller
 
     /**
      * @Route("/listar", name="sancion_listar",methods={"GET"})
+     * @Security("has_role('ROLE_REVISOR')")
      */
     public function listarAction()
     {
@@ -144,6 +150,65 @@ class SancionController extends Controller
         return $this->render('AppBundle:Sancion:listar.html.twig',
             [
                 'sanciones' => $sanciones,
+                'usuario' => $usuario
+            ]);
+    }
+
+    /**
+     * @Route("/detalle/{sancion}", name="sancion_detalle",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR')")
+     */
+    public function detalleAction(Sancion $sancion, Request $request)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
+
+        $formularioSancion = $this->createForm(new SancionType(), $sancion, [
+            'admin' => true,
+            'bloqueado' => false
+        ]);
+
+        $formularioSancion->get('sinSancion')->setData($sancion->getMotivosNoAplicacion() !== null);
+        
+        $observacion = new ObservacionSancion();
+        $observacion->setFecha(new \DateTime())
+            ->setSancion($sancion)
+            ->setUsuario($usuario)
+            ->setAutomatica(false);
+
+        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
+            'admin' => $esAdmin
+        ]);
+
+        $formularioObservacion->handleRequest($request);
+
+        if ($formularioObservacion->isSubmitted() && $formularioObservacion->isValid()) {
+            $em->persist($observacion);
+            $em->flush();
+            $this->addFlash('success', 'Observación registrada correctamente');
+        }
+
+        $formularioSancion->handleRequest($request);
+
+        if ($formularioSancion->isSubmitted() && $formularioSancion->isValid()) {
+
+            $em->flush();
+
+            $this->addFlash('success', 'Se han registrado correctamente los cambios en la sanción');
+
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('sancion_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Sancion:detalle.html.twig',
+            [
+                'sancion' => $sancion,
+                'formulario_sancion' => $formularioSancion->createView(),
+                'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
             ]);
     }

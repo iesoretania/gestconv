@@ -1,0 +1,45 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Detalles de una sanción' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path('sancion_listar') }}">Gestionar sanciones</a></li>
+        <li class="active">Sanción #{{ sancion.id }}</li>
+    </ol>
+
+    <h1 class="well">Detalles de la sanción</h1>
+
+    {% if sancion.fechaComunicado %}
+        <div class="alert alert-warning" role="alert">
+            <strong>¡Atención!</strong> El parte ya ha sido notificado a la familia.
+        </div>
+    {% endif %}
+    {% if sancion.motivosNoAplicacion %}
+        <div class="alert alert-info" role="alert">
+            <strong>No sancionado.</strong> No se aplicarán sanciones a los partes asociados ni será necesario notificarlo a la familia.
+        </div>
+    {% endif %}
+    {{ form(formulario_sancion) }}
+
+    {% include 'AppBundle:Sancion:partial_avisos.html.twig' %}
+
+    {% if sancion.observaciones | length == 0 %}
+        <div class="panel-heading">
+            <h3 class="panel-title">Observaciones</h3>
+        </div>
+    {% endif %}
+
+    {% include 'AppBundle:Sancion:partial_observaciones.html.twig' %}
+
+    {{ form(formulario_observacion) }}
+
+    <h1 class="well">Partes asociados a la sanción</h1>
+
+    {% set marcar = false %}
+    {% for parte in sancion.partes %}
+        {% include "AppBundle:Parte:partial_parte.html.twig" %}
+    {% endfor %}
+    {% dump app.request %}
+    <a href="{{ path('sancion_listar') }}" class="btn btn-info">Volver al listado de sanciones</a>
+{% endblock %}

@@ -17,6 +17,21 @@ class SancionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('fechaSancion', 'datetime', [
+                'label' => 'Sanción creada el*',
+                'required' => true
+            ])
+            ->add('fechaComunicado', 'date', [
+                'label' => 'Sanción comunicada',
+                'widget' => 'single_text',
+                'required' => false,
+                'disabled' => true
+            ])
+            ->add('fechaRegistro', 'date', [
+                'label' => 'Fecha del registro de salida',
+                'widget' => 'single_text',
+                'required' => false
+            ])
             ->add('medidas', null, [
                 'label' => 'Medidas tomadas*',
                 'required' => true,
@@ -47,8 +62,21 @@ class SancionType extends AbstractType
                 'attr' => ['rows' => '8'],
                 'required' => false
             ])
+            ->add('medidasEfectivas', 'checkbox', [
+                'label' => 'Las medidas han sido efectivas',
+                'required' => false
+            ])
+            ->add('reclamacion', 'checkbox', [
+                'label' => 'La familia ha presentado una reclamación a la sanción',
+                'required' => false
+            ])
+            ->add('actitudFamilia', null, [
+                'label' => 'Actitud de la familia ante la sanción',
+                'placeholder' => 'Desconocida o no aplicable',
+                'required' => false
+            ])
             ->add('enviar', 'submit', [
-                'label' => 'Grabar sanción',
+                'label' => 'Grabar cambios de la sanción',
                 'attr' => ['class' => 'btn btn-success']
             ]);
     }
@@ -60,7 +88,8 @@ class SancionType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Sancion',
-            'alumno' => null,
+            'admin' => false,
+            'bloqueado' => false,
             'validation_groups' => function(FormInterface $form) {
                 if ($form->get('sinSancion')->getData() === true)
                     return ['Default', 'sin_sancion'];

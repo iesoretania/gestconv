@@ -9,6 +9,6 @@ parte.tramo.not_blank: Debe indicarse dónde ocurrió el suceso.
 sancion.medidas.min: Debe seleccionar al menos una medida.
 sancion.partes.min: Debe seleccionar al menos un parte.
 sancion.sin_sancion.motivos: Debe indicar los motivos de la no aplicación de sanción.
-
+sancion.fecha_fin_sancion.min: La fecha del final de la sanción debe ser mayor o igual que la de comienzo.
 password.min_length: La contraseña debe tener como mínimo {{ limit }} caracteres.
 password.no_match: Las nuevas contraseñas no coinciden.

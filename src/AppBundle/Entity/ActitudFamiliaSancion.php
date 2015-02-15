@@ -75,4 +75,12 @@ class ActitudFamiliaSancion
     {
         return $this->descripcion;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getDescripcion();
+    }
 }

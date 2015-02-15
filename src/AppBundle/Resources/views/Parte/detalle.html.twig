@@ -17,7 +17,7 @@
     {% endif %}
     {{ form(formulario_parte) }}
 
-    {% include 'AppBundle:Parte:partial_avisos_parte.html.twig' %}
+    {% include 'AppBundle:Parte:partial_avisos.html.twig' %}
 
     {% if parte.observaciones | length == 0 %}
         <div class="panel-heading">
@@ -25,7 +25,7 @@
         </div>
     {% endif %}
 
-    {% include 'AppBundle:Parte:partial_observaciones_parte.html.twig' %}
+    {% include 'AppBundle:Parte:partial_observaciones.html.twig' %}
 
     {{ form(formulario_observacion) }}
 

@@ -1,4 +1,4 @@
-{% if parte.observaciones | length > 0 %}
+{% if observaciones | length > 0 %}
     <div class="panel-heading">
         <h3 class="panel-title">Observaciones</h3>
     </div>
@@ -11,7 +11,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for observacion in parte.observaciones %}
+        {% for observacion in observaciones %}
             <tr>
                 <td>{{ observacion.fecha | date('d/m/Y H:m') }}</td>
                 <td>{{ observacion.usuario }}</td>

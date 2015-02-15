@@ -167,10 +167,10 @@ class ParteController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
 
         $formularioParte = $this->createForm(new ParteType(), $parte, [
-            'admin' => $esAdmin,
+            'admin' => $esRevisor,
             'bloqueado' => (false === is_null($parte->getSancion()))
         ]);
 
@@ -181,7 +181,7 @@ class ParteController extends Controller
             ->setAutomatica(false);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
-            'admin' => $esAdmin
+            'admin' => $esRevisor
         ]);
 
         $formularioObservacion->handleRequest($request);

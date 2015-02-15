@@ -1,4 +1,4 @@
-{% if (parte.avisos | length) > 0 %}
+{% if (avisos | length) > 0 %}
     <div class="panel-heading">
         <h3 class="panel-title">Avisos realizados</h3>
     </div>
@@ -12,7 +12,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for aviso in parte.avisos %}
+        {% for aviso in avisos %}
             <tr>
                 <td>{{ aviso.fecha | date('d/m/Y H:i') }}</td>
                 <td>{{ aviso.tipo.descripcion }}</td>

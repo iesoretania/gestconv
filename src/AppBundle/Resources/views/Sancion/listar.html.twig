@@ -32,7 +32,7 @@
             {% endif %}
             <tr class="{{ estado }}">
                 <td>{{ sancion.id }}</td>
-                <td>{{ sancion.fechaSancion | date('d/m/Y H:m') }}{% if sancion.fechaComunicado %} <span class="text-muted small">({{ sancion.fechaComunicado | date('d/m/Y') }})</span>{% endif %}</td>
+                <td>{{ sancion.fechaSancion | date('d/m/Y H:i') }}{% if sancion.fechaComunicado %} <span class="text-muted small">({{ sancion.fechaComunicado | date('d/m/Y') }})</span>{% endif %}</td>
                 <td>{{ sancion.partes[0].alumno }}</td>
                 <td>
                     {% if sancion.fechaInicioSancion %}<strong>Sancionado desde {{ sancion.fechaInicioSancion | date('d/m/Y')}} hasta {{ sancion.fechaFinSancion | date('d/m/Y') }}</strong><br />{% endif %}
@@ -54,7 +54,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    <a href="#" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+                    <a href="{{ path('sancion_detalle', {'sancion': sancion.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
                 </td>
             </tr>
         {% else %}
