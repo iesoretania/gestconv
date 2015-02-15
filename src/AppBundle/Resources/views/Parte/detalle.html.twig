@@ -15,7 +15,26 @@
             <strong>¡Atención!</strong> El parte ya ha sido sancionado, sólo desde Jefatura de estudios podrá ser modificado.
         </div>
     {% endif %}
-    {{ form(formulario) }}
-    <a href="{{ path('parte_listar') }}" class="btn btn-info">Volver al listado sin modificar el parte</a>
+    {{ form(formulario_parte) }}
+
+    {% include 'AppBundle:Parte:partial_avisos_parte.html.twig' %}
+
+    {% if parte.observaciones | length == 0 %}
+        <div class="panel-heading">
+            <h3 class="panel-title">Observaciones</h3>
+        </div>
+    {% endif %}
+
+    {% include 'AppBundle:Parte:partial_observaciones_parte.html.twig' %}
+
+    {{ form(formulario_observacion) }}
+
+    {% if parte.sancion %}
+        <h1 class="well">Sanción</h1>
+        {% set sancion = parte.sancion %}
+        {% include 'AppBundle:Sancion:partial_sancion.html.twig' %}
+    {% endif %}
+
+    <a href="{{ path('parte_listar') }}" class="btn btn-info">Volver al listado de partes</a>
 
 {% endblock %}

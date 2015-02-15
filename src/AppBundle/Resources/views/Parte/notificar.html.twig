@@ -9,7 +9,7 @@
 
     <h1 class="well">Notificación de partes a las familias</h1>
 
-    {%  set mensaje = 'Se marcará el parte como notificado para poder ser estudiado por la Comisión de Convivencia. ¿Desea continuar?' %}
+    {% set mensaje = 'Se marcará el parte como notificado para poder ser estudiado por la Comisión de Convivencia. ¿Desea continuar?' %}
     {% for alumno in alumnos %}
         <div class="panel panel-default">
             {% include 'AppBundle:Alumno:partial_alumno.html.twig' %}

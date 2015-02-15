@@ -1,0 +1,23 @@
+{% if parte.observaciones | length > 0 %}
+    <div class="panel-heading">
+        <h3 class="panel-title">Observaciones</h3>
+    </div>
+    <table class="table table-hover table-striped table-condensed table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-2">Fecha</th>
+            <th class="col-md-3">Creada por</th>
+            <th class="col-md-7">Detalle</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for observacion in parte.observaciones %}
+            <tr>
+                <td>{{ observacion.fecha | date('d/m/Y H:m') }}</td>
+                <td>{{ observacion.usuario }}</td>
+                <td>{{ observacion.anotacion | nl2br }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
