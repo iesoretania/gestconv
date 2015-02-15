@@ -30,7 +30,7 @@ class SancionType extends BaseSancionType
                 'widget' => 'single_text',
                 'required' => false
             ]);
-        
+
         parent::buildForm($builder, $options);
 
         $builder
