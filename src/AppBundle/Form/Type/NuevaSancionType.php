@@ -2,13 +2,12 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormInterface;
 
-class NuevaSancionType extends AbstractType
+class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -37,37 +36,11 @@ class NuevaSancionType extends AbstractType
                     return $qb;
                 },
                 'required'  => true
-            ])
-            ->add('medidas', null, [
-                'label' => 'Medidas tomadas*',
-                'required' => true,
-                'expanded' => true
-            ])
-            ->add('anotacion', 'textarea', [
-                'label' => 'Detalle de la sanción impuesta*',
-                'required' => true,
-                'attr' => ['rows' => '8']
-            ])
-            ->add('fechaInicioSancion', 'date', [
-                'label' => 'Sanción efectiva desde',
-                'widget' => 'single_text',
-                'required' => false
-            ])
-            ->add('fechaFinSancion', 'date', [
-                'label' => 'Sanción efectiva hasta',
-                'widget' => 'single_text',
-                'required' => false
-            ])
-            ->add('sinSancion', 'checkbox', [
-                'label' => 'No se aplica corrección/medida disciplinaria',
-                'mapped' => false,
-                'required' => false
-            ])
-            ->add('motivosNoAplicacion', 'textarea', [
-                'label' => 'Motivos de la no aplicación de sanción',
-                'attr' => ['rows' => '8'],
-                'required' => false
-            ])
+            ]);
+
+        parent::buildForm($builder, $options);
+
+        $builder
             ->add('enviar', 'submit', [
                 'label' => 'Grabar sanción',
                 'attr' => ['class' => 'btn btn-success']

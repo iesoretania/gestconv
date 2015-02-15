@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormInterface;
 
-abstract class NuevaSancionType extends AbstractType
+abstract class BaseSancionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
