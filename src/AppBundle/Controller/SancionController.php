@@ -90,10 +90,9 @@ class SancionController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $notificada = $request->request->get('notificada');
-        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($notificada))) {
+        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
 
-            $id = $request->request->get(($notificada) ? 'notificada' : 'noNotificada');
+            $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 
             $sanciones = $em->getRepository('AppBundle:Sancion')
                 ->findAllNoNotificadosPorAlumno($id);
@@ -106,7 +105,7 @@ class SancionController extends Controller
                     ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
                     ->setSancion($sancion);
 
-                if ($notificada) {
+                if ($request->request->get('notificada')) {
                     $sancion->setFechaComunicado(new \DateTime());
                 }
 
@@ -163,8 +162,6 @@ class SancionController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN');
-
         $formularioSancion = $this->createForm(new SancionType(), $sancion, [
             'admin' => true,
             'bloqueado' => false
@@ -179,7 +176,7 @@ class SancionController extends Controller
             ->setAutomatica(false);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
-            'admin' => $esAdmin
+            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
         ]);
 
         $formularioObservacion->handleRequest($request);
