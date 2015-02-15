@@ -126,4 +126,25 @@ class SancionController extends Controller
             ]);
     }
 
+
+    /**
+     * @Route("/listar", name="sancion_listar",methods={"GET"})
+     */
+    public function listarAction()
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $sanciones = $em->getRepository('AppBundle:Sancion')
+            ->createQueryBuilder('s')
+            ->orderBy('s.fechaSancion', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('AppBundle:Sancion:listar.html.twig',
+            [
+                'sanciones' => $sanciones,
+                'usuario' => $usuario
+            ]);
+    }
 }

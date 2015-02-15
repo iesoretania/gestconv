@@ -1,0 +1,69 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Gestionar sanciones' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Gestionar sanciones</li>
+    </ol>
+
+    <h1 class="well">Listado de sanciones registradas</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive listado">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th class="col-md-1">Fecha registro (comunicación)</th>
+            <th class="col-md-2">Estudiante</th>
+            <th class="col-md-5">Resumen sanción</th>
+            <th class="col-md-3">Estado</th>
+            <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sancion in sanciones %}
+            {% set partes = sancion.partes %}
+            {% if sancion.fechaComunicado %}
+                {% set estado = "success" %}
+            {% elseif sancion.motivosNoAplicacion is null %}
+                {% set estado = "warning" %}
+            {% else %}
+                {% set estado = "" %}
+            {% endif %}
+            <tr class="{{ estado }}">
+                <td>{{ sancion.id }}</td>
+                <td>{{ sancion.fechaSancion | date('d/m/Y H:m') }}{% if sancion.fechaComunicado %} <span class="text-muted small">({{ sancion.fechaComunicado | date('d/m/Y') }})</span>{% endif %}</td>
+                <td>{{ sancion.partes[0].alumno }}</td>
+                <td>
+                    {% if sancion.fechaInicioSancion %}<strong>Sancionado desde {{ sancion.fechaInicioSancion | date('d/m/Y')}} hasta {{ sancion.fechaFinSancion | date('d/m/Y') }}</strong><br />{% endif %}
+                    {{ sancion.anotacion | nl2br }}
+                    <ul>
+                        {% for medida in sancion.medidas %}
+                            <li>{{ medida.descripcion }} - {{ medida.categoria.descripcion }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td>
+                    {{ (partes | length) == 1 ? '1 parte asociado. ' : (sancion.partes | length) ~ ' partes asociados.' }}
+                    {% if sancion.motivosNoAplicacion is not null %}
+                        No se aplica sanción
+                    {% elseif sancion.fechaComunicado is null %}
+                        No comunicado
+                    {% else %}
+                        Comunicado el {{ sancion.fechaComunicado | date('d/m/Y') }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="#" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No hay sanciones que mostrar</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+{% endblock %}

@@ -10,7 +10,7 @@
     <table class="table table-bordered table-hover table-striped table-responsive listado">
         <thead>
         <tr>
-            <th class="col-md-6">Estudiante</th>
+            <th class="col-md-7">Estudiante</th>
             <th class="col-md-3">Fechas</th>
             <th class="col-md-1">Partes a considerar</th>
             <th class="col-md-1"></th>
@@ -28,7 +28,7 @@
                 </td>
                 <td>{{ alumno[1] }}</td>
                 <td>
-                    <a href="{{ path('parte_sancionar', {'alumno': alumno[0].id }) }}" class="btn btn-warning btn-block">Sancionar</a>
+                    <a href="{{ path('parte_sancionar', {'alumno': alumno[0].id }) }}" class="btn btn-warning btn-block"><i class="fa fa-gavel"></i> Sancionar</a>
                 </td>
             </tr>
         {% else %}

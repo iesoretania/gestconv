@@ -54,4 +54,5 @@ class UsuarioController extends Controller
                 'formulario' => $formulario->createView()
             ]);
     }
+
 }
