@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Form\FormInterface;
 
-class NuevoParteType extends AbstractType
+class ParteType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -23,53 +23,62 @@ class NuevoParteType extends AbstractType
                 ]);
         }
 
+        $desactivado = !$options['admin'] && $options['bloqueado'];
+
         $builder
             ->add('fechaSuceso', null, [
                 'label' => 'Fecha y hora del suceso*',
-                'required'  => true
+                'required'  => true,
+                'disabled' => $desactivado
+            ])
+            ->add('fechaCreacion', null, [
+                'label' => 'Fecha y hora del registro*',
+                'required'  => true,
+                'disabled' => ($desactivado)
             ])
             ->add('tramo', null, [
                 'label' => 'Dónde ha sucedido*',
-                'required'  => true
+                'required'  => true,
+                'disabled' => ($desactivado)
             ])
-            ->add('alumnos', 'entity', [
+            ->add('alumno', 'entity', [
                 'label' => 'Alumnado implicado*',
                 'class' => 'AppBundle\Entity\Alumno',
-                'mapped' => false,
-                'multiple' => true,
-                'attr' => ['data-placeholder' => 'Escriba parte del nombre o el grupo al que pertenece'],
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('u')
-                        ->orderBy('u.apellido1', 'ASC')
-                        ->addOrderBy('u.apellido2', 'ASC')
-                        ->addOrderBy('u.nombre', 'ASC');
-                },
-                'required'  => false
+                'required'  => false,
+                'disabled' => true
             ])
             ->add('conductas', null, [
                 'label' => 'Conductas que provocan el parte*',
                 'required' => true,
-                'expanded' => true
+                'expanded' => true,
+                'disabled' => ($desactivado)
             ])
             ->add('anotacion', 'textarea', [
                 'label' => 'Detalle de lo acontecido*',
                 'required' => true,
-                'attr' => ['rows' => '8']
+                'attr' => ['rows' => '8'],
+                'disabled' => ($desactivado)
 
             ])
             ->add('hayExpulsion', null, [
                 'label' => 'Marcar si se expulsó al alumnado implicado del aula',
-                'required' => false
+                'required' => false,
+                'disabled' => ($desactivado)
             ])
             ->add('actividades', 'textarea', [
                 'label' => 'Actividades a realizar por el alumnado expulsado del aula',
                 'required' => false,
-                'attr' => ['rows' => '5']
-            ])
-            ->add('enviar', 'submit', [
-                'label' => 'Registrar parte',
-                'attr' => ['class' => 'btn btn-success']
+                'attr' => ['rows' => '5'],
+                'disabled' => ($desactivado)
             ]);
+
+        if (false === $desactivado) {
+            $builder
+                ->add('enviar', 'submit', [
+                    'label' => 'Modificar parte',
+                    'attr' => ['class' => 'btn btn-success']
+                ]);
+        }
     }
 
     /**
@@ -80,6 +89,7 @@ class NuevoParteType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Parte',
             'admin' => false,
+            'bloqueado' => false,
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if ($data->getHayExpulsion() === true)
@@ -95,6 +105,6 @@ class NuevoParteType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_nuevoparte';
+        return 'appbundle_parte';
     }
 }

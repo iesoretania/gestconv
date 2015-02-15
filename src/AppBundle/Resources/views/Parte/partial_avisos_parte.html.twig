@@ -1,0 +1,25 @@
+{% if (parte.avisos | length) > 0 %}
+    <div class="panel-heading">
+        <h3 class="panel-title">Avisos realizados</h3>
+    </div>
+    <table class="table table-hover table-striped table-condensed table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-2">Fecha y hora</th>
+            <th class="col-md-2">Tipo</th>
+            <th class="col-md-4">Por</th>
+            <th class="col-md-4">Observaciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for aviso in parte.avisos %}
+            <tr>
+                <td>{{ aviso.fecha | date('d/m/Y H:i') }}</td>
+                <td>{{ aviso.tipo.descripcion }}</td>
+                <td>{{ aviso.usuario }}</td>
+                <td>{{ aviso.anotacion | nl2br }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}

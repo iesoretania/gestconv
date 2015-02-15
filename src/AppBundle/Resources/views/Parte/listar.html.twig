@@ -7,7 +7,7 @@
         <li class="active">Gestionar partes</li>
     </ol>
 
-    <h1 class="well">Gestionar partes</h1>
+    <h1 class="well">Listado de partes registrados</h1>
 
     <table class="table table-bordered table-hover table-striped table-responsive listado">
         <thead>
@@ -45,11 +45,14 @@
                             Pendiente de sanción
                         {% else %}
                             Sancionado el {{ parte.sancion.fechaSancion | date('d/m/Y') }}
+                            {% if parte.sancion.fechaComunicado %}
+                                con comunicación el {{ parte.sancion.fechaComunicado | date('d/m/Y') }}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </td>
                 <td>
-                    <a href="#" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+                    <a href="{{ path('parte_detalle', {'parte': parte.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
                 </td>
             </tr>
         {% else %}

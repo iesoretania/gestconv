@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\AvisoParte;
+use AppBundle\Entity\ObservacionParte;
 use AppBundle\Entity\Parte;
+use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevoParteType;
+use AppBundle\Form\Type\ParteType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,12 +33,13 @@ class ParteController extends Controller
             ->setUsuario($usuario)
             ->setPrescrito(false);
 
+        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
         $formulario = $this->createForm(new NuevoParteType(), $parte, [
-            'admin' => $usuario->getEsAdministrador()
+            'admin' => $esAdmin
         ]);
 
         $formulario->handleRequest($peticion);
-        if (!$usuario->getEsAdministrador()) {
+        if (false === $esAdmin) {
             $parte->setUsuario($usuario);
         }
 
@@ -151,6 +155,62 @@ class ParteController extends Controller
         return $this->render('AppBundle:Parte:listar.html.twig',
             [
                 'partes' => $partes,
+                'usuario' => $usuario
+            ]);
+    }
+
+    /**
+     * @Route("/detalle/{parte}", name="parte_detalle",methods={"GET", "POST"})
+     */
+    public function detalleAction(Parte $parte, Request $request)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+
+        $formularioParte = $this->createForm(new ParteType(), $parte, [
+            'admin' => $esAdmin,
+            'bloqueado' => (false === is_null($parte->getSancion()))
+        ]);
+
+        $observacion = new ObservacionParte();
+        $observacion->setFecha(new \DateTime())
+            ->setParte($parte)
+            ->setUsuario($usuario)
+            ->setAutomatica(false);
+
+        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
+            'admin' => $esAdmin
+        ]);
+
+        $formularioObservacion->handleRequest($request);
+
+        if ($formularioObservacion->isSubmitted() && $formularioObservacion->isValid()) {
+            $em->persist($observacion);
+            $em->flush();
+            $this->addFlash('success', 'Observación registrada correctamente');
+        }
+
+        $formularioParte->handleRequest($request);
+
+        if ($formularioParte->isSubmitted() && $formularioParte->isValid()) {
+
+            $em->flush();
+
+            $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
+
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('parte_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Parte:detalle.html.twig',
+            [
+                'parte' => $parte,
+                'formulario_parte' => $formularioParte->createView(),
+                'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
             ]);
     }

@@ -50,6 +50,11 @@ class Observacion
      * @var string
      */
     protected $anotacion;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
+    protected $automatica;
 
     /**
      * Get id
@@ -65,7 +70,7 @@ class Observacion
      * Set usuario
      *
      * @param Usuario $usuario
-     * @return ObservacionParte
+     * @return self
      */
     public function setUsuario(Usuario $usuario = null)
     {
@@ -88,7 +93,7 @@ class Observacion
      * Set fecha
      *
      * @param \DateTime $fecha
-     * @return ObservacionParte
+     * @return self
      */
     public function setFecha($fecha)
     {
@@ -111,7 +116,7 @@ class Observacion
      * Set anotacion
      *
      * @param string $anotacion
-     * @return ObservacionParte
+     * @return self
      */
     public function setAnotacion($anotacion)
     {
@@ -128,5 +133,28 @@ class Observacion
     public function getAnotacion()
     {
         return $this->anotacion;
+    }
+
+    /**
+     * Set automatica
+     *
+     * @param boolean $automatica
+     * @return self
+     */
+    public function setAutomatica($automatica)
+    {
+        $this->automatica = $automatica;
+
+        return $this;
+    }
+
+    /**
+     * Get automatica
+     *
+     * @return boolean
+     */
+    public function getAutomatica()
+    {
+        return $this->automatica;
     }
 }
