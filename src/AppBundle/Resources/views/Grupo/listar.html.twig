@@ -1,0 +1,44 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Gestionar tutoría' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Gestionar tutoría</li>
+    </ol>
+
+    <h1 class="well">Listado de alumnado de la tutoría</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-1">Grupo</th>
+            <th class="col-md-4">Estudiante</th>
+            <th class="col-md-2">Partes</th>
+            <th class="col-md-2">Sanciones</th>
+            <th class="col-md-3">Estado</th>
+            <th class="col-md-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for alumno in alumnos %}
+            <tr>
+                <td>{{ alumno.grupo }}</td>
+                <td>{{ alumno.nombreCompleto }} <span class="text-muted small">({{ alumno.fechaNacimiento | date('d/m/Y') }})</span></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a href="#" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No hay estudiantes que mostrar</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+{% endblock %}

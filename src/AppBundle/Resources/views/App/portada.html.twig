@@ -43,6 +43,19 @@
             </a>
         </article>
     {% endif %}
+    {% if is_granted('ROLE_TUTOR') %}
+        <article class="col-md-4 tile tile-col-4 tile-yellow">
+            <a class="tile-link" href="{{ path('grupo_listar') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-group fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Alumnado de mi tutoría</h4>
+                    <p>Permite mostrar información sobre el grupo</p>
+                </div>
+            </a>
+        </article>
+    {% endif %}
     {% if is_granted('ROLE_REVISOR') %}
         {% if partes_sancionables > 0 %}
             <article class="col-md-4 tile tile-col-4 tile-teal">

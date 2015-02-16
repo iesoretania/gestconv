@@ -196,8 +196,16 @@ class Alumno
      *
      * @return string
      */
+    public function getNombreCompleto() {
+        return $this->getApellidos() . ', ' . $this->getNombre();
+    }
+
+    /**
+     *
+     * @return string
+     */
     public function __toString() {
-        return $this->getApellidos() . ', ' . $this->getNombre() . ' (' . $this->getGrupo()->getDescripcion() . ')';
+        return $this->getNombreCompleto() . ' (' . $this->getGrupo()->getDescripcion() . ')';
     }
 
     /**
