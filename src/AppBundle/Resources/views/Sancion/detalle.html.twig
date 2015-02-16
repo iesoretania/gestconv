@@ -40,6 +40,6 @@
     {% for parte in sancion.partes %}
         {% include "AppBundle:Parte:partial_parte.html.twig" %}
     {% endfor %}
-    {% dump app.request %}
+
     <a href="{{ path('sancion_listar') }}" class="btn btn-info">Volver al listado de sanciones</a>
 {% endblock %}
