@@ -36,7 +36,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return Usuario
      */
-    function generateUsuario()
+    public function generateUsuario()
     {
         $usuario = new Usuario();
         // Generar tipo de alumno (0=H, 1=M)

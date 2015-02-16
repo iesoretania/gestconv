@@ -37,7 +37,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
      * @param int $anio Año de nacimiento, null si aleatorio
      * @return Alumno
      */
-    static function generateAlumno($anio = null)
+    static public function generateAlumno($anio = null)
     {
         $alumno = new Alumno();
         // Generar tipo de alumno (0=H, 1=M)
@@ -110,7 +110,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
      * @param Grupo $grupo Grupo al que pertenecerá el alumno
      * @param int $anio Año de nacimiento aproximado
      */
-    static function createAlumnos($manager, $n, $grupo, $anio)
+    static public function createAlumnos($manager, $n, $grupo, $anio)
     {
         for ($k = 0; $k < $n; $k++) {
             $alumno = self::generateAlumno($anio);

@@ -51,7 +51,7 @@ class Nombres
      * @param boolean $esMovil
      * @return string
      */
-    static function generateTelefono($esMovil)
+    static public function generateTelefono($esMovil)
     {
         $prefijos = ['69', '65', '60'];
         if ($esMovil) {
@@ -80,7 +80,7 @@ class Nombres
      * @param int $tipo 0 para generar un nombre de hombre y 1 de mujer
      * @return array
      */
-    static function generateNombreCompleto($tipo)
+    static public function generateNombreCompleto($tipo)
     {
         // Obtener un nombre al azar
         $nNombre = rand(0, count(self::$nombres[$tipo])-1);
@@ -109,7 +109,7 @@ class Nombres
      * @param array $nombre
      * @return string
      */
-    static function composeNombre($nombre)
+    static public function composeNombre($nombre)
     {
         return $nombre['nombre'] . ' ' . $nombre['apellido1'] . ' ' . $nombre['apellido2'];
     }
