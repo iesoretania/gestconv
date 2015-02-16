@@ -71,6 +71,7 @@ class Sancion
     protected $fechaInicioSancion;
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Expression(expression="(this.getFechaInicioSancion() == null and this.getFechaFinSancion() == null) or (this.getFechaInicioSancion() != null and this.getFechaFinSancion() >= this.getFechaInicioSancion())", message="sancion.fecha_fin_sancion.min")
      * @var \DateTime
      */
     protected $fechaFinSancion;
@@ -525,4 +526,5 @@ class Sancion
     {
         return $this->fechaFinSancion;
     }
+
 }

@@ -167,15 +167,15 @@ class ParteController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
         $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
 
-        if (!$esAdmin && !$esTutor && $parte->getUsuario() != $usuario) {
+        if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException('No puede acceder al parte indicado');
         }
 
         $formularioParte = $this->createForm(new ParteType(), $parte, [
-            'admin' => $esAdmin,
+            'admin' => $esRevisor,
             'bloqueado' => (false === is_null($parte->getSancion()))
         ]);
 
@@ -186,7 +186,7 @@ class ParteController extends Controller
             ->setAutomatica(false);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
-            'admin' => $esAdmin
+            'admin' => $esRevisor
         ]);
 
         $formularioObservacion->handleRequest($request);
