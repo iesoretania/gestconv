@@ -49,8 +49,38 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findPorUsuarioOTutoria($usuario)
+    {
+        $orX = $this->getEntityManager()->createQueryBuilder()
+            ->expr()->orX()
+            ->add('p.usuario = :usuario')
+            ->add('g.tutor = :usuario');
+
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->innerJoin('p.alumno', 'a')
+            ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
+            ->andWhere($orX)
+            ->setParameter('usuario', $usuario);
+    }
+
+    public function findPorUsuario($usuario)
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->where('p.usuario = :usuario')
+            ->setParameter('usuario', $usuario);
+    }
 
     public function findNoNotificadosPorUsuario($usuario)
+    {
+        return $this->findPorUsuario($usuario)
+            ->andWhere('p.fechaAviso IS NULL');
+    }
+
+    public function findNoNotificadosPorUsuarioOTutoria($usuario)
     {
         $orX = $this->getEntityManager()->createQueryBuilder()
             ->expr()->orX()
@@ -70,10 +100,43 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllPorUsuario($usuario)
+    public function findAllPorUsuarioOTutoria($usuario)
     {
-        return $this->findPorUsuario($usuario)
+        return $this->findPorUsuarioOTutoria($usuario)
             ->getQuery()
             ->getResult();
+    }
+
+    public function countNoNotificadosPorUsuario($usuario)
+    {
+        return $this->findNoNotificadosPorUsuario($usuario)
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countNoNotificadosPorUsuarioOTutoria($usuario)
+    {
+        return $this->findNoNotificadosPorUsuarioOTutoria($usuario)
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countPorUsuarioOTutoria($usuario)
+    {
+        return $this->findPorUsuarioOTutoria($usuario)
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
+    public function countPorUsuario($usuario)
+    {
+        return $this->findPorUsuario($usuario)
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

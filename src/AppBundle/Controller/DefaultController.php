@@ -18,27 +18,13 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $partesPendientesPropios = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
-            ->select('COUNT(p.id)')
-            ->where('p.fechaAviso IS NULL')
-            ->andWhere('p.usuario = :usuario')
-            ->setParameter('usuario', $usuario)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->countNoNotificadosPorUsuario($usuario);
 
         $partesPendientesTotales = $em->getRepository('AppBundle:Parte')
-            ->findNoNotificadosPorUsuario($usuario)
-            ->select('COUNT(p)')
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->countNoNotificadosPorUsuarioOTutoria($usuario);
 
         $partesTotales = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
-            ->select('COUNT(p.id)')
-            ->andWhere('p.usuario = :usuario')
-            ->setParameter('usuario', $usuario)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->countPorUsuario($usuario);
 
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
             $partesSancionables = $em->getRepository('AppBundle:Parte')
