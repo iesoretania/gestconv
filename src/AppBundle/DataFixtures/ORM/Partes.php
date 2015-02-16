@@ -41,7 +41,7 @@ class Partes extends AbstractFixture implements OrderedFixtureInterface
      *
      * @return int
      */
-    static function getCuenta()
+    static public function getCuenta()
     {
         return self::$frecuenciaCuenta[rand(0, count(self::$frecuenciaCuenta)-1)];
     }
@@ -51,7 +51,7 @@ class Partes extends AbstractFixture implements OrderedFixtureInterface
      * @param $manager EntityManager de Doctrine
      * @param $profesor Usuario al que se asigna el parte
      */
-    function createParte(ObjectManager $manager, Usuario $profesor, TramoParte $tramo)
+    public function createParte(ObjectManager $manager, Usuario $profesor, TramoParte $tramo)
     {
         $grupos = $manager->getRepository('AppBundle:Grupo')->findAll();
         shuffle($grupos);
@@ -107,7 +107,8 @@ class Partes extends AbstractFixture implements OrderedFixtureInterface
         $usuarios = $manager->getRepository('AppBundle:Usuario')->findAll();
         shuffle($usuarios);
 
-        for ($i = 1; $i < count($usuarios); $i++) {
+        $total = count($usuarios);
+        for ($i = 1; $i < $total; $i++) {
             $usuario = next($usuarios);
             $cuenta = self::getCuenta();
             for ($j = 0; $j < $cuenta; $j++) {
