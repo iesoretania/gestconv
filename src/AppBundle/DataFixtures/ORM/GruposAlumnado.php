@@ -105,10 +105,10 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
     /**
      * Crea un grupos de alumnos aleatorio y lo asigna al grupo
      *
-     * @param $manager EntityManager de Doctrine
-     * @param $n Número de alumnos a crear
-     * @param $grupo Grupo al que pertenecerá el alumno
-     * @param $anio Año de nacimiento aproximado
+     * @param ObjectManager $manager EntityManager de Doctrine
+     * @param int $n Número de alumnos a crear
+     * @param Grupo $grupo Grupo al que pertenecerá el alumno
+     * @param int $anio Año de nacimiento aproximado
      */
     static function createAlumnos($manager, $n, $grupo, $anio)
     {

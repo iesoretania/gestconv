@@ -26,7 +26,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use AppBundle\Entity\Usuario;
-use Faker\Provider\Internet;
 
 class Usuarios extends AbstractFixture implements OrderedFixtureInterface
 {
