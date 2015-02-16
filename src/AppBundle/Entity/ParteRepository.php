@@ -96,6 +96,7 @@ class ParteRepository extends EntityRepository
     public function findAllNoNotificadosPorUsuario($usuario)
     {
         return $this->findNoNotificadosPorUsuario($usuario)
+            ->orderBy('p.fechaSuceso', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -103,6 +104,7 @@ class ParteRepository extends EntityRepository
     public function findAllPorUsuarioOTutoria($usuario)
     {
         return $this->findPorUsuarioOTutoria($usuario)
+            ->orderBy('p.fechaSuceso', 'DESC')
             ->getQuery()
             ->getResult();
     }

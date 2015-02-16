@@ -143,11 +143,7 @@ class ParteController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $partes = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
-            ->andWhere('p.usuario = :usuario')
-            ->setParameter('usuario', $usuario)
-            ->getQuery()
-            ->getResult();
+            ->findAllPorUsuarioOTutoria($usuario);
 
         return $this->render('AppBundle:Parte:listar.html.twig',
             [

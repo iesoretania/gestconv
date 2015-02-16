@@ -33,7 +33,7 @@
             <tr class="{{ estado }}">
                 <td>{{ parte.id }}</td>
                 <td>{{ parte.fechaSuceso | date('d/m/Y') }} <span class="text-muted small">({{ parte.fechaCreacion | date('d/m/Y') }})</span></td>
-                <td>{{ parte.alumno }}{% if parte.usuario != usuario %} - Registrado por {{ parte.usuario }}{% endif %}</td>
+                <td>{% if parte.usuario == usuario %}<strong>{% endif %}{{ parte.alumno }}{% if parte.usuario == usuario %}</strong>{% endif %}{% if parte.usuario != usuario %} - Registrado por {{ parte.usuario }}{% endif %}</td>
                 <td>
                     {% if parte.prescrito %}
                         Prescrito
