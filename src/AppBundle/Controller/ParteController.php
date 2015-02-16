@@ -33,15 +33,11 @@ class ParteController extends Controller
             ->setUsuario($usuario)
             ->setPrescrito(false);
 
-        $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
         $formulario = $this->createForm(new NuevoParteType(), $parte, [
-            'admin' => $esAdmin
+            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')
         ]);
 
         $formulario->handleRequest($peticion);
-        if (false === $esAdmin) {
-            $parte->setUsuario($usuario);
-        }
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
