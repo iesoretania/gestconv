@@ -53,7 +53,7 @@ class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
         $nie = rand(1000, 10000000);
 
         // Fecha nacimiento
-        if ($anio == null) {
+        if ($anio === null) {
             $anio = rand(1990, 2002);
         }
         else {
