@@ -99,11 +99,12 @@ class SancionController extends Controller
 
             foreach ($sanciones as $sancion) {
                 $avisoSancion = new AvisoSancion();
-                $avisoSancion->setUsuario($usuario)
+                $avisoSancion
+                    ->setSancion($sancion)
+                    ->setUsuario($usuario)
                     ->setAnotacion($request->request->get('anotacion'))
                     ->setFecha(new \DateTime())
-                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
-                    ->setSancion($sancion);
+                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')));
 
                 if ($request->request->get('notificada')) {
                     $sancion->setFechaComunicado(new \DateTime());

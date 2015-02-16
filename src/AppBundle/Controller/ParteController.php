@@ -86,11 +86,12 @@ class ParteController extends Controller
 
             foreach ($partes as $parte) {
                 $avisoParte = new AvisoParte();
-                $avisoParte->setUsuario($usuario)
+                $avisoParte
+                    ->setParte($parte)
+                    ->setUsuario($usuario)
                     ->setAnotacion($request->request->get('anotacion'))
                     ->setFecha(new \DateTime())
-                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')))
-                    ->setParte($parte);
+                    ->setTipo($em->getRepository('AppBundle:CategoriaAviso')->find($request->request->get('tipo')));
 
                 if ($request->request->get('notificada')) {
                     $parte->setFechaAviso(new \DateTime());
