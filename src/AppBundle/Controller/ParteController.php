@@ -168,6 +168,11 @@ class ParteController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $esAdmin = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
+
+        if (!$esAdmin && !$esTutor && $parte->getUsuario() != $usuario) {
+            throw $this->createAccessDeniedException('No puede acceder al parte indicado');
+        }
 
         $formularioParte = $this->createForm(new ParteType(), $parte, [
             'admin' => $esAdmin,

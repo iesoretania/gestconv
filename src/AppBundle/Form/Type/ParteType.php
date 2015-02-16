@@ -34,7 +34,7 @@ class ParteType extends AbstractType
             ->add('fechaCreacion', null, [
                 'label' => 'Fecha y hora del registro*',
                 'required'  => true,
-                'disabled' => ($desactivado)
+                'disabled' => (!$options['admin'])
             ])
             ->add('tramo', null, [
                 'label' => 'Dónde ha sucedido*',
