@@ -15,7 +15,7 @@
             {% include 'AppBundle:Alumno:partial_alumno.html.twig' %}
 
             {% set marcar = false %}
-            {% for parte in alumno.partes if parte.usuario == usuario %}
+            {% for parte in alumno.partes if parte.usuario == usuario or parte.alumno.grupo.tutor == usuario %}
                 {% include 'AppBundle:Parte:partial_parte.html.twig' %}
             {% endfor %}
 

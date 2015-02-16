@@ -34,19 +34,29 @@ class AlumnoRepository extends EntityRepository
         return $this->getEntityManager()
             ->getRepository('AppBundle:Alumno')
             ->createQueryBuilder('a')
-            ->innerJoin('AppBundle:Parte', 'p')
+            ->innerJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
             ->where('p.fechaAviso IS NULL')
-            ->andWhere('p.alumno = a')
             ->orderBy('a.apellido1', 'ASC')
             ->addOrderBy('a.apellido2', 'ASC')
             ->addOrderBy('a.nombre', 'ASC');
     }
 
+    public function findConPartesAunNoNotificadosPorUsuario(Usuario $usuario)
+    {
+        $orX = $this->getEntityManager()->createQueryBuilder()
+            ->expr()->orX()
+            ->add('p.usuario = :usuario')
+            ->add('g.tutor = :usuario');
+
+        return $this->findConPartesAunNoNotificados()
+            ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
+            ->andWhere($orX)
+            ->setParameter('usuario', $usuario);
+    }
+
     public function findAllConPartesAunNoNotificadosPorUsuario(Usuario $usuario)
     {
-        return $this->findConPartesAunNoNotificados()
-            ->andWhere('p.usuario = :usuario')
-            ->setParameter('usuario', $usuario)
+        return $this->findConPartesAunNoNotificadosPorUsuario($usuario)
             ->getQuery()
             ->getResult();
     }

@@ -29,17 +29,50 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParteRepository extends EntityRepository
 {
-    public function findAllNoNotificadosPorAlumnoYUsuario($alumno, $usuario)
+    public function findNoNotificados()
     {
         return $this->getEntityManager()
             ->getRepository('AppBundle:Parte')
             ->createQueryBuilder('p')
             ->innerJoin('p.alumno', 'a')
-            ->where('p.fechaAviso IS NULL')
+            ->where('p.fechaAviso IS NULL');
+    }
+
+    public function findAllNoNotificadosPorAlumnoYUsuario($alumno, $usuario)
+    {
+        return $this->findNoNotificados()
             ->andWhere('p.usuario = :usuario')
             ->andWhere('p.alumno = :alumno')
             ->setParameter('usuario', $usuario)
             ->setParameter('alumno', $alumno)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findNoNotificadosPorUsuario($usuario)
+    {
+        $orX = $this->getEntityManager()->createQueryBuilder()
+            ->expr()->orX()
+            ->add('p.usuario = :usuario')
+            ->add('g.tutor = :usuario');
+
+        return $this->findNoNotificados()
+            ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
+            ->andWhere($orX)
+            ->setParameter('usuario', $usuario);
+    }
+
+    public function findAllNoNotificadosPorUsuario($usuario)
+    {
+        return $this->findNoNotificadosPorUsuario($usuario)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllPorUsuario($usuario)
+    {
+        return $this->findPorUsuario($usuario)
             ->getQuery()
             ->getResult();
     }

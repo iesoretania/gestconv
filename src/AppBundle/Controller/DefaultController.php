@@ -17,12 +17,18 @@ class DefaultController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $partesPendientes = $em->getRepository('AppBundle:Parte')
+        $partesPendientesPropios = $em->getRepository('AppBundle:Parte')
             ->createQueryBuilder('p')
             ->select('COUNT(p.id)')
             ->where('p.fechaAviso IS NULL')
             ->andWhere('p.usuario = :usuario')
             ->setParameter('usuario', $usuario)
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        $partesPendientesTotales = $em->getRepository('AppBundle:Parte')
+            ->findNoNotificadosPorUsuario($usuario)
+            ->select('COUNT(p)')
             ->getQuery()
             ->getSingleScalarResult();
 
@@ -65,8 +71,9 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle:App:portada.html.twig', [
-            'partes_pendientes' => $partesPendientes,
+            'partes_pendientes_totales' => $partesPendientesTotales,
             'partes_totales' => $partesTotales,
+            'partes_pendientes_propios' => $partesPendientesPropios,
             'partes_sancionables' => $partesSancionables,
             'sanciones_notificables' => $sancionesNotificables,
             'sanciones_totales' => $sancionesTotales

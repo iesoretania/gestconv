@@ -1,7 +1,7 @@
 <div class="panel-heading">
     <h3 class="panel-title">
         {% if marcar %}<input type="checkbox" class="casilla" name="{{ marcar.full_name }}" value="{{ parte.id }}" {{ marcar.checked ? 'checked' }}>{% endif %}
-        Parte #{{ parte.id }} - Registrado por {{ parte.usuario }}
+        <strong>Parte #{{ parte.id }}</strong> - Registrado por {{ parte.usuario }}
         - {{ parte.fechaSuceso | date('d/m/Y H:i') }}
         {% if parte.fechaAviso %} - Notificado el {{ parte.fechaAviso | date('d/m/Y H:i') }}{% endif %}
         </h3>
