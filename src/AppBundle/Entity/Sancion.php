@@ -66,12 +66,14 @@ class Sancion
     protected $fechaRegistro;
     /**
      * @ORM\Column(type="date", nullable=true)
+     * @Assert\Blank(groups={"sin_sancion"}, message="sancion.sin_sancion.fecha")
      * @var \DateTime
      */
     protected $fechaInicioSancion;
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Assert\Expression(expression="(this.getFechaInicioSancion() == null and this.getFechaFinSancion() == null) or (this.getFechaInicioSancion() != null and this.getFechaFinSancion() >= this.getFechaInicioSancion())", message="sancion.fecha_fin_sancion.min")
+     * @Assert\Blank(groups={"sin_sancion"}, message="sancion.sin_sancion.fecha")
      * @var \DateTime
      */
     protected $fechaFinSancion;
