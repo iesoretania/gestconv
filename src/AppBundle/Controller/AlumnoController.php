@@ -24,8 +24,16 @@ class AlumnoController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a');
+        $alumnos = $em->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->join('AppBundle:Alumno', 'a', 'WITH', 'p.alumno = a')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->select('a')
+            ->addSelect('count(p)')
+            ->addSelect('count(p.fechaAviso)')
+            ->addSelect('count(p.sancion)')
+            ->addSelect('count(s.fechaComunicado)')
+            ->addSelect('count(s.motivosNoAplicacion)');
 
         if ($request->get('_route') == 'alumno_tutoria') {
             $alumnos = $alumnos
@@ -38,12 +46,13 @@ class AlumnoController extends Controller
             ->addOrderBy('a.apellido1')
             ->addOrderBy('a.apellido2')
             ->addOrderBy('a.nombre')
+            ->groupBy('a.id')
             ->getQuery()
             ->getResult();
 
         return $this->render(($request->get('_route') == 'alumno_tutoria')
-                ? 'AppBundle:Grupo:tutoria.html.twig'
-                : 'AppBundle:Grupo:listar.html.twig',
+                ? 'AppBundle:Alumno:tutoria.html.twig'
+                : 'AppBundle:Alumno:listar.html.twig',
             [
                 'alumnos' => $alumnos,
                 'usuario' => $usuario
