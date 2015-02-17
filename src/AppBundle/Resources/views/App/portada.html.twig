@@ -43,19 +43,6 @@
             </a>
         </article>
     {% endif %}
-    {% if is_granted('ROLE_TUTOR') %}
-        <article class="col-md-4 tile tile-col-4 tile-yellow">
-            <a class="tile-link" href="{{ path('alumno_tutoria') }}">
-                <div class="tile-icon-holder">
-                    <i class="fa fa-group fa-4x"></i>
-                </div>
-                <div class="text-holder">
-                    <h4>Alumnado de mi tutoría</h4>
-                    <p>Permite mostrar información sobre el grupo</p>
-                </div>
-            </a>
-        </article>
-    {% endif %}
     {% if is_granted('ROLE_REVISOR') %}
         {% if partes_sancionables > 0 %}
             <article class="col-md-4 tile tile-col-4 tile-teal">
@@ -84,7 +71,7 @@
             </article>
         {% endif %}
         {% if sanciones_totales > 0 %}
-            <article class="col-md-4 tile tile-col-4 tile-graylight">
+            <article class="col-md-4 tile tile-col-4 tile-bluedark">
                 <a class="tile-link" href="{{ path('sancion_listar') }}">
                     <div class="tile-icon-holder">
                         <i class="fa fa-archive fa-4x"></i>
@@ -97,17 +84,32 @@
             </article>
         {% endif %}
     {% endif %}
-    <article class="col-md-4 tile tile-col-4 tile-greendark">
-        <a class="tile-link" href="{{ path('alumno_listar_todo') }}">
-            <div class="tile-icon-holder">
-                <i class="fa fa-list-alt fa-4x"></i>
-            </div>
-            <div class="text-holder">
-                <h4>Listar todo el alumnado</h4>
-                <p>Gestionar el alumnado del centro</p>
-            </div>
-        </a>
-    </article>
+    {% if is_granted('ROLE_REVISOR') %}
+        <article class="col-md-4 tile tile-col-4 tile-greendark">
+            <a class="tile-link" href="{{ path('alumno_listar_todo') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-list-alt fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Listar todo el alumnado</h4>
+                    <p>Gestionar el alumnado del centro</p>
+                </div>
+            </a>
+        </article>
+    {% endif %}
+    {% if is_granted('ROLE_TUTOR') %}
+        <article class="col-md-4 tile tile-col-4 tile-yellow">
+            <a class="tile-link" href="{{ path('alumno_tutoria') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-group fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Alumnado de mi tutoría</h4>
+                    <p>Permite mostrar información sobre el grupo</p>
+                </div>
+            </a>
+        </article>
+    {% endif %}
     <article class="col-md-4 tile tile-col-4 tile-purple">
         <a class="tile-link" href="{{ path('usuario_modificar') }}">
             <div class="tile-icon-holder">
@@ -119,7 +121,7 @@
             </div>
         </a>
     </article>
-    <article class="col-md-4 tile tile-col-4 tile-bluedark">
+    <article class="col-md-4 tile tile-col-4 tile-gray">
         <a class="tile-link" href="{{ path('usuario_salir') }}">
             <div class="tile-icon-holder">
                 <i class="fa fa-power-off fa-4x"></i>
