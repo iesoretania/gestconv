@@ -173,8 +173,8 @@ class ParteController extends Controller
         ]);
 
         $observacion = new ObservacionParte();
-        $observacion->setFecha(new \DateTime())
-            ->setParte($parte)
+        $observacion->setParte($parte)
+            ->setFecha(new \DateTime())
             ->setUsuario($usuario)
             ->setAutomatica(false);
 

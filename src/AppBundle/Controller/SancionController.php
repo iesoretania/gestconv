@@ -171,8 +171,9 @@ class SancionController extends Controller
         $formularioSancion->get('sinSancion')->setData($sancion->getMotivosNoAplicacion() !== null);
         
         $observacion = new ObservacionSancion();
-        $observacion->setFecha(new \DateTime())
+        $observacion
             ->setSancion($sancion)
+            ->setFecha(new \DateTime())
             ->setUsuario($usuario)
             ->setAutomatica(false);
 
