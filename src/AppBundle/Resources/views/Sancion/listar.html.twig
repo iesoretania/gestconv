@@ -24,7 +24,7 @@
         {% for sancion in sanciones %}
             {% set partes = sancion.partes %}
             {% if sancion.fechaInicioSancion %}
-                {% if sancion.fechaComunicado %} %}
+                {% if sancion.fechaComunicado %}
                     {% set estado = "success" %}
                 {% else %}
                     {% set estado = "danger" %}
