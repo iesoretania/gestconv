@@ -40,8 +40,7 @@ class ParteRepository extends EntityRepository
 
     public function findAllNoNotificadosPorAlumnoYUsuario($alumno, $usuario)
     {
-        return $this->findNoNotificados()
-            ->andWhere('p.usuario = :usuario')
+        return $this->findNoNotificadosPorUsuarioOTutoria($usuario)
             ->andWhere('p.alumno = :alumno')
             ->setParameter('usuario', $usuario)
             ->setParameter('alumno', $alumno)
