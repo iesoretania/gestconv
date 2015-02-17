@@ -3,15 +3,8 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
-use AppBundle\Entity\AvisoSancion;
-use AppBundle\Entity\ObservacionSancion;
-use AppBundle\Entity\Sancion;
 use AppBundle\Form\Type\AlumnoType;
-use AppBundle\Form\Type\NuevaObservacionType;
-use AppBundle\Form\Type\NuevaSancionType;
-use AppBundle\Form\Type\SancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
