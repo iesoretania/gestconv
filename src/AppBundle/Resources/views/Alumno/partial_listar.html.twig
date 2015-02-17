@@ -15,10 +15,13 @@
         <tr>
             <td>{{ alumno[0].grupo }}</td>
             <td>{{ alumno[0].nombreCompleto }} <span class="text-muted small">({{ alumno[0].fechaNacimiento | date('d/m/Y') }})</span></td>
-            <td>{{ alumno[1] }}{% if alumno[1] - alumno[2] %} <strong>({{ alumno[1] - alumno[2] }})</strong>{% endif %}</td>
-            <td>{{ alumno[3] - alumno[5] }}{% if alumno[3] - alumno[4] - alumno[5] %} <strong>({{ alumno[3] - alumno[4] - alumno[5] }})</strong>{% endif %}</td>
+            <td>{{ alumno[1] }}{% if alumno[1] - alumno[2] %} <strong>({{ alumno[1] - alumno[2] }})</strong>{% endif %}
+                {% if alumno[9] %}<span class="text-muted"> - {{ alumno[9] }}</span>{% endif %}
+            </td>
+            <td>{{ alumno[3] - alumno[5] }}{% if alumno[3] - alumno[4] - alumno[5] %} <strong>({{ alumno[3] - alumno[4] - alumno[5] }})</strong>{% endif %}
+            </td>
             <td>{% if alumno[6] %}<strong>{% endif %}{{ alumno[6] }}{% if alumno[6] %}</strong>{% endif %}</td>
-            <td></td>
+            <td>{% if alumno[7] %}Último parte el {{ alumno[7] | date('d/m/Y') }}{% endif %}{% if alumno[8] %}. Última sanción el {{ alumno[8] | date('d/m/Y') }}{% endif %}</td>
             <td>
                 <a href="{{ path(ruta_detalle, {'alumno': alumno[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
             </td>
