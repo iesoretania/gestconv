@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotNull;
 
-class ModificarUsuarioType extends AbstractType
+class UsuarioType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,13 +17,11 @@ class ModificarUsuarioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options['es_admin']) {
-            $builder
-                ->add('nombreUsuario', null, [
-                    'label' => 'Nombre de usuario'
-                ]);
-        }
         $builder
+            ->add('nombreUsuario', null, [
+                'label' => 'Nombre de usuario*',
+                'disabled' => !$options['admin']
+            ])
             ->add('nombre', null, [
                 'label' => 'Nombre*',
                 'required'  => true
@@ -41,12 +39,12 @@ class ModificarUsuarioType extends AbstractType
                 'required' => false
             ]);
 
-        if ($options['es_admin']) {
+        if ($options['admin']) {
             $builder
                 ->add('esAdministrador', null, [
                     'label' => 'Es administrador',
                     'required' => false,
-                    'disabled' => $options['es_propio']
+                    'disabled' => $options['propio']
                 ])
                 ->add('esRevisor', null, [
                     'label' => 'Pertenece a la comisión de convivencia',
@@ -60,7 +58,7 @@ class ModificarUsuarioType extends AbstractType
                 'attr' => ['class' => 'btn btn-success']
             ]);
 
-        if (!$options['es_admin']) {
+        if (!$options['admin']) {
             $builder
                 ->add('oldPassword', 'password', [
                     'label' => 'Contraseña antigua',
@@ -111,8 +109,8 @@ class ModificarUsuarioType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
-            'es_admin' => false,
-            'es_propio' => false
+            'admin' => false,
+            'propio' => false
         ));
     }
 
@@ -121,6 +119,6 @@ class ModificarUsuarioType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_modificarusuario';
+        return 'appbundle_usuario';
     }
 }

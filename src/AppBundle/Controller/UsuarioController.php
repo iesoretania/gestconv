@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\Type\ModificarUsuarioType;
+use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\SubmitButton;
@@ -18,9 +18,9 @@ class UsuarioController extends Controller
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
 
-        $formulario = $this->createForm(new ModificarUsuarioType(), $usuario, [
-            'es_admin' => $usuario->getEsAdministrador(),
-            'es_propio' => true
+        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
+            'propio' => true
         ]);
 
         $formulario->handleRequest($peticion);
