@@ -1,17 +1,21 @@
-<div class="panel-heading">
-    <h3 class="panel-title">
-        <strong>Sanción #{{ sancion.id }}</strong>
-        - {{ sancion.fechaSancion | date('d/m/Y H:i') }}
-        {% if sancion.fechaComunicado %} - Notificada el {{ sancion.fechaComunicado | date('d/m/Y H:i') }}{% endif %}
+{% set estado = sancion.fechaInicioSancion ? 'panel-danger' : (sancion.motivosNoAplicacion ? 'panel-success' : 'panel-info') %}
+<div class="panel {{ estado }}">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <strong>Sanción #{{ sancion.id }}</strong>
+            - {{ sancion.fechaSancion | date('d/m/Y H:i') }}
+            {% if sancion.fechaComunicado %} - Notificada el {{ sancion.fechaComunicado | date('d/m/Y H:i') }}{% endif %}
+            {% if sancion.fechaInicioSancion %} - Sanción efectiva desde {{ sancion.fechaInicioSancion | date('d/m/Y') }} hasta {{ sancion.fechaFinSancion | date('d/m/Y') }} {% endif %}
         </h3>
-    <ul>
-        {% for medida in sancion.medidas %}
-            <li>{{ medida.descripcion }} - {{ medida.categoria.descripcion }}</li>
-        {% endfor %}
-    </ul>
-    <div class="alert alert-warning">
-        {{ sancion.anotacion | nl2br }}
+        <ul>
+            {% for medida in sancion.medidas %}
+                <li>{{ medida.descripcion }} - {{ medida.categoria.descripcion }}</li>
+            {% endfor %}
+        </ul>
+        <div class="alert alert-warning">
+            {{ sancion.anotacion | nl2br }}
+        </div>
     </div>
-</div>
 
-{% include "AppBundle:Sancion:partial_avisos.html.twig" %}
+    {% include "AppBundle:Sancion:partial_avisos.html.twig" %}
+</div>

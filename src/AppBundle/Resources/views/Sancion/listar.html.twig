@@ -23,8 +23,14 @@
         <tbody>
         {% for sancion in sanciones %}
             {% set partes = sancion.partes %}
-            {% if sancion.fechaComunicado %}
-                {% set estado = "success" %}
+            {% if sancion.fechaInicioSancion %}
+                {% if sancion.fechaComunicado %} %}
+                    {% set estado = "success" %}
+                {% else %}
+                    {% set estado = "danger" %}
+                {% endif %}
+            {% elseif sancion.fechaComunicado %}
+                {% set estado = "info" %}
             {% elseif sancion.motivosNoAplicacion is null %}
                 {% set estado = "warning" %}
             {% else %}

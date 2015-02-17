@@ -33,7 +33,8 @@ class AlumnoController extends Controller
             ->addSelect('count(p.fechaAviso)')
             ->addSelect('count(p.sancion)')
             ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)');
+            ->addSelect('count(s.motivosNoAplicacion)')
+            ->addSelect('count(s.fechaInicioSancion)');
 
         if ($request->get('_route') == 'alumno_tutoria') {
             $alumnos = $alumnos

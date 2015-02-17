@@ -2,9 +2,10 @@
     <thead>
     <tr>
         <th class="col-md-1">Grupo</th>
-        <th class="col-md-5">Estudiante</th>
+        <th class="col-md-4">Estudiante</th>
         <th class="col-md-1">Partes (total, sin notificar)</th>
         <th class="col-md-1">Sanciones (total, sin notificar)</th>
+        <th class="col-md-1">Expulsiones</th>
         <th class="col-md-4">Estado</th>
         <th class="col-md-1"></th>
     </tr>
@@ -15,7 +16,8 @@
             <td>{{ alumno[0].grupo }}</td>
             <td>{{ alumno[0].nombreCompleto }} <span class="text-muted small">({{ alumno[0].fechaNacimiento | date('d/m/Y') }})</span></td>
             <td>{{ alumno[1] }}{% if alumno[1] - alumno[2] %} <strong>({{ alumno[1] - alumno[2] }})</strong>{% endif %}</td>
-            <td>{{ alumno[3] }}{% if alumno[3] - alumno[4] - alumno[5] %} <strong>({{ alumno[3] - alumno[4] - alumno[5] }})</strong>{% endif %}</td>
+            <td>{{ alumno[3] - alumno[5] }}{% if alumno[3] - alumno[4] - alumno[5] %} <strong>({{ alumno[3] - alumno[4] - alumno[5] }})</strong>{% endif %}</td>
+            <td>{% if alumno[6] %}<strong>{% endif %}{{ alumno[6] }}{% if alumno[6] %}</strong>{% endif %}</td>
             <td></td>
             <td>
                 <a href="{{ path(ruta_detalle, {'alumno': alumno[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
