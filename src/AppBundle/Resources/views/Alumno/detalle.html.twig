@@ -12,7 +12,7 @@
 
     {{ form(formulario_alumno) }}
 
-    {% if alumno.partes | length > 0 %}
+    {% if (is_granted('ROLE_REVISOR') or (alumno.grupo.tutor == usuario)) and (alumno.partes | length > 0) %}
         <h1 class="well">Partes asociados</h1>
         {% set marcar = false %}
         {% for parte in alumno.partes %}
