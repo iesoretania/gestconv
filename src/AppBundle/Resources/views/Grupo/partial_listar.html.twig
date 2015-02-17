@@ -1,0 +1,30 @@
+{{ form(formulario_fechas) }}
+<table class="table table-bordered table-hover table-striped table-responsive listado">
+    <thead>
+    <tr>
+        <th class="col-md-2">Grupo</th>
+        <th class="col-md-2">Partes (total, sin notificar)</th>
+        <th class="col-md-2">Sancionados (total, sin notificar)</th>
+        <th class="col-md-2">Expulsiones</th>
+        <th class="col-md-4">Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for grupo in grupos %}
+        <tr>
+            <td>{{ grupo[0].descripcion }}</td>
+            <td>{{ grupo[1] }}{% if grupo[1] - grupo[2] %} <strong>({{ grupo[1] - grupo[2] }})</strong>{% endif %}
+                {% if grupo[9] %}<span class="text-muted"> - {{ grupo[9] }}</span>{% endif %}
+            </td>
+            <td>{{ grupo[3] - grupo[5] }}{% if grupo[3] - grupo[4] - grupo[5] %} <strong>({{ grupo[3] - grupo[4] - grupo[5] }})</strong>{% endif %}
+            </td>
+            <td>{% if grupo[6] %}<strong>{% endif %}{{ grupo[6] }}{% if grupo[6] %}</strong>{% endif %}</td>
+            <td>{% if grupo[7] %}Último parte el {{ grupo[7] | date('d/m/Y') }}{% endif %}{% if grupo[8] %}. Última sanción el {{ grupo[8] | date('d/m/Y') }}{% endif %}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">No hay grupos que mostrar</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

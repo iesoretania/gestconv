@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
 use AppBundle\Form\Type\AlumnoType;
+use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,17 +17,22 @@ use Symfony\Component\HttpFoundation\Request;
 class AlumnoController extends Controller
 {
     /**
-     * @Route("/tutoria", name="alumno_tutoria",methods={"GET"})
-     * @Route("/todo", name="alumno_listar_todo",methods={"GET"})
+     * @Route("/tutoria", name="alumno_tutoria",methods={"GET", "POST"})
+     * @Route("/todo", name="alumno_listar_todo",methods={"GET", "POST"})
      */
-    public function listarTodoAction(Request $request)
+    public function listarAction(Request $request)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $alumnos = $em->getRepository('AppBundle:Parte')
-            ->createQueryBuilder('p')
-            ->join('AppBundle:Alumno', 'a', 'WITH', 'p.alumno = a')
+        $fechasPorDefecto = ['desde' => null, 'hasta' => null];
+
+        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
+        $form->handleRequest($request);
+
+        $alumnos = $em->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
             ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
             ->select('a')
             ->addSelect('count(p)')
@@ -38,6 +44,21 @@ class AlumnoController extends Controller
             ->addSelect('max(p.fechaSuceso)')
             ->addSelect('max(s.fechaSancion)')
             ->addSelect('sum(p.prescrito)');
+
+        if ($form->isValid()) {
+            // aplicar filtro de fechas
+            $data = $form->getData();
+            if ($data['desde']) {
+                $alumnos = $alumnos
+                    ->andWhere('p.fechaSuceso >= :desde')
+                    ->setParameter('desde', $data['desde']);
+            }
+            if ($data['hasta']) {
+                $alumnos = $alumnos
+                    ->andWhere('p.fechaSuceso <= :hasta')
+                    ->setParameter('hasta', $data['hasta']);
+            }
+        }
 
         if ($request->get('_route') == 'alumno_tutoria') {
             $alumnos = $alumnos
@@ -58,6 +79,7 @@ class AlumnoController extends Controller
                 ? 'AppBundle:Alumno:tutoria.html.twig'
                 : 'AppBundle:Alumno:listar.html.twig',
             [
+                'formulario_fechas' => $form->createView(),
                 'alumnos' => $alumnos,
                 'usuario' => $usuario
             ]);
