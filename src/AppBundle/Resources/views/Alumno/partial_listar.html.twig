@@ -1,0 +1,30 @@
+<table class="table table-bordered table-hover table-striped table-responsive listado">
+    <thead>
+    <tr>
+        <th class="col-md-1">Grupo</th>
+        <th class="col-md-4">Estudiante</th>
+        <th class="col-md-2">Partes</th>
+        <th class="col-md-2">Sanciones</th>
+        <th class="col-md-3">Estado</th>
+        <th class="col-md-1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for alumno in alumnos %}
+        <tr>
+            <td>{{ alumno.grupo }}</td>
+            <td>{{ alumno.nombreCompleto }} <span class="text-muted small">({{ alumno.fechaNacimiento | date('d/m/Y') }})</span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+                <a href="{{ path(ruta_detalle, {'alumno': alumno.id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">No hay estudiantes que mostrar</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

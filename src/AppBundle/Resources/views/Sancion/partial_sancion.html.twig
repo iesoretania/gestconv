@@ -1,6 +1,6 @@
 <div class="panel-heading">
     <h3 class="panel-title">
-        Sanción #{{ sancion.id }}
+        <strong>Sanción #{{ sancion.id }}</strong>
         - {{ sancion.fechaSancion | date('d/m/Y H:i') }}
         {% if sancion.fechaComunicado %} - Notificada el {{ sancion.fechaComunicado | date('d/m/Y H:i') }}{% endif %}
         </h3>

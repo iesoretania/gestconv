@@ -1,0 +1,32 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Detalles de un parte' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path(vuelta.ruta) }}">{{ vuelta.descripcion }}</a></li>
+        <li class="active">{{ alumno }}</li>
+    </ol>
+
+    <h1 class="well">Detalles del estudiante</h1>
+
+    {{ form(formulario_alumno) }}
+
+    {% if alumno.partes | length > 0 %}
+        <h1 class="well">Partes asociados</h1>
+        {% set marcar = false %}
+        {% for parte in alumno.partes %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {% include 'AppBundle:Parte:partial_parte.html.twig' %}
+                    {% if parte.sancion %}
+                        {% set sancion = parte.sancion %}
+                        {% include 'AppBundle:Sancion:partial_sancion.html.twig' %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <a href="{{ path(vuelta.ruta) }}" class="btn btn-info">{{ vuelta.boton }}</a>
+{% endblock %}

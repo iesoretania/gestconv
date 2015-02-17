@@ -4,12 +4,12 @@
 {% block content %}
     <ol class="breadcrumb">
         <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-        <li class="active">Gestionar alumnado</li>
+        <li class="active">Gestionar tutoría</li>
     </ol>
 
-    <h1 class="well">Listado de alumnado del centro</h1>
+    <h1 class="well">Listado de alumnado de la tutoría</h1>
 
-    {% set ruta_detalle = 'alumno_detalle' %}
+    {% set ruta_detalle = 'alumno_tutoria_detalle' %}
     {% include 'AppBundle:Alumno:partial_listar.html.twig' %}
 
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
