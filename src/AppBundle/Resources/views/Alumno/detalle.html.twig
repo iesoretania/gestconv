@@ -16,8 +16,8 @@
         <h1 class="well">Partes asociados</h1>
         {% set marcar = false %}
         {% for parte in alumno.partes %}
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="panel panel-{{ parte.prescrito ? "danger" : "default" }}">
+                <div class="panel-body {{ parte.prescrito ? "panel-danger" }}">
                     {% include 'AppBundle:Parte:partial_parte.html.twig' %}
                     {% if parte.sancion %}
                         {% set sancion = parte.sancion %}

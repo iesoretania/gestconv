@@ -56,6 +56,11 @@ class ParteType extends AbstractType
                 'disabled' => ($desactivado)
 
             ])
+            ->add('prescrito', null, [
+                'label' => 'El parte ha prescrito',
+                'required' => false,
+                'disabled' => (!$options['admin'])
+            ])
             ->add('hayExpulsion', null, [
                 'label' => 'Marcar si se expulsó al alumnado implicado del aula',
                 'required' => false,
