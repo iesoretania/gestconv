@@ -21,6 +21,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * SancionRepository
@@ -29,6 +30,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class SancionRepository extends EntityRepository
 {
+    protected function count(QueryBuilder $expresion)
+    {
+        return $expresion
+            ->select('COUNT(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function findNoNotificados()
     {
         return $this->getEntityManager()
@@ -66,10 +75,24 @@ class SancionRepository extends EntityRepository
 
     public function countNoNotificadosPorTutoria($usuario)
     {
-        return $this->findNoNotificadosPorTutoria($usuario)
-            ->select('COUNT(s.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $this->count($this->findNoNotificadosPorTutoria($usuario));
     }
 
+    public function countNoNotificados()
+    {
+        return $this->count($this->findNoNotificados());
+
+    }
+
+    public function findAll()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Sancion')
+            ->createQueryBuilder('s');
+    }
+
+    public function countAll()
+    {
+        return $this->count($this->findAll());
+    }
 }

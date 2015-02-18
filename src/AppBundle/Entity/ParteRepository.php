@@ -29,6 +29,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParteRepository extends EntityRepository
 {
+    public function findNotificados()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->innerJoin('p.alumno', 'a')
+            ->where('p.fechaAviso IS NOT NULL');
+    }
+
     public function findNoNotificados()
     {
         return $this->getEntityManager()
@@ -108,10 +117,19 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
+
+    public function countNoNotificados()
+    {
+        return $this->findNoNotificados()
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countNoNotificadosPorUsuario($usuario)
     {
         return $this->findNoNotificadosPorUsuario($usuario)
-            ->select('COUNT(p)')
+            ->select('COUNT(p.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -119,7 +137,7 @@ class ParteRepository extends EntityRepository
     public function countNoNotificadosPorUsuarioOTutoria($usuario)
     {
         return $this->findNoNotificadosPorUsuarioOTutoria($usuario)
-            ->select('COUNT(p)')
+            ->select('COUNT(p.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -127,7 +145,7 @@ class ParteRepository extends EntityRepository
     public function countPorUsuarioOTutoria($usuario)
     {
         return $this->findPorUsuarioOTutoria($usuario)
-            ->select('COUNT(p)')
+            ->select('COUNT(p.id)')
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -136,7 +154,17 @@ class ParteRepository extends EntityRepository
     public function countPorUsuario($usuario)
     {
         return $this->findPorUsuario($usuario)
-            ->select('COUNT(p)')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countSancionables()
+    {
+        return $this->findNotificados()
+            ->select('COUNT(p.id)')
+            ->andWhere('p.prescrito = false')
+            ->andWhere('p.sancion IS NULL')
             ->getQuery()
             ->getSingleScalarResult();
     }

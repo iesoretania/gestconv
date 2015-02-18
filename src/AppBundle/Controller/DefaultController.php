@@ -17,10 +17,14 @@ class DefaultController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         $em = $this->getDoctrine()->getManager();
 
+
+        $partesPendientes = $em->getRepository('AppBundle:Parte')
+            ->countNoNotificados();
+
         $partesPendientesPropios = $em->getRepository('AppBundle:Parte')
             ->countNoNotificadosPorUsuario($usuario);
 
-        $partesPendientesTotales = $em->getRepository('AppBundle:Parte')
+        $partesPendientesPropiosYTutoria = $em->getRepository('AppBundle:Parte')
             ->countNoNotificadosPorUsuarioOTutoria($usuario);
 
         $partesTotales = $em->getRepository('AppBundle:Parte')
@@ -28,27 +32,13 @@ class DefaultController extends Controller
 
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
             $partesSancionables = $em->getRepository('AppBundle:Parte')
-                ->createQueryBuilder('p')
-                ->select('COUNT(p.id)')
-                ->andWhere('p.sancion IS NULL')
-                ->andWhere('p.fechaAviso IS NOT NULL')
-                ->andWhere('p.prescrito = false')
-                ->getQuery()
-                ->getSingleScalarResult();
+                ->countSancionables();
 
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
-                ->createQueryBuilder('s')
-                ->select('COUNT(s.id)')
-                ->andWhere('s.fechaComunicado IS NULL')
-                ->andWhere('s.motivosNoAplicacion IS NULL')
-                ->getQuery()
-                ->getSingleScalarResult();
+                ->countNoNotificados();
 
             $sancionesTotales = $em->getRepository('AppBundle:Sancion')
-                ->createQueryBuilder('s')
-                ->select('COUNT(s.id)')
-                ->getQuery()
-                ->getSingleScalarResult();
+                ->countAll();
         }
         else {
             $partesSancionables = 0;
@@ -58,7 +48,8 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle:App:portada.html.twig', [
-            'partes_pendientes_totales' => $partesPendientesTotales,
+            'partes_pendientes' => $partesPendientes,
+            'partes_pendientes_propios_y_tutoria' => $partesPendientesPropiosYTutoria,
             'partes_totales' => $partesTotales,
             'partes_pendientes_propios' => $partesPendientesPropios,
             'partes_sancionables' => $partesSancionables,

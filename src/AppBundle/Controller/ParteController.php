@@ -102,9 +102,15 @@ class ParteController extends Controller
             }
             $em->flush();
         }
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->findAllConPartesAunNoNotificadosPorUsuario($usuario);
 
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
+            $alumnos = $em->getRepository('AppBundle:Alumno')
+                ->findAllConPartesAunNoNotificados();
+        }
+        else {
+            $alumnos = $em->getRepository('AppBundle:Alumno')
+                ->findAllConPartesAunNoNotificadosPorUsuario($usuario);
+        }
         if (count($alumnos) == 0) {
             // redireccionar a la portada
             return new RedirectResponse(

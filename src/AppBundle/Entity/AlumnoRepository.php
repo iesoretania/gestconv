@@ -54,6 +54,13 @@ class AlumnoRepository extends EntityRepository
             ->setParameter('usuario', $usuario);
     }
 
+    public function findAllConPartesAunNoNotificados()
+    {
+        return $this->findConPartesAunNoNotificados()
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findAllConPartesAunNoNotificadosPorUsuario(Usuario $usuario)
     {
         return $this->findConPartesAunNoNotificadosPorUsuario($usuario)
@@ -74,7 +81,7 @@ class AlumnoRepository extends EntityRepository
             ->where('p.fechaAviso IS NOT NULL')
             ->andWhere('p.sancion IS NULL')
             ->andWhere('p.alumno = a')
-            ->groupBy('p.alumno')
+            ->groupBy('a.id')
             ->orderBy('a.apellido1', 'ASC')
             ->addOrderBy('a.apellido2', 'ASC')
             ->addOrderBy('a.nombre', 'ASC')
