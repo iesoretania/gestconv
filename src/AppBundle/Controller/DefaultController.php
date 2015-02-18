@@ -52,7 +52,8 @@ class DefaultController extends Controller
         }
         else {
             $partesSancionables = 0;
-            $sancionesNotificables = 0;
+            $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
+                ->countNoNotificadosPorTutoria($usuario);
             $sancionesTotales = 0;
         }
 

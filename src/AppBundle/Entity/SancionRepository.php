@@ -29,7 +29,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class SancionRepository extends EntityRepository
 {
-    public function findAllNoNotificadosPorAlumno($alumno)
+    public function findNoNotificados()
     {
         return $this->getEntityManager()
             ->getRepository('AppBundle:Sancion')
@@ -37,10 +37,39 @@ class SancionRepository extends EntityRepository
             ->leftJoin('s.partes', 'p')
             ->leftJoin('p.alumno', 'a')
             ->andWhere('s.fechaComunicado IS NULL')
-            ->andWhere('s.motivosNoAplicacion IS NULL')
+            ->andWhere('s.motivosNoAplicacion IS NULL');
+    }
+
+    public function findAllNoNotificadosPorAlumno($alumno)
+    {
+        return $this->findNoNotificados()
             ->andWhere('p.alumno = :alumno')
             ->setParameter('alumno', $alumno)
             ->getQuery()
             ->getResult();
     }
+
+    public function findNoNotificadosPorTutoria($usuario)
+    {
+        return $this->findNoNotificados()
+            ->join('a.grupo', 'g')
+            ->andWhere('g.tutor = :usuario')
+            ->setParameter('usuario', $usuario);
+    }
+
+    public function findAllNoNotificadosPorTutoria($usuario)
+    {
+        return $this->findNoNotificadosPorTutoria($usuario)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countNoNotificadosPorTutoria($usuario)
+    {
+        return $this->findNoNotificadosPorTutoria($usuario)
+            ->select('COUNT(s.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 }

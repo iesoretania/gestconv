@@ -82,7 +82,7 @@ class AlumnoRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllConSancionesAunNoNotificadas()
+    public function findConSancionesAunNoNotificadas()
     {
         return $this->getEntityManager()
             ->getRepository('AppBundle:Alumno')
@@ -95,7 +95,22 @@ class AlumnoRepository extends EntityRepository
             ->andWhere('p.sancion = s')
             ->orderBy('a.apellido1', 'ASC')
             ->addOrderBy('a.apellido2', 'ASC')
-            ->addOrderBy('a.nombre', 'ASC')
+            ->addOrderBy('a.nombre', 'ASC');
+    }
+
+    public function findAllConSancionesAunNoNotificadas()
+    {
+        return $this->findConSancionesAunNoNotificadas()
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllConSancionesAunNoNotificadasPorTutoria($usuario)
+    {
+        return $this->findConSancionesAunNoNotificadas()
+            ->join('a.grupo', 'g')
+            ->andWhere('g.tutor = :usuario')
+            ->setParameter('usuario', $usuario)
             ->getQuery()
             ->getResult();
     }

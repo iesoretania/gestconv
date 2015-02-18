@@ -83,7 +83,7 @@ class SancionController extends Controller
 
     /**
      * @Route("/notificar", name="sancion_listado_notificar",methods={"GET", "POST"})
-     * @Security("has_role('ROLE_REVISOR')")
+     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
      */
     public function listadoNotificarAction(Request $request)
     {
@@ -114,8 +114,15 @@ class SancionController extends Controller
             }
             $em->flush();
         }
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->findAllConSancionesAunNoNotificadas();
+
+        if ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
+            $alumnos = $em->getRepository('AppBundle:Alumno')
+                ->findAllConSancionesAunNoNotificadas();
+        }
+        else {
+            $alumnos = $em->getRepository('AppBundle:Alumno')
+                ->findAllConSancionesAunNoNotificadasPorTutoria($usuario);
+        }
 
         if (count($alumnos) == 0) {
             // redireccionar a la portada
