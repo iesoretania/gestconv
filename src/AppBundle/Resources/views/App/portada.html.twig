@@ -24,7 +24,7 @@
                 <h4>Notificar un parte a la familia</h4>
                 <p>
                     Tienes {{ cuenta['partes_pendientes_propios'] }}
-                    {{ cuenta['partes_pendientes_propios'] == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}{% if cuenta['partes_pendientes_propios'] != cuenta['partes_pendientes_propios_y_tutoria'] %} ({{ cuenta['partes_pendientes_propios_y_tutoria'] }} incluyendo la tutoría){% endif %}{% if is_granted('ROLE_REVISOR') %}. El total del centro es de {{ cuenta['partes_pendientes'] }}{% endif %}
+                    {{ cuenta['partes_pendientes_propios'] == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}{% if cuenta['partes_pendientes_propios'] != cuenta['partes_pendientes_propios_y_tutoria'] %} ({{ cuenta['partes_pendientes_propios_y_tutoria'] }} incluyendo la tutoría){% endif %}{% if is_granted('ROLE_REVISOR') %}. En total hay {{ cuenta['partes_pendientes'] }}{% endif %}
                 </p>
             </div>
         </a>

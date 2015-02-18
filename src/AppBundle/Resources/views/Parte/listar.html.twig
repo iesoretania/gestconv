@@ -36,11 +36,14 @@
                 <td>{% if parte.usuario == usuario %}<strong>{% endif %}{{ parte.alumno }}{% if parte.usuario == usuario %}</strong>{% endif %}{% if parte.usuario != usuario %} - Registrado por {{ parte.usuario }}{% endif %}</td>
                 <td>
                     {% if parte.prescrito %}
-                        Prescrito
-                    {% elseif not parte.fechaAviso %}
+                        Prescrito.
+                    {% endif %}
+                    {% if not parte.fechaAviso %}
                         Sin notificar
                     {% else %}
                         Notificado el {{ parte.fechaAviso | date('d/m/Y') }}.
+                    {% endif %}
+                    {% if not parte.prescrito and parte.fechaAviso %}
                         {% if not parte.sancion %}
                             Pendiente de sanción
                         {% else %}
