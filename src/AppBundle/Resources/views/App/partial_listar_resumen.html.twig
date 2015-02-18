@@ -1,0 +1,30 @@
+{{ form(formulario_fechas) }}
+<table class="table table-bordered table-hover table-striped table-responsive listado">
+    <thead>
+    <tr>
+        <th class="col-md-3">Grupo</th>
+        <th class="col-md-2">Partes (total, sin notificar)</th>
+        <th class="col-md-2">Sancionados (total, sin notificar)</th>
+        <th class="col-md-2">Expulsiones asociadas</th>
+        <th class="col-md-3">Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr>
+            <td>{{ item[0] }}</td>
+            <td>{{ item[1] }}{% if item[1] - item[2] %} <strong>({{ item[1] - item[2] }})</strong>{% endif %}
+                {% if item[9] %}<span class="text-muted"> - {{ grupo[9] }}</span>{% endif %}
+            </td>
+            <td>{{ item[3] - item[5] }}{% if item[3] - item[4] - item[5] %} <strong>({{ item[3] - item[4] - item[5] }})</strong>{% endif %}
+            </td>
+            <td>{% if item[6] %}<strong>{% endif %}{{ item[6] }}{% if item[6] %}</strong>{% endif %}</td>
+            <td>{% if item[7] %}Último parte el {{ item[7] | date('d/m/Y') }}{% endif %}{% if item[8] %}. Última sanción el {{ item[8] | date('d/m/Y') }}{% endif %}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="6">No hay elementos que mostrar</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

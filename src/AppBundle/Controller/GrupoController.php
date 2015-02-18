@@ -66,7 +66,7 @@ class GrupoController extends Controller
         return $this->render('AppBundle:Grupo:listar.html.twig',
             [
                 'formulario_fechas' => $form->createView(),
-                'grupos' => $grupos,
+                'items' => $grupos,
                 'usuario' => $usuario
             ]);
     }

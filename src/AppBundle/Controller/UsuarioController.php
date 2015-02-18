@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,10 +10,13 @@ use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @Route("/usuario")
+ */
 class UsuarioController extends Controller
 {
     /**
-     * @Route("/usuario/modificar", name="usuario_modificar",methods={"GET", "POST"})
+     * @Route("/modificar", name="usuario_modificar",methods={"GET", "POST"})
      */
     public function modificarAction(Request $peticion)
     {
@@ -55,4 +59,62 @@ class UsuarioController extends Controller
             ]);
     }
 
+    /**
+     * @Route("/listar", name="usuario_listar",methods={"GET", "POST"})
+     */
+    public function listarAction(Request $request)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $fechasPorDefecto = ['desde' => null, 'hasta' => null];
+
+        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
+        $form->handleRequest($request);
+
+        $usuarios = $em->getRepository('AppBundle:Usuario')
+            ->createQueryBuilder('u')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.usuario = u')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->select('u')
+            ->addSelect('count(p)')
+            ->addSelect('count(p.fechaAviso)')
+            ->addSelect('count(p.sancion)')
+            ->addSelect('count(s.fechaComunicado)')
+            ->addSelect('count(s.motivosNoAplicacion)')
+            ->addSelect('count(s.fechaInicioSancion)')
+            ->addSelect('max(p.fechaSuceso)')
+            ->addSelect('max(s.fechaSancion)')
+            ->addSelect('sum(p.prescrito)');
+
+        if ($form->isValid()) {
+            // aplicar filtro de fechas
+            $data = $form->getData();
+            if ($data['desde']) {
+                $usuarios = $usuarios
+                    ->andWhere('p.fechaSuceso >= :desde')
+                    ->setParameter('desde', $data['desde']);
+            }
+            if ($data['hasta']) {
+                $usuarios = $usuarios
+                    ->andWhere('p.fechaSuceso <= :hasta')
+                    ->setParameter('hasta', $data['hasta']);
+            }
+        }
+
+        $usuarios = $usuarios
+            ->addOrderBy('u.apellido1')
+            ->addOrderBy('u.apellido2')
+            ->addOrderBy('u.nombre')
+            ->groupBy('u.id')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('AppBundle:Usuario:listar.html.twig',
+            [
+                'formulario_fechas' => $form->createView(),
+                'items' => $usuarios,
+                'usuario' => $usuario
+            ]);
+    }
 }

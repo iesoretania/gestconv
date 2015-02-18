@@ -110,17 +110,30 @@
             </a>
         </article>
     {% endif %}
-    <article class="col-md-4 tile tile-col-4 tile-pink">
-        <a class="tile-link" href="{{ path('grupo_listar') }}">
-            <div class="tile-icon-holder">
-                <i class="fa fa-th-large fa-4x"></i>
-            </div>
-            <div class="text-holder">
-                <h4>Estadísticas por grupo</h4>
-                <p>Muestra información general sobre los grupos</p>
-            </div>
-        </a>
-    </article>
+    {% if is_granted('ROLE_REVISOR') %}
+        <article class="col-md-4 tile tile-col-4 tile-pink">
+            <a class="tile-link" href="{{ path('grupo_listar') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-th-large fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Estadísticas por grupo</h4>
+                    <p>Muestra información general sobre los grupos</p>
+                </div>
+            </a>
+        </article>
+        <article class="col-md-4 tile tile-col-4 tile-magenta">
+            <a class="tile-link" href="{{ path('usuario_listar') }}">
+                <div class="tile-icon-holder">
+                    <i class="fa fa-graduation-cap fa-4x"></i>
+                </div>
+                <div class="text-holder">
+                    <h4>Usuarios del centro</h4>
+                    <p>Permite mostrar información sobre los usuarios</p>
+                </div>
+            </a>
+        </article>
+    {% endif %}
     <article class="col-md-4 tile tile-col-4 tile-purple">
         <a class="tile-link" href="{{ path('usuario_modificar') }}">
             <div class="tile-icon-holder">
