@@ -71,6 +71,7 @@ class ParteController extends Controller
 
     /**
      * @Route("/notificar", name="parte_listado_notificar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
      */
     public function listadoNotificarAction(Request $request)
     {

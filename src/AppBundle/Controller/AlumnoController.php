@@ -6,6 +6,7 @@ use AppBundle\Entity\Alumno;
 use AppBundle\Form\Type\AlumnoType;
 use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/tutoria", name="alumno_tutoria",methods={"GET", "POST"})
      * @Route("/todo", name="alumno_listar_todo",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
      */
     public function listarAction(Request $request)
     {
@@ -88,6 +90,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle",methods={"GET", "POST"})
      * @Route("/detalle/{alumno}", name="alumno_detalle",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
      */
     public function detalleAction(Alumno $alumno, Request $request)
     {

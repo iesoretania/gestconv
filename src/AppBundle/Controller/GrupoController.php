@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,6 +16,7 @@ class GrupoController extends Controller
 {
     /**
      * @Route("/listar", name="grupo_listar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR')")
      */
     public function listarAction(Request $request)
     {
