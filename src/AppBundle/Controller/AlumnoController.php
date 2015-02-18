@@ -32,64 +32,23 @@ class AlumnoController extends Controller
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
         $form->handleRequest($request);
 
-        $alumnos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->select('a')
-            ->addSelect('count(p)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)')
-            ->addSelect('sum(p.prescrito)');
+        $tutor = ($request->get('_route') == 'alumno_tutoria') ? $usuario : null;
 
-        if ($form->isValid()) {
-            // aplicar filtro de fechas
-            $data = $form->getData();
-            if ($data['desde']) {
-                $alumnos = $alumnos
-                    ->andWhere('p.fechaSuceso >= :desde')
-                    ->setParameter('desde', $data['desde']);
-            }
-            if ($data['hasta']) {
-                $alumnos = $alumnos
-                    ->andWhere('p.fechaSuceso <= :hasta')
-                    ->setParameter('hasta', $data['hasta']);
-            }
-        }
-
-        if ($request->get('_route') == 'alumno_tutoria') {
-            $alumnos = $alumnos
-                ->join('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-                ->where('g.tutor = :usuario')
-                ->setParameter('usuario', $usuario)
-                ->addOrderBy('g.descripcion');
-        }
-        $alumnos = $alumnos
-            ->addOrderBy('a.apellido1')
-            ->addOrderBy('a.apellido2')
-            ->addOrderBy('a.nombre')
-            ->groupBy('a.id')
-            ->getQuery()
-            ->getResult();
+        $items = $em->getRepository('AppBundle:Alumno')->findResumenTutorPartesSancionesYExpulsionesEnFecha($tutor, $form->isValid() ? $form->getData() : $fechasPorDefecto);
 
         return $this->render(($request->get('_route') == 'alumno_tutoria')
                 ? 'AppBundle:Alumno:tutoria.html.twig'
                 : 'AppBundle:Alumno:listar.html.twig',
             [
                 'formulario_fechas' => $form->createView(),
-                'alumnos' => $alumnos,
+                'items' => $items,
                 'usuario' => $usuario
             ]);
     }
 
     /**
-     * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle",methods={"GET", "POST"})
-     * @Route("/detalle/{alumno}", name="alumno_detalle",methods={"GET", "POST"})
+     * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle", methods={"GET", "POST"})
+     * @Route("/detalle/{alumno}", name="alumno_detalle", methods={"GET", "POST"})
      * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
      */
     public function detalleAction(Alumno $alumno, Request $request)

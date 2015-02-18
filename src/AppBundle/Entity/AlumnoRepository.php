@@ -121,4 +121,59 @@ class AlumnoRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getResumenPartesSancionesYExpulsiones()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->select('a')
+            ->addSelect('count(p)')
+            ->addSelect('count(p.fechaAviso)')
+            ->addSelect('count(p.sancion)')
+            ->addSelect('count(s.fechaComunicado)')
+            ->addSelect('count(s.motivosNoAplicacion)')
+            ->addSelect('count(s.fechaInicioSancion)')
+            ->addSelect('sum(p.prescrito)')
+            ->addSelect('max(p.fechaSuceso)')
+            ->addSelect('max(s.fechaSancion)');
+    }
+
+    public function getResumenPartesSancionesYExpulsionesEnFecha($data)
+    {
+        $alumnos = $this->getResumenPartesSancionesYExpulsiones();
+
+        if ($data['desde']) {
+            $alumnos = $alumnos
+                ->andWhere('p.fechaSuceso >= :desde')
+                ->setParameter('desde', $data['desde']);
+        }
+        if ($data['hasta']) {
+            $alumnos = $alumnos
+                ->andWhere('p.fechaSuceso <= :hasta')
+                ->setParameter('hasta', $data['hasta']);
+        }
+        return $alumnos;
+    }
+
+    public function findResumenTutorPartesSancionesYExpulsionesEnFecha($tutor, $data)
+    {
+        $resultado = $this->getResumenPartesSancionesYExpulsionesEnFecha($data);
+
+        if ($tutor) {
+            $resultado = $resultado
+                ->join('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
+                ->where('g.tutor = :usuario')
+                ->setParameter('usuario', $tutor);
+        }
+        return $resultado
+            ->addOrderBy('a.apellido1')
+            ->addOrderBy('a.apellido2')
+            ->addOrderBy('a.nombre')
+            ->groupBy('a.id')
+            ->getQuery()
+            ->getResult();
+    }
 }

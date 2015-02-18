@@ -2,29 +2,54 @@
 <table class="table table-bordered table-hover table-striped table-responsive listado">
     <thead>
     <tr>
-        <th class="col-md-3">Grupo</th>
+        <th class="col-md-3">{% block lista_item %}Elemento{% endblock %}</th>
         <th class="col-md-2">Partes (total, sin notificar)</th>
         <th class="col-md-2">Sancionados (total, sin notificar)</th>
         <th class="col-md-2">Expulsiones asociadas</th>
         <th class="col-md-3">Estado</th>
+        {% block lista_extra_cabecera %}{% endblock %}
     </tr>
     </thead>
     <tbody>
+    {% set suma1, suma2, suma3, suma4, suma5, suma6, suma7 = 0, 0, 0, 0, 0, 0, 0 %}
     {% for item in items %}
         <tr>
             <td>{{ item[0] }}</td>
             <td>{{ item[1] }}{% if item[1] - item[2] %} <strong>({{ item[1] - item[2] }})</strong>{% endif %}
-                {% if item[9] %}<span class="text-muted"> - {{ item[9] }}</span>{% endif %}
+                {% if item[7] %}<span class="text-muted"> - {{ item[7] }}</span>{% endif %}
             </td>
             <td>{{ item[3] - item[5] }}{% if item[3] - item[4] - item[5] %} <strong>({{ item[3] - item[4] - item[5] }})</strong>{% endif %}
             </td>
             <td>{% if item[6] %}<strong>{% endif %}{{ item[6] }}{% if item[6] %}</strong>{% endif %}</td>
-            <td>{% if item[7] %}Último parte el {{ item[7] | date('d/m/Y') }}{% endif %}{% if item[8] %}. Última sanción el {{ item[8] | date('d/m/Y') }}{% endif %}</td>
+            <td>{% if item[8] %}Último parte el {{ item[8] | date('d/m/Y') }}{% endif %}{% if item[9] %}. Última sanción el {{ item[9] | date('d/m/Y') }}{% endif %}</td>
+            {% block lista_extra_fila %}{% endblock %}
         </tr>
+        {% set suma1 = suma1 + item[1] %}
+        {% set suma2 = suma2 + item[2] %}
+        {% set suma3 = suma3 + item[3] %}
+        {% set suma4 = suma4 + item[4] %}
+        {% set suma5 = suma5 + item[5] %}
+        {% set suma6 = suma6 + item[6] %}
+        {% set suma7 = suma7 + item[7] %}
     {% else %}
         <tr>
-            <td colspan="6">No hay elementos que mostrar</td>
+            <td colspan="100">No hay elementos que mostrar</td>
         </tr>
     {% endfor %}
     </tbody>
+    {% if items %}
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <th>{{ suma1 }}{% if suma1 - suma2 %} <strong>({{ suma1 - suma2 }})</strong>{% endif %}
+                    {% if suma7 %}<span class="text-muted"> - {{ suma7 }}</span>{% endif %}
+                </th>
+                <th>
+                    {{ suma3 - suma5 }}{% if suma3 - suma4 - suma5 %} <strong>({{ suma3 - suma4 - suma5 }})</strong>{% endif %}
+                </th>
+                <th>{% if suma6 %}<strong>{% endif %}{{ suma6 }}{% if suma6 %}</strong>{% endif %}</td>
+                <th colspan="100"></td>
+            </tr>
+        </tfoot>
+    {% endif %}
 </table>

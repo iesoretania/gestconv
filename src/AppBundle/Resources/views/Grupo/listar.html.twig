@@ -9,7 +9,9 @@
 
     <h1 class="well">Listado de grupos del centro</h1>
 
-    {% include 'AppBundle:App:partial_listar_resumen.html.twig' %}
+    {% embed 'AppBundle:App:partial_listar_resumen.html.twig' %}
+        {% block lista_item "Grupo" %}
+    {% endembed %}
 
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
 {% endblock %}

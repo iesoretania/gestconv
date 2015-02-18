@@ -85,9 +85,9 @@ class UsuarioController extends Controller
             ->addSelect('count(s.fechaComunicado)')
             ->addSelect('count(s.motivosNoAplicacion)')
             ->addSelect('count(s.fechaInicioSancion)')
+            ->addSelect('sum(p.prescrito)')
             ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)')
-            ->addSelect('sum(p.prescrito)');
+            ->addSelect('max(s.fechaSancion)');
 
         if ($form->isValid()) {
             // aplicar filtro de fechas

@@ -9,8 +9,11 @@
 
     <h1 class="well">Listado de alumnado del centro</h1>
 
-    {% set ruta_detalle = 'alumno_detalle' %}
-    {% include 'AppBundle:Alumno:partial_listar.html.twig' %}
+    {% embed 'AppBundle:App:partial_listar_resumen.html.twig' %}
+        {% block lista_item "Estudiante" %}
+        {% block lista_extra_cabecera %}<th></th>{% endblock %}
+        {% block lista_extra_fila %}<td><a href="{{ path('alumno_detalle', {'alumno': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a></td>{% endblock %}
+    {% endembed %}
 
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
 {% endblock %}
