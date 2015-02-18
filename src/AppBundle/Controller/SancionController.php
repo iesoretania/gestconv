@@ -176,8 +176,7 @@ class SancionController extends Controller
         $observacion
             ->setSancion($sancion)
             ->setFecha(new \DateTime())
-            ->setUsuario($usuario)
-            ->setAutomatica(false);
+            ->setUsuario($usuario);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
             'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')

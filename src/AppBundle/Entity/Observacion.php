@@ -50,11 +50,6 @@ class Observacion
      * @var string
      */
     protected $anotacion;
-    /**
-     * @ORM\Column(type="boolean", nullable=false)
-     * @var boolean
-     */
-    protected $automatica;
 
     /**
      * Get id
@@ -133,28 +128,5 @@ class Observacion
     public function getAnotacion()
     {
         return $this->anotacion;
-    }
-
-    /**
-     * Set automatica
-     *
-     * @param boolean $automatica
-     * @return self
-     */
-    public function setAutomatica($automatica)
-    {
-        $this->automatica = $automatica;
-
-        return $this;
-    }
-
-    /**
-     * Get automatica
-     *
-     * @return boolean
-     */
-    public function getAutomatica()
-    {
-        return $this->automatica;
     }
 }

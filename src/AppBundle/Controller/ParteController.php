@@ -178,8 +178,7 @@ class ParteController extends Controller
         $observacion = new ObservacionParte();
         $observacion->setParte($parte)
             ->setFecha(new \DateTime())
-            ->setUsuario($usuario)
-            ->setAutomatica(false);
+            ->setUsuario($usuario);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
             'admin' => $esRevisor
