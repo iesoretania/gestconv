@@ -48,11 +48,13 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle:App:portada.html.twig', [
-            'partes_pendientes' => $partesPendientes,
-            'partes_pendientes_propios_y_tutoria' => $partesPendientesPropiosYTutoria,
-            'partes_totales' => $partesTotales,
-            'partes_pendientes_propios' => $partesPendientesPropios,
-            'partes_sancionables' => $partesSancionables,
+            'cuenta' => [
+                'partes_pendientes' => $partesPendientes,
+                'partes_pendientes_propios_y_tutoria' => $partesPendientesPropiosYTutoria,
+                'partes_totales' => $partesTotales,
+                'partes_pendientes_propios' => $partesPendientesPropios,
+                'partes_sancionables' => $partesSancionables
+            ],
             'sanciones_notificables' => $sancionesNotificables,
             'sanciones_totales' => $sancionesTotales
         ]);

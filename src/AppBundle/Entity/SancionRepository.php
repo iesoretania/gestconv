@@ -84,7 +84,7 @@ class SancionRepository extends EntityRepository
 
     }
 
-    public function findAll()
+    public function findTodos()
     {
         return $this->getEntityManager()
             ->getRepository('AppBundle:Sancion')
@@ -93,6 +93,6 @@ class SancionRepository extends EntityRepository
 
     public function countAll()
     {
-        return $this->count($this->findAll());
+        return $this->count($this->findTodos());
     }
 }

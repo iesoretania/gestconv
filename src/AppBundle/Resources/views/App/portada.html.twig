@@ -14,7 +14,7 @@
             </div>
         </a>
     </article>
-    {% if (partes_pendientes_propios_y_tutoria > 0) or (is_granted('ROLE_REVISOR') and partes_pendientes > 0) %}
+    {% if (cuenta['partes_pendientes_propios_y_tutoria'] > 0) or (is_granted('ROLE_REVISOR') and cuenta['partes_pendientes'] > 0) %}
     <article class="col-md-4 tile tile-col-4 tile-orange">
         <a class="tile-link" href="{{ path('parte_listado_notificar') }}">
             <div class="tile-icon-holder">
@@ -23,14 +23,14 @@
             <div class="text-holder">
                 <h4>Notificar un parte a la familia</h4>
                 <p>
-                    Tienes {{ partes_pendientes_propios }}
-                    {{ partes_pendientes_propios == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}{% if partes_pendientes_propios != partes_pendientes_propios_y_tutoria %} ({{ partes_pendientes_propios_y_tutoria }} incluyendo la tutoría){% endif %}{% if is_granted('ROLE_REVISOR') %}. El total del centro es de {{ partes_pendientes }}{% endif %}
+                    Tienes {{ cuenta['partes_pendientes_propios'] }}
+                    {{ cuenta['partes_pendientes_propios'] == 1 ? 'parte propio pendiente' : 'partes propios pendientes' }}{% if cuenta['partes_pendientes_propios'] != cuenta['partes_pendientes_propios_y_tutoria'] %} ({{ cuenta['partes_pendientes_propios_y_tutoria'] }} incluyendo la tutoría){% endif %}{% if is_granted('ROLE_REVISOR') %}. El total del centro es de {{ cuenta['partes_pendientes'] }}{% endif %}
                 </p>
             </div>
         </a>
     </article>
     {% endif %}
-    {% if partes_totales > 0 %}
+    {% if cuenta['partes_totales'] > 0 %}
         <article class="col-md-4 tile tile-col-4 tile-lime">
             <a class="tile-link" href="{{ path('parte_listar') }}">
                 <div class="tile-icon-holder">
@@ -44,7 +44,7 @@
         </article>
     {% endif %}
     {% if is_granted('ROLE_REVISOR') %}
-        {% if partes_sancionables > 0 %}
+        {% if cuenta['partes_sancionables'] > 0 %}
             <article class="col-md-4 tile tile-col-4 tile-teal">
                 <a class="tile-link" href="{{ path('parte_pendiente') }}">
                     <div class="tile-icon-holder">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="text-holder">
                         <h4>Revisar y sancionar</h4>
-                        <p>Hay {{ partes_sancionables }} {{ partes_sancionables == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
+                        <p>Hay {{ cuenta['partes_sancionables'] }} {{ cuenta['partes_sancionables'] == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
                     </div>
                 </a>
             </article>

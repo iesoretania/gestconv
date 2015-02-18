@@ -115,14 +115,9 @@ class SancionController extends Controller
             $em->flush();
         }
 
-        if ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
-            $alumnos = $em->getRepository('AppBundle:Alumno')
-                ->findAllConSancionesAunNoNotificadas();
-        }
-        else {
-            $alumnos = $em->getRepository('AppBundle:Alumno')
-                ->findAllConSancionesAunNoNotificadasPorTutoria($usuario);
-        }
+        $alumnos = ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR'))
+            ? $em->getRepository('AppBundle:Alumno')->findAllConSancionesAunNoNotificadas()
+            : $em->getRepository('AppBundle:Alumno')->findAllConSancionesAunNoNotificadasPorTutoria($usuario);
 
         if (count($alumnos) == 0) {
             // redireccionar a la portada
