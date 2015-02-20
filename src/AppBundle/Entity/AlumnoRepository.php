@@ -81,6 +81,7 @@ class AlumnoRepository extends EntityRepository
             ->where('p.fechaAviso IS NOT NULL')
             ->andWhere('p.sancion IS NULL')
             ->andWhere('p.alumno = a')
+            ->andWhere('p.prescrito = false')
             ->groupBy('a.id')
             ->orderBy('a.apellido1', 'ASC')
             ->addOrderBy('a.apellido2', 'ASC')
