@@ -2,10 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Grupo;
+use AppBundle\Form\Type\GrupoType;
 use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -70,6 +73,38 @@ class GrupoController extends Controller
                 'formulario_fechas' => $form->createView(),
                 'items' => $grupos,
                 'usuario' => $usuario
+            ]);
+    }
+
+    /**
+     * @Route("/modificar/{grupo}", name="grupo_modificar",methods={"GET", "POST"})
+     */
+    public function modificarAction(Grupo $grupo, Request $peticion)
+    {
+        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
+
+        $formulario = $this->createForm(new GrupoType(), $grupo);
+
+        $formulario->handleRequest($peticion);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            // Guardar el usuario en la base de datos
+            $em = $this->getDoctrine()->getManager();
+
+            $em->flush();
+
+            $this->addFlash('success', 'Datos guardados correctamente');
+
+            // redireccionar al listado de grupos
+            return new RedirectResponse(
+                $this->generateUrl('grupo_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Grupo:modificar.html.twig',
+            [
+                'formulario' => $formulario->createView()
             ]);
     }
 }

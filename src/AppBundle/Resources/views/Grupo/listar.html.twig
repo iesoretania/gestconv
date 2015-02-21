@@ -11,6 +11,8 @@
 
     {% embed 'AppBundle:App:partial_listar_resumen.html.twig' %}
         {% block lista_item "Grupo" %}
+        {% block lista_extra_cabecera %}<th></th>{% endblock %}
+        {% block lista_extra_fila %}<td><a href="{{ path('grupo_modificar', {'grupo': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Modificar</a></td>{% endblock %}
     {% endembed %}
 
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>

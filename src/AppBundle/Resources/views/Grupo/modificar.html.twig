@@ -1,0 +1,17 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Modificar datos del grupo' %}
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+            <li><a href="{{ path('grupo_listar') }}">Listado de grupos</a></li>
+            <li class="active">{{ grupo | default('Nuevo grupo') }}</li>
+        </ol>
+
+        <h1 class="well">Datos del grupo</h1>
+
+        {{ form(formulario) }}
+        <a href="{{ path('grupo_listar') }}" class="btn btn-info">Volver al listado sin guardar los cambios</a>
+    </div>
+{% endblock %}
