@@ -20,7 +20,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/tutoria", name="alumno_tutoria",methods={"GET", "POST"})
      * @Route("/todo", name="alumno_listar_todo",methods={"GET", "POST"})
-     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
+     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria')")
      */
     public function listarAction(Request $request)
     {
@@ -49,7 +49,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle", methods={"GET", "POST"})
      * @Route("/detalle/{alumno}", name="alumno_detalle", methods={"GET", "POST"})
-     * @Security("has_role('ROLE_REVISOR') or has_role('ROLE_TUTOR') ")
+     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria_detalle)")
      */
     public function detalleAction(Alumno $alumno, Request $request)
     {
@@ -57,7 +57,7 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $formularioAlumno = $this->createForm(new AlumnoType(), $alumno, [
-            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
+            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_DIRECTIVO'),
             'bloqueado' => ($alumno->getGrupo()->getTutor() != $usuario)
         ]);
 

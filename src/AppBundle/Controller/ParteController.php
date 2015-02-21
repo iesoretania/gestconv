@@ -166,7 +166,7 @@ class ParteController extends Controller
         $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
 
         if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
-            throw $this->createAccessDeniedException('No puede acceder al parte indicado');
+            throw $this->createAccessDeniedException();
         }
 
         $formularioParte = $this->createForm(new ParteType(), $parte, [

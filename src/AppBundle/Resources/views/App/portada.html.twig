@@ -85,7 +85,7 @@
             </article>
         {% endif %}
     {% endif %}
-    {% if is_granted('ROLE_REVISOR') %}
+    {% if is_granted('ROLE_DIRECTIVO') %}
         <article class="col-md-4 tile tile-col-4 tile-yellow">
             <a class="tile-link" href="{{ path('alumno_listar_todo') }}">
                 <div class="tile-icon-holder">
@@ -111,7 +111,7 @@
             </a>
         </article>
     {% endif %}
-    {% if is_granted('ROLE_REVISOR') %}
+    {% if is_granted('ROLE_DIRECTIVO') %}
         <article class="col-md-4 tile tile-col-4 tile-pink">
             <a class="tile-link" href="{{ path('grupo_listar') }}">
                 <div class="tile-icon-holder">

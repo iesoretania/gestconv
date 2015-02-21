@@ -91,6 +91,12 @@ class Usuario implements AdvancedUserInterface
     protected $esRevisor;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * @var boolean
+     */
+    protected $esDirectivo;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": true})
      * @var boolean
      */
@@ -353,6 +359,29 @@ class Usuario implements AdvancedUserInterface
     }
 
     /**
+     * Get esDirectivo
+     *
+     * @return boolean
+     */
+    public function getEsDirectivo()
+    {
+        return $this->esDirectivo;
+    }
+
+    /**
+     * Set esAdministrador
+     *
+     * @param boolean $esDirectivo
+     * @return Usuario
+     */
+    public function setEsDirectivo($esDirectivo)
+    {
+        $this->esDirectivo = $esDirectivo;
+
+        return $this;
+    }
+
+    /**
      * Add sanciones
      *
      * @param Sancion $sanciones
@@ -565,6 +594,10 @@ class Usuario implements AdvancedUserInterface
 
         if ($this->getEsRevisor()) {
             $roles[] = new Role('ROLE_REVISOR');
+        }
+
+        if ($this->getEsDirectivo()) {
+            $roles[] = new Role('ROLE_DIRECTIVO');
         }
 
         if ($this->getTutorias()->count() > 0) {

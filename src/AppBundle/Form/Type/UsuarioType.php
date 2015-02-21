@@ -49,6 +49,10 @@ class UsuarioType extends AbstractType
                 ->add('esRevisor', null, [
                     'label' => 'Pertenece a la comisión de convivencia',
                     'required' => false
+                ])
+                ->add('esDirectivo', null, [
+                    'label' => 'Pertenece al equipo directivo',
+                    'required' => false
                 ]);
         }
 

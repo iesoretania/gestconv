@@ -16,7 +16,7 @@ class GrupoController extends Controller
 {
     /**
      * @Route("/listar", name="grupo_listar",methods={"GET", "POST"})
-     * @Security("has_role('ROLE_REVISOR')")
+     * @Security("has_role('ROLE_DIRECTIVO')")
      */
     public function listarAction(Request $request)
     {
