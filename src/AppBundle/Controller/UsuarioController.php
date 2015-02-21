@@ -37,7 +37,7 @@ class UsuarioController extends Controller
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
             'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
-            'propio' => true
+            'propio' => ($usuarioActivo->getId() == $usuario->getId())
         ]);
 
         $formulario->handleRequest($peticion);
@@ -62,7 +62,55 @@ class UsuarioController extends Controller
 
             // redireccionar a la portada
             return new RedirectResponse(
-                $this->generateUrl('portada')
+                $this->generateUrl($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? 'usuario_listar' : 'portada')
+            );
+        }
+
+        return $this->render('AppBundle:Usuario:modificar.html.twig',
+            [
+                'usuario' => $usuario,
+                'formulario' => $formulario->createView()
+            ]);
+    }
+
+    /**
+     * @Route("/nuevo", name="usuario_nuevo",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function nuevoAction(Request $peticion)
+    {
+        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
+
+        $usuario = new Usuario();
+        $usuario
+            ->setEstaActivo(true)
+            ->setEstaBloqueado(false);
+
+        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+            'admin' => true,
+            'propio' => false,
+            'nuevo' => true
+        ]);
+
+        $formulario->handleRequest($peticion);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            // Guardar el usuario en la base de datos
+            $em = $this->getDoctrine()->getManager();
+
+            $encoder = $this->container->get('security.password_encoder');
+            $password = $encoder->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
+            $usuario->setPassword($password);
+
+            $em->persist($usuario);
+            $em->flush();
+
+            $this->addFlash('success', 'Usuario creado correctamente');
+
+            // redireccionar a la portada
+            return new RedirectResponse(
+                $this->generateUrl('usuario_listar')
             );
         }
 

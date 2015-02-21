@@ -41,6 +41,14 @@ class UsuarioType extends AbstractType
 
         if ($options['admin']) {
             $builder
+                ->add('estaActivo', null, [
+                    'label' => 'El usuario está activo',
+                    'required' => false
+                ])
+                ->add('estaBloqueado', null, [
+                    'label' => 'El usuario está bloqueado',
+                    'required' => false
+                ])
                 ->add('esAdministrador', null, [
                     'label' => 'Es administrador',
                     'required' => false,
@@ -56,22 +64,24 @@ class UsuarioType extends AbstractType
                 ]);
         }
 
-        $builder
-            ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
-
-        if (!$options['admin']) {
+        if (!$options['nuevo']) {
             $builder
-                ->add('oldPassword', 'password', [
-                    'label' => 'Contraseña antigua',
-                    'required' => false,
-                    'mapped' => false,
-                    'constraints' => new UserPassword([
-                        'groups' => ['password']
-                    ])
+                ->add('enviar', 'submit', [
+                    'label' => 'Guardar cambios',
+                    'attr' => ['class' => 'btn btn-success']
                 ]);
+
+            if (!$options['admin']) {
+                $builder
+                    ->add('oldPassword', 'password', [
+                        'label' => 'Contraseña antigua',
+                        'required' => false,
+                        'mapped' => false,
+                        'constraints' => new UserPassword([
+                            'groups' => ['password']
+                        ])
+                    ]);
+            }
         }
 
         $builder
@@ -114,7 +124,8 @@ class UsuarioType extends AbstractType
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
-            'propio' => false
+            'propio' => false,
+            'nuevo' => false
         ));
     }
 

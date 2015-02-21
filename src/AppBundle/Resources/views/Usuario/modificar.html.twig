@@ -7,13 +7,13 @@
             <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
             {% if is_granted('ROLE_ADMIN') %}
                 <li><a href="{{ path('usuario_listar') }}">Listado de usuarios</a></li>
-                <li class="active">{{ usuario | default('Nuevo usuario') }}</li>
+                <li class="active">{{ usuario.id ? usuario : 'Nuevo usuario' }}</li>
             {% else %}
                 <li class="active">Modificar datos personales</li>
             {% endif %}
         </ol>
 
-        <h1 class="well">Datos del usuario</h1>
+        <h1 class="well">{{ usuario.id ? 'Datos del usuario' : 'Nuevo usuario' }}</h1>
 
         {{ form(formulario) }}
         {% if is_granted('ROLE_ADMIN') %}
