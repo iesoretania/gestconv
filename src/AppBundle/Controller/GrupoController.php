@@ -47,6 +47,23 @@ class GrupoController extends Controller
             ->addSelect('max(p.fechaSuceso)')
             ->addSelect('max(s.fechaSancion)');
 
+        $cursos = $em->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->leftJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
+            ->leftJoin('AppBundle:Curso', 'c', 'WITH', 'g.curso = c')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->select('c')
+            ->addSelect('count(p)')
+            ->addSelect('count(p.fechaAviso)')
+            ->addSelect('count(p.sancion)')
+            ->addSelect('count(s.fechaComunicado)')
+            ->addSelect('count(s.motivosNoAplicacion)')
+            ->addSelect('count(s.fechaInicioSancion)')
+            ->addSelect('sum(p.prescrito)')
+            ->addSelect('max(p.fechaSuceso)')
+            ->addSelect('max(s.fechaSancion)');
+
         if ($form->isValid()) {
             // aplicar filtro de fechas
             $data = $form->getData();
@@ -54,9 +71,15 @@ class GrupoController extends Controller
                 $grupos = $grupos
                     ->andWhere('p.fechaSuceso >= :desde')
                     ->setParameter('desde', $data['desde']);
+                $cursos = $cursos
+                    ->andWhere('p.fechaSuceso >= :desde')
+                    ->setParameter('desde', $data['desde']);
             }
             if ($data['hasta']) {
                 $grupos = $grupos
+                    ->andWhere('p.fechaSuceso <= :hasta')
+                    ->setParameter('hasta', $data['hasta']);
+                $cursos = $cursos
                     ->andWhere('p.fechaSuceso <= :hasta')
                     ->setParameter('hasta', $data['hasta']);
             }
@@ -68,16 +91,24 @@ class GrupoController extends Controller
             ->getQuery()
             ->getResult();
 
+        $cursos = $cursos
+            ->addOrderBy('c.descripcion')
+            ->groupBy('c.id')
+            ->getQuery()
+            ->getResult();
+
         return $this->render('AppBundle:Grupo:listar.html.twig',
             [
                 'formulario_fechas' => $form->createView(),
                 'items' => $grupos,
+                'items2' => $cursos,
                 'usuario' => $usuario
             ]);
     }
 
     /**
      * @Route("/modificar/{grupo}", name="grupo_modificar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function modificarAction(Grupo $grupo, Request $peticion)
     {

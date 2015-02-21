@@ -1,0 +1,17 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Modificar datos del curso' %}
+{% block content %}
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+            <li><a href="{{ path('grupo_listar') }}">Listado de grupos</a></li>
+            <li class="active">{{ grupo | default('Nuevo curso') }}</li>
+        </ol>
+
+        <h1 class="well">Datos del curso</h1>
+
+        {{ form(formulario) }}
+        <a href="{{ path('grupo_listar') }}" class="btn btn-info">Volver al listado sin guardar los cambios</a>
+    </div>
+{% endblock %}
