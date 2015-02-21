@@ -5,12 +5,21 @@
     <div class="container">
         <ol class="breadcrumb">
             <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
-            <li class="active">Modificar datos personales</li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="{{ path('usuario_listar') }}">Listado de usuarios</a></li>
+                <li class="active">{{ usuario | default('Nuevo usuario') }}</li>
+            {% else %}
+                <li class="active">Modificar datos personales</li>
+            {% endif %}
         </ol>
 
-        <h1 class="well">Datos personales</h1>
+        <h1 class="well">Datos del usuario</h1>
 
         {{ form(formulario) }}
-        <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada sin guardar los cambios</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('usuario_listar') }}" class="btn btn-info">Volver a la lista de usuarios sin guardar los cambios</a>
+        {% else %}
+            <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada sin guardar los cambios</a>
+        {% endif %}
     </div>
 {% endblock %}

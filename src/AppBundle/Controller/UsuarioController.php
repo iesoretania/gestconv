@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Form\Type\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,10 +20,21 @@ class UsuarioController extends Controller
     /**
      * @Route("/modificar", name="usuario_modificar",methods={"GET", "POST"})
      */
-    public function modificarAction(Request $peticion)
+    public function modificarPropioAction(Request $peticion)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        return $this->forward('AppBundle:Usuario:modificar', ['usuario' => $usuario->getId()]);
+    }
 
+    /**
+     * @Route("/modificar/{usuario}", name="usuario_modificar_otro",methods={"GET", "POST"})
+     */
+    public function modificarAction(Usuario $usuario, Request $peticion)
+    {
+        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
+        if ($usuario->getId() != $usuarioActivo->getId() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            return $this->createAccessDeniedException();
+        }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
             'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
             'propio' => true
@@ -56,6 +68,7 @@ class UsuarioController extends Controller
 
         return $this->render('AppBundle:Usuario:modificar.html.twig',
             [
+                'usuario' => $usuario,
                 'formulario' => $formulario->createView()
             ]);
     }
