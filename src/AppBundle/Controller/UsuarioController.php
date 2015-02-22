@@ -44,7 +44,6 @@ class UsuarioController extends Controller
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
-            $mensaje = 'Datos guardados correctamente';
             // Guardar el usuario en la base de datos
             $em = $this->getDoctrine()->getManager();
 
@@ -54,11 +53,12 @@ class UsuarioController extends Controller
                 $encoder = $this->container->get('security.password_encoder');
                 $password = $encoder->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
                 $usuario->setPassword($password);
-                $mensaje = 'Datos guardados correctamente y contraseña cambiada';
+                $this->addFlash('success', 'Datos guardados correctamente y contraseña cambiada');
+            }
+            else {
+                $this->addFlash('success', 'Datos guardados correctamente');
             }
             $em->flush();
-
-            $this->addFlash('success', $mensaje);
 
             // redireccionar a la portada
             return new RedirectResponse(
@@ -79,8 +79,6 @@ class UsuarioController extends Controller
      */
     public function nuevoAction(Request $peticion)
     {
-        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
-
         $usuario = new Usuario();
         $usuario
             ->setEstaActivo(true)

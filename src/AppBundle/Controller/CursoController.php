@@ -22,8 +22,6 @@ class CursoController extends Controller
      */
     public function modificarAction(Curso $curso, Request $peticion)
     {
-        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
-
         $formulario = $this->createForm(new CursoType(), $curso);
 
         $formulario->handleRequest($peticion);

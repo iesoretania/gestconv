@@ -28,8 +28,7 @@ class GrupoController extends Controller
 
         $fechasPorDefecto = ['desde' => null, 'hasta' => null];
 
-        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
-        $form->handleRequest($request);
+        $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto)->handleRequest($request);
 
         $grupos = $em->getRepository('AppBundle:Alumno')
             ->createQueryBuilder('a')
@@ -112,8 +111,6 @@ class GrupoController extends Controller
      */
     public function modificarAction(Grupo $grupo, Request $peticion)
     {
-        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
-
         $formulario = $this->createForm(new GrupoType(), $grupo);
 
         $formulario->handleRequest($peticion);
