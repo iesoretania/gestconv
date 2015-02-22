@@ -20,7 +20,7 @@ class UsuarioController extends Controller
     /**
      * @Route("/modificar", name="usuario_modificar",methods={"GET", "POST"})
      */
-    public function modificarPropioAction(Request $peticion)
+    public function modificarPropioAction()
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
         return $this->forward('AppBundle:Usuario:modificar', ['usuario' => $usuario->getId()]);
