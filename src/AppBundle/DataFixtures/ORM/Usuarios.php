@@ -80,46 +80,52 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $this->faker = \Faker\Factory::create('es_ES');
 
         $usuario = new Usuario();
-        $usuario->setNombreUsuario('admin');
-        $usuario->setPassword(password_hash('admin', PASSWORD_DEFAULT));
-        $usuario->setNombre('Administrador');
-        $usuario->setApellido1('Admin');
-        $usuario->setEsAdministrador(true);
-        $usuario->setEsRevisor(false);
-        $usuario->setEstaActivo(true);
-        $usuario->setEstaBloqueado(false);
+        $usuario->setNombreUsuario('admin')
+            ->setPassword(password_hash('admin', PASSWORD_DEFAULT))
+            ->setNombre('Administrador')
+            ->setApellido1('Admin')
+            ->setEsAdministrador(true)
+            ->setEsRevisor(false)
+            ->setEsDirectivo(false)
+            ->setEstaActivo(true)
+            ->setEstaBloqueado(false);
 
         $manager->persist($usuario);
 
         $usuario = new Usuario();
-        $usuario->setNombreUsuario('comisionario');
-        $usuario->setPassword(password_hash('comisionario', PASSWORD_DEFAULT));
-        $usuario->setNombre('Comisión');
-        $usuario->setApellido1('Convivencia');
-        $usuario->setEsAdministrador(false);
-        $usuario->setEsRevisor(true);
-        $usuario->setEstaActivo(true);
-        $usuario->setEstaBloqueado(false);
+        $usuario->setNombreUsuario('comisionario')
+            ->setPassword(password_hash('comisionario', PASSWORD_DEFAULT))
+            ->setNombre('Comisión')
+            ->setApellido1('Convivencia')
+            ->setEsAdministrador(false)
+            ->setEsRevisor(true)
+            ->setEsDirectivo(false)
+            ->setEstaActivo(true)
+            ->setEstaBloqueado(false);
+
         $manager->persist($usuario);
 
         $usuario = new Usuario();
-        $usuario->setNombreUsuario('usuario');
-        $usuario->setPassword(password_hash('usuario', PASSWORD_DEFAULT));
-        $usuario->setNombre('Juan');
-        $usuario->setApellido1('Nadie');
-        $usuario->setApellido2('Nadie');
-        $usuario->setEsAdministrador(false);
-        $usuario->setEsRevisor(false);
-        $usuario->setEstaActivo(true);
-        $usuario->setEstaBloqueado(false);
+        $usuario->setNombreUsuario('usuario')
+            ->setPassword(password_hash('usuario', PASSWORD_DEFAULT))
+            ->setNombre('Juan')
+            ->setApellido1('Nadie')
+            ->setApellido2('Nadie')
+            ->setEsAdministrador(false)
+            ->setEsRevisor(false)
+            ->setEsDirectivo(false)
+            ->setEstaActivo(true)
+            ->setEstaBloqueado(false);
+
         $manager->persist($usuario);
 
         for ($i = 0; $i < rand(30, 45); $i++) {
             $usuario = self::generateUsuario();
-            $usuario->setEsAdministrador(false);
-            $usuario->setEsRevisor(rand(1, 20) > 19);
-            $usuario->setEstaActivo(true);
-            $usuario->setEstaBloqueado(false);
+            $usuario->setEsAdministrador(false)
+                ->setEsRevisor(rand(1, 20) > 19)
+                ->setEsDirectivo(false)
+                ->setEstaActivo(true)
+                ->setEstaBloqueado(false);
             $manager->persist($usuario);
         }
 
