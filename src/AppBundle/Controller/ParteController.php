@@ -221,7 +221,8 @@ class ParteController extends Controller
     public function detallePdfAction(Parte $parte)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
+        $plantilla = $this->container->getParameter('parte');
+        $logos = $this->container->getParameter('logos');
 
         $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
         $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
@@ -237,10 +238,26 @@ class ParteController extends Controller
         $pdf->SetTitle('Parte #' . $parte->getId());
         $pdf->SetSubject($parte->getAlumno());
         $pdf->SetKeywords('');
+        $pdf->SetExtendedHeaderData(
+            [
+                $logos['centro'], $logos['organizacion'], $logos['sello']
+            ],
+            [
+                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
+                    $plantilla['proceso'],
+                    $plantilla['descripcion'],
+                    $plantilla['modelo'],
+                    $plantilla['revision']
+            ]
+        );
+        $pdf->setBarcode('P' . $parte->getId());
+        $pdf->setFooterData([0,0,128], [0,64,128]);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-        // remove default header/footer
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
+        // mostrar cabecera
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
 
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
@@ -258,10 +275,12 @@ class ParteController extends Controller
         $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
             [
                 'parte' => $parte,
-                'usuario' => $usuario
+                'usuario' => $usuario,
+                'localidad' => $this->container->getParameter('localidad')
             ]);
 
-        $pdf -> writeHTML($html);
+        $pdf->writeHTML($html);
+
         $response = new Response($pdf->Output('parte_' . $parte->getId() . '.pdf'));
         $response->headers->set('Content-Type', 'application/pdf');
 

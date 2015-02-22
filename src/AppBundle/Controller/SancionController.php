@@ -222,6 +222,8 @@ class SancionController extends Controller
     public function detallePdfAction(Sancion $sancion)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $plantilla = $this->container->getParameter('sancion');
+        $logos = $this->container->getParameter('logos');
 
         $pdf = $this->get('white_october.tcpdf')->create();
 
@@ -230,10 +232,26 @@ class SancionController extends Controller
         $pdf->SetTitle('Sancion #' . $sancion->getId());
         $pdf->SetSubject($sancion->getPartes()->first()->getAlumno());
         $pdf->SetKeywords('');
+        $pdf->SetExtendedHeaderData(
+            [
+                $logos['centro'], $logos['organizacion'], $logos['sello']
+            ],
+            [
+                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
+                $plantilla['proceso'],
+                $plantilla['descripcion'],
+                $plantilla['modelo'],
+                $plantilla['revision']
+            ]
+        );
+        $pdf->setBarcode('S' . $sancion->getId());
+        $pdf->setFooterData([0,0,128], [0,64,128]);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
-        // remove default header/footer
-        $pdf->setPrintHeader(false);
-        $pdf->setPrintFooter(false);
+        // mostrar cabecera
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
 
         // set default monospaced font
         $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
@@ -242,7 +260,7 @@ class SancionController extends Controller
         $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
 
         // set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM - 15);
 
         $pdf->SetFont('helvetica', '', 10, '', true);
 
@@ -251,10 +269,13 @@ class SancionController extends Controller
         $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
             [
                 'sancion' => $sancion,
-                'usuario' => $usuario
+                'usuario' => $usuario,
+                'localidad' => $this->container->getParameter('localidad'),
+                'director' => $this->container->getParameter('director')
             ]);
 
-        $pdf -> writeHTML($html);
+        $pdf->writeHTML($html);
+
         $response = new Response($pdf->Output('sancion_' . $sancion->getId() . '.pdf'));
         $response->headers->set('Content-Type', 'application/pdf');
 

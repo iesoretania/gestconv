@@ -22,4 +22,22 @@ parameters:
     session_name:      gestconv
 
     localidad:         Linares
-
+    centro:            I.E.S. Oretania
+    localidad:         Linares
+    director:          Dª. Francisca Sánchez Ruiz
+    logos:
+                      centro: '../src/AppBundle/Resources/public/images/centro.png'
+                      organizacion: '../src/AppBundle/Resources/public/images/organizacion.png'
+                      sello: '../src/AppBundle/Resources/public/images/sello.png'
+    parte:
+                       modelo: MD750202
+                       revision: REV.2
+                       proceso: CONVIVENCIA
+                       descripcion: Parte de incidencia
+                       margen: 0
+    sancion:
+                       modelo: MD750204
+                       revision: REV.1
+                       proceso: CONVIVENCIA
+                       descripcion: Comunicación de correcciones y medidas disciplinarias a familias
+                       margen: -4
