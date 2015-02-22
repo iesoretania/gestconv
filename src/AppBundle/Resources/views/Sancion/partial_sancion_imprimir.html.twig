@@ -1,0 +1,35 @@
+<h1>Sanción #{{ sancion.id }}{% if not detalle %}: {{ (sancion.partes | first).alumno }}{% endif %}</h1>
+
+<h3>Registrada por {{ sancion.usuario }}
+    - {{ sancion.fechaSancion | date('d/m/Y H:i') }}
+    {% if sancion.fechaComunicado %} - Notificada el {{ sancion.fechaComunicado | date('d/m/Y H:i') }}{% endif %}
+</h3>
+<h3>Medidas adoptadas:</h3>
+<ul>
+    {% for medida in sancion.medidas %}
+        <li>{{ medida.descripcion }} - {{ medida.categoria.descripcion }}</li>
+    {% endfor %}
+</ul>
+<b>En detalle:</b><br/>{{ sancion.anotacion | nl2br }}
+
+{% if sancion.fechaInicioSancion %}
+    <h3>Duración de las medidas adoptadas</h3>
+    Desde el día <b>{{ sancion.fechaInicioSancion | date('d/m/Y') }}</b> hasta el día <b>{{ sancion.fechaFinSancion | date('d/m/Y') }}</b>.
+{% endif %}
+
+{% if sancion.observaciones | length > 0 %}
+    <h3>Observaciones a la sanción:</h3>
+    <ul>
+        {% for observacion in sancion.observaciones %}
+        <li><b>{{ observacion.fecha | date('d/m/Y H:m') }} - {{ observacion.usuario }}</b><br/>{{ observacion.anotacion | nl2br }}
+            {% endfor %}
+    </ul>
+{% endif %}
+{% if sancion.avisos | length > 0 %}
+    <h3>Avisos sobre la sanción realizados a la familia:</h3>
+    <ul>
+        {% for aviso in sancion.avisos %}
+        <li><b>{{ aviso.fecha | date('d/m/Y H:m') }} - {{ aviso.tipo.descripcion }} - {{ aviso.usuario }}</b>{% if aviso.anotacion %}<br/>{{ aviso.anotacion | nl2br }}{% endif %}
+            {% endfor %}
+    </ul>
+{% endif %}

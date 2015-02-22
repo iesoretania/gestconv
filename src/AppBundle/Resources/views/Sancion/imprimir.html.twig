@@ -1,0 +1,8 @@
+{% set detalle = false %}
+{% include 'AppBundle:Sancion:partial_sancion_imprimir.html.twig' %}
+{% set detalle = true %}
+{% for parte in sancion.partes %}
+    {% include 'AppBundle:Parte:partial_parte_imprimir.html.twig' %}
+{% endfor %}
+
+{% include 'AppBundle:App:partial_firma_imprimir.html.twig' %}

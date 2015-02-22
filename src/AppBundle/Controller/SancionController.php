@@ -14,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/sancion")
@@ -211,5 +212,52 @@ class SancionController extends Controller
                 'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
             ]);
+    }
+
+
+    /**
+     * @Route("/imprimir/{sancion}", name="sancion_detalle_pdf",methods={"GET"})
+     * @Security("has_role('ROLE_REVISOR')")
+     */
+    public function detallePdfAction(Sancion $sancion)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+
+        $pdf = $this->get('white_october.tcpdf')->create();
+
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Gestconv');
+        $pdf->SetTitle('Sancion #' . $sancion->getId());
+        $pdf->SetSubject($sancion->getPartes()->first()->getAlumno());
+        $pdf->SetKeywords('');
+
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+        $pdf->SetFont('helvetica', '', 10, '', true);
+
+        $pdf->AddPage();
+
+        $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
+            [
+                'sancion' => $sancion,
+                'usuario' => $usuario
+            ]);
+
+        $pdf -> writeHTML($html);
+        $response = new Response($pdf->Output('sancion_' . $sancion->getId() . '.pdf'));
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
     }
 }

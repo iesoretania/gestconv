@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/parte")
@@ -212,5 +213,58 @@ class ParteController extends Controller
                 'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
             ]);
+    }
+
+    /**
+     * @Route("/imprimir/{parte}", name="parte_detalle_pdf",methods={"GET"})
+     */
+    public function detallePdfAction(Parte $parte)
+    {
+        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
+
+        if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $pdf = $this->get('white_october.tcpdf')->create();
+
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Gestconv');
+        $pdf->SetTitle('Parte #' . $parte->getId());
+        $pdf->SetSubject($parte->getAlumno());
+        $pdf->SetKeywords('');
+
+        // remove default header/footer
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+        $pdf->SetFont('helvetica', '', 10, '', true);
+
+        $pdf->AddPage();
+
+        $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
+            [
+                'parte' => $parte,
+                'usuario' => $usuario
+            ]);
+
+        $pdf -> writeHTML($html);
+        $response = new Response($pdf->Output('parte_' . $parte->getId() . '.pdf'));
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
     }
 }

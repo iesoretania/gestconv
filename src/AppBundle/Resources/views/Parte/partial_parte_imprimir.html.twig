@@ -1,0 +1,36 @@
+<h1>Parte de convivencia #{{ parte.id }}{% if not detalle %}: {{ parte.alumno }}{% endif %}</h1>
+
+<h3>Registrado por {{ parte.usuario }}
+    - {{ parte.fechaSuceso | date('d/m/Y H:i') }}
+    {% if parte.fechaAviso %} - Notificado el {{ parte.fechaAviso | date('d/m/Y H:i') }}{% endif %}
+    {% if parte.prescrito %} - <u>Prescrito</u>{% endif %}
+</h3>
+<h3>Conductas que provocan el parte:</h3>
+<ul>
+    {% for conducta in parte.conductas %}
+        <li>{{ conducta.descripcion }} - {{ conducta.categoria.descripcion }}</li>
+    {% endfor %}
+</ul>
+<b>En detalle:</b><br/>{{ parte.anotacion | nl2br }}
+
+{% if parte.hayExpulsion %}
+    <h3>Expulsión del aula</h3>
+    <b>Actividades a realizar:</b> {{ parte.actividades | nl2br }}
+{% endif %}
+
+{% if parte.observaciones | length > 0 %}
+    <h3>Observaciones al parte:</h3>
+    <ul>
+        {% for observacion in parte.observaciones %}
+        <li><b>{{ observacion.fecha | date('d/m/Y H:m') }} - {{ observacion.usuario }}</b><br/>{{ observacion.anotacion | nl2br }}
+            {% endfor %}
+    </ul>
+{% endif %}
+{% if parte.avisos | length > 0 %}
+    <h3>Avisos sobre el parte realizados a la familia:</h3>
+    <ul>
+        {% for aviso in parte.avisos %}
+        <li><b>{{ aviso.fecha | date('d/m/Y H:m') }} - {{ aviso.tipo.descripcion }} - {{ aviso.usuario }}</b>{% if aviso.anotacion %}<br/>{{ aviso.anotacion | nl2br }}{% endif %}
+            {% endfor %}
+    </ul>
+{% endif %}

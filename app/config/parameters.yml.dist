@@ -20,3 +20,6 @@ parameters:
     secret:            4c35b7b283e0df29cf6034d9ddd631c8a4b8f5f1
 
     session_name:      gestconv
+
+    localidad:         Linares
+
