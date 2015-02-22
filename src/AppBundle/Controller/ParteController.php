@@ -161,8 +161,7 @@ class ParteController extends Controller
     public function detalleAction(Parte $parte, Request $request)
     {
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
-        $em = $this->getDoctrine()->getManager();
-
+        
         $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
 
         if (!$esRevisor && !($parte->getAlumno()->getGrupo()->getTutor() == $usuario) && $parte->getUsuario() != $usuario) {
@@ -186,8 +185,8 @@ class ParteController extends Controller
         $formularioObservacion->handleRequest($request);
 
         if ($formularioObservacion->isSubmitted() && $formularioObservacion->isValid()) {
-            $em->persist($observacion);
-            $em->flush();
+            $this->getDoctrine()->getManager()->persist($observacion);
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Observación registrada correctamente');
         }
 
@@ -195,7 +194,7 @@ class ParteController extends Controller
 
         if ($formularioParte->isSubmitted() && $formularioParte->isValid()) {
 
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
         }
 
