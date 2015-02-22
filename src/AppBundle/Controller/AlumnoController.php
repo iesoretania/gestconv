@@ -49,7 +49,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle", methods={"GET", "POST"})
      * @Route("/detalle/{alumno}", name="alumno_detalle", methods={"GET", "POST"})
-     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria_detalle)")
+     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria_detalle')")
      */
     public function detalleAction(Alumno $alumno, Request $request)
     {
