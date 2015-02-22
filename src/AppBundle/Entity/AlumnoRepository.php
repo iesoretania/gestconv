@@ -74,7 +74,7 @@ class AlumnoRepository extends EntityRepository
             ->getRepository('AppBundle:Parte')
             ->createQueryBuilder('p')
             ->select('a')
-            ->addSelect('COUNT(p)')
+            ->addSelect('COUNT(p.id)')
             ->addSelect('MIN(p.fechaSuceso)')
             ->addSelect('MAX(p.fechaSuceso)')
             ->innerJoin('AppBundle:Alumno', 'a')
@@ -131,7 +131,7 @@ class AlumnoRepository extends EntityRepository
             ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
             ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
             ->select('a')
-            ->addSelect('count(p)')
+            ->addSelect('count(p.id)')
             ->addSelect('count(p.fechaAviso)')
             ->addSelect('count(p.sancion)')
             ->addSelect('count(s.fechaComunicado)')
@@ -166,7 +166,7 @@ class AlumnoRepository extends EntityRepository
         if ($tutor) {
             $resultado = $resultado
                 ->join('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-                ->where('g.tutor = :usuario')
+                ->andWhere('g.tutor = :usuario')
                 ->setParameter('usuario', $tutor);
         }
         return $resultado

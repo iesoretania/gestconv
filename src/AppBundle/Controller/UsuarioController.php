@@ -138,7 +138,7 @@ class UsuarioController extends Controller
             ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.usuario = u')
             ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
             ->select('u')
-            ->addSelect('count(p)')
+            ->addSelect('count(p.id)')
             ->addSelect('count(p.fechaAviso)')
             ->addSelect('count(p.sancion)')
             ->addSelect('count(s.fechaComunicado)')
