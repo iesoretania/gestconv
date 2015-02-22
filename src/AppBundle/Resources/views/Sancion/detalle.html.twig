@@ -41,5 +41,5 @@
         {% include "AppBundle:Parte:partial_parte.html.twig" %}
     {% endfor %}
 
-    <a href="{{ path('sancion_listar') }}" class="btn btn-info">Volver al listado de sanciones</a>
+    <a href="{{ path('sancion_listar') }}" class="btn btn-info">Volver al listado de sanciones</a>&nbsp;<a href="{{ path('sancion_detalle_pdf', { 'sancion': sancion.id }) }}" class="btn btn-primary" target="_blank">Imprimir la sanción</a>
 {% endblock %}
