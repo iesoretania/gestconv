@@ -58,11 +58,6 @@ class UsuarioController extends Controller
                 $this->addFlash('success', 'Datos guardados correctamente');
             }
             $this->getDoctrine()->getManager()->flush();
-
-            // redireccionar a la portada
-            return new RedirectResponse(
-                $this->generateUrl($this->get('security.authorization_checker')->isGranted('ROLE_ADMIN') ? 'usuario_listar' : 'portada')
-            );
         }
 
         return $this->render('AppBundle:Usuario:modificar.html.twig',

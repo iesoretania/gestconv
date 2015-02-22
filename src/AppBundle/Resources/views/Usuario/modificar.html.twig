@@ -17,9 +17,9 @@
 
         {{ form(formulario) }}
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('usuario_listar') }}" class="btn btn-info">Volver a la lista de usuarios sin guardar los cambios</a>
+            <a href="{{ path('usuario_listar') }}" class="btn btn-info">Volver a la lista de usuarios</a>
         {% else %}
-            <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada sin guardar los cambios</a>
+            <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
         {% endif %}
     </div>
 {% endblock %}

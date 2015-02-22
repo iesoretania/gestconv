@@ -198,11 +198,6 @@ class SancionController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Se han registrado correctamente los cambios en la sanción');
-
-            // redireccionar a la portada
-            return new RedirectResponse(
-                $this->generateUrl('sancion_listar')
-            );
         }
 
         return $this->render('AppBundle:Sancion:detalle.html.twig',

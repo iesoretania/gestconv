@@ -14,8 +14,9 @@
         {% block lista_extra_cabecera %}<th></th>{% endblock %}
         {% block lista_extra_fila %}<td><a href="{{ path('usuario_modificar_otro', {'usuario': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Modificar</a></td>{% endblock %}
     {% endembed %}
-    {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('usuario_nuevo') }}" class="btn btn-success">Crear un usuario</a>&nbsp;
-    {% endif %}
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success">Crear un usuario</a>
+    {% endif %}
+
 {% endblock %}

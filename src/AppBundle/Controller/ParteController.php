@@ -197,11 +197,6 @@ class ParteController extends Controller
 
             $em->flush();
             $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
-
-            // redireccionar a la portada
-            return new RedirectResponse(
-                $this->generateUrl('parte_listar')
-            );
         }
 
         return $this->render('AppBundle:Parte:detalle.html.twig',

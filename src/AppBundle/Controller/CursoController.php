@@ -34,11 +34,6 @@ class CursoController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Datos guardados correctamente');
-
-            // redireccionar al listado de grupos
-            return new RedirectResponse(
-                $this->generateUrl('grupo_listar')
-            );
         }
 
         return $this->render('AppBundle:Curso:modificar.html.twig',

@@ -49,7 +49,7 @@ class InformePDF extends \TCPDF
 
     /**
      * Returns header data
-     * @return array()
+     * @return array
      * @public
      */
     public function getExtendedHeaderData()
