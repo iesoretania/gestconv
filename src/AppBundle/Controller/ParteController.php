@@ -164,9 +164,8 @@ class ParteController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
-        $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
 
-        if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
+        if (!$esRevisor && !($parte->getAlumno()->getGrupo()->getTutor() == $usuario) && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException();
         }
 
@@ -175,8 +174,8 @@ class ParteController extends Controller
             'bloqueado' => (false === is_null($parte->getSancion()))
         ]);
 
-        $observacion = new ObservacionParte();
-        $observacion->setParte($parte)
+        $observacion = (new ObservacionParte())
+            ->setParte($parte)
             ->setFecha(new \DateTime())
             ->setUsuario($usuario);
 
@@ -197,7 +196,6 @@ class ParteController extends Controller
         if ($formularioParte->isSubmitted() && $formularioParte->isValid()) {
 
             $em->flush();
-
             $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
 
             // redireccionar a la portada

@@ -45,7 +45,6 @@ class UsuarioController extends Controller
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
             // Guardar el usuario en la base de datos
-            $em = $this->getDoctrine()->getManager();
 
             // Si es solicitado, cambiar la contraseña
             $passwordSubmit = $formulario->get('cambiarPassword');
@@ -58,7 +57,7 @@ class UsuarioController extends Controller
             else {
                 $this->addFlash('success', 'Datos guardados correctamente');
             }
-            $em->flush();
+            $this->getDoctrine()->getManager()->flush();
 
             // redireccionar a la portada
             return new RedirectResponse(
