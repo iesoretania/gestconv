@@ -91,6 +91,17 @@ class SancionRepository extends EntityRepository
             ->createQueryBuilder('s');
     }
 
+    public function findAllPorAlumno($alumno)
+    {
+        return $this->findTodos()
+            ->innerJoin('s.partes', 'p')
+            ->where('p.alumno = :alumno')
+            ->setParameter('alumno', $alumno)
+            ->orderBy('s.fechaSancion', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function countAll()
     {
         return $this->count($this->findTodos());

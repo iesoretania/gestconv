@@ -77,6 +77,7 @@ class SancionController extends Controller
             [
                 'alumno' => $alumno,
                 'partes' => $partes,
+                'sanciones' => $em->getRepository('AppBundle:Sancion')->findAllPorAlumno($alumno),
                 'formulario' => $formulario->createView(),
                 'usuario' => $usuario
             ]);

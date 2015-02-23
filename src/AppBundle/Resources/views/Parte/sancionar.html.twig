@@ -41,6 +41,13 @@
     {{ form_row(formulario.anotacion) }}
     {{ form_end(formulario) }}
     <a href="{{ path('parte_pendiente') }}" class="btn btn-info">Volver a la lista de alumnado</a>
+    {% if sanciones %}
+        <hr/>
+        <h3>Histórico de sanciones</h3>
+        {% for sancion in sanciones %}
+            {% include 'AppBundle:Sancion:partial_sancion.html.twig' %}
+        {% endfor %}
+    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
