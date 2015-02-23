@@ -66,6 +66,13 @@ class NuevoParteType extends AbstractType
                 'required' => false,
                 'attr' => ['rows' => '5']
             ])
+            ->add('actividadesRealizadas', 'choice', [
+                'label' => '¿Se realizaron las actividades durante la expulsión?',
+                'choices' => [null => 'No se sabe', true => 'Sí', false => 'No'],
+                'expanded' => true,
+                'multiple' => false,
+                'required' => false
+            ])
             ->add('enviar', 'submit', [
                 'label' => 'Registrar parte',
                 'attr' => ['class' => 'btn btn-success']

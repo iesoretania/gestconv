@@ -106,6 +106,11 @@ class Parte
      */
     protected $hayExpulsion;
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @var boolean
+     */
+    protected $actividadesRealizadas;
+    /**
      * @ORM\ManyToMany(targetEntity="TipoConducta")
      * @var Collection
      *
@@ -442,6 +447,29 @@ class Parte
     public function getHayExpulsion()
     {
         return $this->hayExpulsion;
+    }
+
+    /**
+     * Set actividadesRealizadas
+     *
+     * @param boolean $actividadesRealizadas
+     * @return Parte
+     */
+    public function setActividadesRealizadas($actividadesRealizadas)
+    {
+        $this->actividadesRealizadas = $actividadesRealizadas;
+
+        return $this;
+    }
+
+    /**
+     * Get actividadesRealizadas
+     *
+     * @return boolean
+     */
+    public function getActividadesRealizadas()
+    {
+        return $this->actividadesRealizadas;
     }
 
     /**

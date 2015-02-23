@@ -21,7 +21,7 @@
             <strong>Expulsión del aula</strong>
         </p>
         {% if parte.actividades %}
-        <strong>Actividades a realizar:</strong>
+        <strong>Actividades para realizar:</strong> {% if parte.actividadesRealizadas == true %}Se hicieron{% elseif parte.actividadesRealizadas is not null %}No se hicieron{% endif %}
         <div class="alert alert-warning">
             {{ parte.actividades | nl2br }}
         </div>

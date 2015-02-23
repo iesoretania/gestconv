@@ -54,7 +54,6 @@ class ParteType extends AbstractType
                 'required' => true,
                 'attr' => ['rows' => '8'],
                 'disabled' => ($desactivado)
-
             ])
             ->add('prescrito', null, [
                 'label' => 'El parte ha prescrito',
@@ -71,6 +70,13 @@ class ParteType extends AbstractType
                 'required' => false,
                 'attr' => ['rows' => '5'],
                 'disabled' => ($desactivado)
+            ])
+            ->add('actividadesRealizadas', 'choice', [
+                'label' => '¿Se realizaron las actividades durante la expulsión?',
+                'choices' => [null => 'No se sabe', true => 'Sí', false => 'No'],
+                'expanded' => true,
+                'multiple' => false,
+                'required' => false
             ]);
 
         if (false === $desactivado) {
