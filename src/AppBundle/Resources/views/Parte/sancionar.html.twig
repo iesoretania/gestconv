@@ -36,10 +36,12 @@
             {{ form_errors(formulario.partes) }}
         </div>
     </div>
-    {% do formulario.partes.setRendered %}
-    {{ form_row(formulario.medidas) }}
-    {{ form_row(formulario.anotacion) }}
-    {{ form_end(formulario) }}
+    {% if partes %}
+        {% do formulario.partes.setRendered %}
+        {{ form_row(formulario.medidas) }}
+        {{ form_row(formulario.anotacion) }}
+        {{ form_end(formulario) }}
+    {% endif %}
     <a href="{{ path('parte_pendiente') }}" class="btn btn-info">Volver a la lista de alumnado</a>
     {% if sanciones %}
         <hr/>

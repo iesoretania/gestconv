@@ -17,7 +17,7 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
     {
         $builder
             ->add('partes', 'entity', [
-                'label' => 'Partes sancionados*',
+                'label' => 'Partes a sancionar*',
                 'class' => 'AppBundle\Entity\Parte',
                 'multiple' => true,
                 'expanded' => true,
