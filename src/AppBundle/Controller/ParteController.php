@@ -82,8 +82,9 @@ class ParteController extends Controller
 
             $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 
-            $partes = $em->getRepository('AppBundle:Parte')
-                ->findAllNoNotificadosPorAlumnoYUsuario($id, $usuario);
+            $partes = ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR'))
+            ? $em->getRepository('AppBundle:Parte')->findAllNoNotificadosPorAlumno($id)
+            : $em->getRepository('AppBundle:Parte')->findAllNoNotificadosPorAlumnoYUsuario($id, $usuario);
 
             foreach ($partes as $parte) {
                 $avisoParte = new AvisoParte();

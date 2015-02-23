@@ -57,6 +57,15 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findAllNoNotificadosPorAlumno($alumno)
+    {
+        return $this->findNoNotificados()
+            ->andWhere('p.alumno = :alumno')
+            ->setParameter('alumno', $alumno)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findPorUsuarioOTutoria($usuario)
     {
         $orX = $this->getEntityManager()->createQueryBuilder()
