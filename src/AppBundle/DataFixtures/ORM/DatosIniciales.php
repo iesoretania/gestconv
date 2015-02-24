@@ -1,5 +1,4 @@
 <?php
-
 /*
   GESTCONV - Aplicación web para la gestión de la convivencia en centros educativos
 
