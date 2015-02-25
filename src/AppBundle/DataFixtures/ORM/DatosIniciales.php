@@ -41,9 +41,6 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
             "En el intercambio de clases",
             "Entrada/Salida",
             "Recreo",
-            "Fuera del centro",
-            "En el comedor",
-            "En el aula matinal",
             "Durante las actividades extraescolares",
             "Otros"
         ];
