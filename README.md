@@ -14,6 +14,17 @@ Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usan
 Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
 instaladas.
 
+## Requisitos
+
+- PHP 5.4.x o superior
+- Servidor web Apache2 (podría funcionar con nginx, pero no se ha probado)
+- Cualquier sistema gestor de bases de datos que funcione bajo Doctrine (p.ej. MySQL, MariaDB, PosgreSQL, SQLite, etc.)
+
+## Instalación
+
+- Ejecutar `composer install` desde la carpeta del proyecto.
+- Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
+
 ## Licencia
 Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 
