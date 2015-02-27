@@ -2,7 +2,8 @@
 [![Build Status](https://travis-ci.org/iesoretania/gestconv.png?branch=master)](https://travis-ci.org/iesoretania/gestconv) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd/mini.png)](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iesoretania/gestconv/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iesoretania/gestconv/?branch=master)
 
 Aplicación web para la gestión de la convivencia en centros educativos
-(en desarrollo, aún no está lista para producción)
+(en desarrollo, aún no está lista para producción). Actualmente se encuentra desplegada en pruebas
+en el I.E.S. Oretania de Linares (Jaén, España).
 
 Desde ella se podrán introducir los distintos partes de convivencia, facilitando la notificación
 de los mismos a las familias y simplificando su revisión por parte de la Comisión de Convivencia
@@ -24,6 +25,7 @@ instaladas.
 
 - Ejecutar `composer install` desde la carpeta del proyecto.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
+- Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
 
 ## Licencia
 Esta aplicación se ofrece bajo licencia [AGPL versión 3].
