@@ -27,10 +27,16 @@ instaladas.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
 - Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
 
+## Entorno de desarrollo
+
+Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [Vagrant] instalado junto con [VirtualBox]
+y ejecutar el comando `vagrant up`. La aplicación será accesible desde la dirección http://192.168.33.10/
+
 ## Licencia
 Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 
 [Vagrant]: https://www.vagrantup.com/
+[VirtualBox]: https://www.virtualbox.org
 [Symfony2]: http://symfony.com/
 [Composer]: http://getcomposer.org
 [AGPL versión 3]: http://www.gnu.org/licenses/agpl.htmlu.org/licenses/agpl.html
