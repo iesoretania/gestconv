@@ -20,13 +20,7 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\Entity\ActitudFamiliaSancion;
-use AppBundle\Entity\CategoriaAviso;
-use AppBundle\Entity\CategoriaConducta;
-use AppBundle\Entity\CategoriaMedida;
 use AppBundle\Entity\EstadoSancion;
-use AppBundle\Entity\TipoConducta;
-use AppBundle\Entity\TipoMedida;
 use AppBundle\Entity\TramoParte;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

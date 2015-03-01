@@ -21,10 +21,10 @@
 namespace AppBundle\DataFixtures\ORM;
 
 use AppBundle\DataFixtures\Utils\Nombres;
+use AppBundle\Entity\Usuario;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Usuario;
 
 class Usuarios extends AbstractFixture implements OrderedFixtureInterface
 {

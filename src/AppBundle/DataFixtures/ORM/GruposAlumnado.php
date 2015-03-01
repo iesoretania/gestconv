@@ -20,13 +20,13 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\DataFixtures\Utils\Nombres;
+use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Curso;
+use AppBundle\Entity\Grupo;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use AppBundle\Entity\Grupo;
-use AppBundle\Entity\Curso;
-use AppBundle\Entity\Alumno;
-use AppBundle\DataFixtures\Utils\Nombres;
 
 class GruposAlumnado extends AbstractFixture implements OrderedFixtureInterface
 {
