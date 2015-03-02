@@ -6,8 +6,8 @@ parameters:
     database_name:     gestconv
     database_user:     root
     database_password: ~
-    # Si vas a usar SQLite, deberías activar la línea siguiente
-    # database_path: "%kernel.root_dir%/data.db3"
+    # Si vas a usar SQLite, deberías modificar la línea siguiente para indicar donde almacenar la base de datos
+    database_path: "%kernel.root_dir%/data.db3"
 
     # En el caso de usar una cuenta de GMail para enviar notificaciones,
     # cambia "smtp" por "gmail", "127.0.0.1" por "~"; en mailer_user coloca
