@@ -7,5 +7,6 @@ php:
   
 before_script:
   - composer install --dev
+  - app/console doctrine:database:create
   
 script: phpunit -c app
