@@ -37,14 +37,6 @@ class ImportarType extends AbstractType
                 'label' => 'Fichero .CSV de Séneca',
                 'required' => true
             ])
-            ->add('eliminar', 'checkbox', [
-                'label' => 'Eliminar los datos antes de importar (¡peligro!)',
-                'required' => false
-            ])
-            ->add('actualizar', 'checkbox', [
-                'label' => 'Actualizar los datos existentes',
-                'required' => false
-            ])
             ->add('enviar', 'submit', [
                 'label' => 'Importar fichero',
                 'attr' => ['class' => 'btn btn-danger']

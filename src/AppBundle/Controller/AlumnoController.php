@@ -196,7 +196,7 @@ class AlumnoController extends Controller
             else {
                 $this->addFlash('error', 'Ha ocurrido un error en la importación');
             }
-            
+
             return new RedirectResponse(
                 $this->generateUrl('alumno_listar_todo')
             );
