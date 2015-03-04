@@ -144,7 +144,38 @@ class GrupoController extends Controller
 
         return $this->render('AppBundle:Grupo:modificar.html.twig',
             [
-                'formulario' => $formulario->createView()
+                'formulario' => $formulario->createView(),
+                'grupo' => $grupo
+            ]);
+    }
+
+
+    /**
+     * @Route("/nuevo", name="grupo_nuevo",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function nuevoAction(Request $peticion)
+    {
+        $grupo = new Grupo;
+
+        $formulario = $this->createForm(new GrupoType(), $grupo);
+
+        $formulario->handleRequest($peticion);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            // Guardar el usuario en la base de datos
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($grupo);
+            $em->flush();
+
+            $this->addFlash('success', 'Grupo creado correctamente');
+        }
+
+        return $this->render('AppBundle:Grupo:modificar.html.twig',
+            [
+                'formulario' => $formulario->createView(),
+                'grupo' => $grupo
             ]);
     }
 }

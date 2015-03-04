@@ -42,8 +42,11 @@ class GrupoType extends AbstractType
                 'required'  => true
             ])
             ->add('tutor', null, [
-                'label' => 'Tutor/a*',
-                'required'  => true
+                'label' => 'Tutor/a',
+                'required'  => false,
+                'attr' => [
+                    'placeholder' => 'Elija el tutor/a del grupo'
+                ]
             ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
