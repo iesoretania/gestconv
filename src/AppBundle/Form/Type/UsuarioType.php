@@ -55,6 +55,10 @@ class UsuarioType extends AbstractType
             ->add('email', 'email', [
                 'label' => 'Correo electrónico',
                 'required' => false
+            ])
+            ->add('notificaciones', null, [
+                'label' => 'Marcar si se desea recibir notificaciones',
+                'required' => false
             ]);
 
         if ($options['admin']) {
