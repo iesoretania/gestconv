@@ -78,6 +78,12 @@ class Usuario implements AdvancedUserInterface
     protected $email;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     * @var boolean
+     */
+    protected $notificaciones;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": false})
      * @var boolean
      */
@@ -309,6 +315,29 @@ class Usuario implements AdvancedUserInterface
     public function getPartes()
     {
         return $this->partes;
+    }
+
+    /**
+     * Get notificaciones
+     *
+     * @return boolean
+     */
+    public function getNotificaciones()
+    {
+        return $this->notificaciones;
+    }
+
+    /**
+     * Set notificaciones
+     *
+     * @param boolean $notificaciones
+     * @return Usuario
+     */
+    public function setNotificaciones($notificaciones)
+    {
+        $this->notificaciones = $notificaciones;
+
+        return $this;
     }
 
     /**
