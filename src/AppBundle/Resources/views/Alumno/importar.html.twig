@@ -4,6 +4,7 @@
 {% block content %}
     <ol class="breadcrumb">
         <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path('alumno_listar_todo') }}">Gestionar alumnado</a></li>
         <li class="active">Importar alumnado</li>
     </ol>
 
@@ -16,5 +17,5 @@
 
     {{ form(formulario) }}
 
-    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+    <a href="{{ path('alumno_listar_todo') }}" class="btn btn-info">Volver al listado de alumnado</a>
 {% endblock %}
