@@ -114,8 +114,10 @@ class AlumnoController extends Controller
             ]);
     }
 
-    protected function importarAlumnadoDesdeCsv(EntityManager $em, $fichero)
+    protected function importarAlumnadoDesdeCsv($fichero)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $importer = new CsvImporter($fichero, true);
         $curso = $em->getRepository('AppBundle:Curso')->createQueryBuilder('c')
             ->select('c')->setMaxResults(1)->getQuery()
@@ -182,15 +184,13 @@ class AlumnoController extends Controller
      */
     public function importarAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $datos = new Importar();
         $form = $this->createForm(new ImportarType(), $datos);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($this->importarAlumnadoDesdeCsv($em, $datos->getFichero()->getPathname())) {
+            if ($this->importarAlumnadoDesdeCsv($datos->getFichero()->getPathname())) {
                 $this->addFlash('success', 'Los datos se han importado correctamente');
             }
             else {
