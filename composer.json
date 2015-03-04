@@ -1,6 +1,6 @@
 {
     "name": "iesoretania/gestconv",
-    "license": "AGPL-3",
+    "license": "AGPL-3.0",
     "type": "project",
     "description": "Gestión de partes de convivencia en centros educativos",
     "autoload": {
