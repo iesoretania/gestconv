@@ -20,11 +20,10 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GrupoType extends AbstractType
+class ImportarType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -33,23 +32,22 @@ class GrupoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion', null, [
-                'label' => 'Descripción del grupo*',
+            ->add('fichero', 'file', [
+                'label' => 'Fichero .CSV de Séneca',
                 'required' => true
             ])
-            ->add('curso', null, [
-                'label' => 'Curso al que pertenece*',
-                'required'  => true
+            ->add('eliminar', null, [
+                'label' => 'Eliminar los datos antes de importar (¡peligro!)',
+                'required' => false
             ])
-            ->add('tutor', null, [
-                'label' => 'Tutor/a*',
-                'required'  => true
+            ->add('actualizar', null, [
+                'label' => 'Actualizar los datos existentes',
+                'required' => false
             ])
             ->add('enviar', 'submit', [
-                'label' => 'Guardar cambios',
-                'attr' => ['class' => 'btn btn-success']
+                'label' => 'Importar fichero',
+                'attr' => ['class' => 'btn btn-danger']
             ]);
-
     }
 
     /**
@@ -58,7 +56,7 @@ class GrupoType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => 'AppBundle\Entity\Grupo'
+            'data_class' => 'AppBundle\Form\Model\Importar'
         ]);
     }
 
@@ -67,6 +65,6 @@ class GrupoType extends AbstractType
      */
     public function getName()
     {
-        return 'appbundle_grupo';
+        return 'appbundle_importar';
     }
 }

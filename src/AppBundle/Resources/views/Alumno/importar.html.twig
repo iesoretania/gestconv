@@ -1,0 +1,15 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Importar alumnado' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Importar alumnado</li>
+    </ol>
+
+    <h1 class="well">Importar alumnado desde Séneca</h1>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+{% endblock %}

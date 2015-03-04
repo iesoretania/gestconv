@@ -138,13 +138,13 @@ class UsuarioType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
             'propio' => false,
             'nuevo' => false
-        ));
+        ]);
     }
 
     /**

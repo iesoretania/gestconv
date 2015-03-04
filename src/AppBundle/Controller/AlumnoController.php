@@ -21,7 +21,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
+use AppBundle\Form\Model\Importar;
 use AppBundle\Form\Type\AlumnoType;
+use AppBundle\Form\Type\ImportarType;
 use AppBundle\Form\Type\RangoFechasType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -104,6 +106,21 @@ class AlumnoController extends Controller
                 'alumno' => $alumno,
                 'formulario_alumno' => $formularioAlumno->createView(),
                 'usuario' => $usuario
+            ]);
+    }
+
+    /**
+     * @Route("/importar", name="alumno_tutoria",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_DIRECTIVO')")
+     */
+    public function importarAction(Request $request)
+    {
+        $datos = new Importar();
+        $form = $this->createForm(new ImportarType(), $datos);
+        $form->handleRequest($request);
+        return $this->render('AppBundle:Alumno:importar.html.twig',
+            [
+                'formulario' => $form->createView()
             ]);
     }
 }

@@ -102,7 +102,7 @@ class NuevoParteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Parte',
             'admin' => false,
             'validation_groups' => function(FormInterface $form) {
@@ -112,7 +112,7 @@ class NuevoParteType extends AbstractType
                 else
                     return ['Default'];
             }
-        ));
+        ]);
     }
 
     /**
