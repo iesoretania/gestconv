@@ -21,11 +21,18 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Alumno;
+use AppBundle\Entity\Curso;
+use AppBundle\Entity\Grupo;
+use AppBundle\Form\Model\Importar;
 use AppBundle\Form\Type\AlumnoType;
+use AppBundle\Form\Type\ImportarType;
 use AppBundle\Form\Type\RangoFechasType;
+use AppBundle\Utils\CsvImporter;
+use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -104,6 +111,100 @@ class AlumnoController extends Controller
                 'alumno' => $alumno,
                 'formulario_alumno' => $formularioAlumno->createView(),
                 'usuario' => $usuario
+            ]);
+    }
+
+    protected function importarAlumnadoDesdeCsv(EntityManager $em, $fichero)
+    {
+        $importer = new CsvImporter($fichero, true);
+        $curso = $em->getRepository('AppBundle:Curso')->createQueryBuilder('c')
+            ->select('c')->setMaxResults(1)->getQuery()
+            ->getOneOrNullResult();
+
+        if (!$curso) {
+            $curso = new Curso();
+            $curso->setDescripcion('Importado');
+            $em->persist($curso);
+        }
+
+        $grupos = [];
+
+        while($data = $importer->get(100))
+        {
+            foreach($data as $alumnoData) {
+
+                if ($alumnoData['Unidad']) {
+                    $alumno = $em->getRepository('AppBundle:Alumno')
+                        ->findOneByNie($alumnoData['Nº Id. Escolar']);
+                    if (!$alumno) {
+                        $alumno = new Alumno();
+                    }
+
+                    if (!isset($grupos[$alumnoData['Unidad']])) {
+                        $grupo = $em->getRepository('AppBundle:Grupo')
+                            ->findOneByDescripcion($alumnoData['Unidad']);
+
+                        if (!$grupo) {
+                            $grupo = new Grupo;
+                            $grupo->setDescripcion($alumnoData['Unidad'])->setCurso($curso);
+                            $em->persist($grupo);
+                        }
+
+                        $grupos[$alumnoData['Unidad']] = $grupo;
+                    }
+                    else {
+                        $grupo = $grupos[$alumnoData['Unidad']];
+                    }
+
+                    $alumno->setNie($alumnoData['Nº Id. Escolar'])
+                        ->setApellido1($alumnoData['Primer apellido'])
+                        ->setApellido2($alumnoData['Segundo apellido'])
+                        ->setNombre($alumnoData['Nombre'])
+                        ->setFechaNacimiento(\DateTime::createFromFormat('d/m/Y', $alumnoData['Fecha de nacimiento']))
+                        ->setTutor1($alumnoData['Nombre Primer tutor'] . ' ' . $alumnoData['Primer apellido Primer tutor'] . ' ' . $alumnoData['Segundo apellido Primer tutor'])
+                        ->setTutor2($alumnoData['Nombre Segundo tutor'] . ' ' . $alumnoData['Primer apellido Segundo tutor'] . ' ' . $alumnoData['Segundo apellido Segundo tutor'])
+                        ->setTelefono1($alumnoData['Teléfono'])
+                        ->setTelefono2($alumnoData['Teléfono de urgencia'])
+                        ->setGrupo($grupo);
+
+                    $em->persist($alumno);
+                }
+            }
+            $em->flush();
+
+            return true;
+        }
+    }
+
+    /**
+     * @Route("/importar", name="alumno_importar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_DIRECTIVO')")
+     */
+    public function importarAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $datos = new Importar();
+        $form = $this->createForm(new ImportarType(), $datos);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($this->importarAlumnadoDesdeCsv($em, $datos->getFichero()->getPathname())) {
+                $this->addFlash('success', 'Los datos se han importado correctamente');
+            }
+            else {
+                $this->addFlash('error', 'Ha ocurrido un error en la importación');
+            }
+
+            return new RedirectResponse(
+                $this->generateUrl('alumno_listar_todo')
+            );
+        }
+
+        return $this->render('AppBundle:Alumno:importar.html.twig',
+            [
+                'formulario' => $form->createView()
             ]);
     }
 }

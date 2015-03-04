@@ -111,7 +111,7 @@ class ParteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Parte',
             'admin' => false,
             'bloqueado' => false,
@@ -122,7 +122,7 @@ class ParteType extends AbstractType
                 else
                     return ['Default'];
             }
-        ));
+        ]);
     }
 
     /**

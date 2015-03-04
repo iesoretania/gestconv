@@ -70,7 +70,7 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Sancion',
             'alumno' => null,
             'validation_groups' => function(FormInterface $form) {
@@ -79,7 +79,7 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
                 else
                     return ['Default'];
             }
-        ));
+        ]);
     }
 
     /**

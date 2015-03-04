@@ -76,7 +76,7 @@ class SancionType extends BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Sancion',
             'admin' => false,
             'bloqueado' => false,
@@ -86,7 +86,7 @@ class SancionType extends BaseSancionType
                 else
                     return ['Default'];
             }
-        ));
+        ]);
     }
 
     /**
