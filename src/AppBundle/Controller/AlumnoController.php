@@ -28,7 +28,6 @@ use AppBundle\Form\Type\AlumnoType;
 use AppBundle\Form\Type\ImportarType;
 use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Utils\CsvImporter;
-use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -131,8 +130,7 @@ class AlumnoController extends Controller
 
         $grupos = [];
 
-        while($data = $importer->get(100))
-        {
+        while($data = $importer->get(100)) {
             foreach($data as $alumnoData) {
 
                 if ($alumnoData['Unidad']) {
@@ -172,10 +170,9 @@ class AlumnoController extends Controller
                     $em->persist($alumno);
                 }
             }
-            $em->flush();
-
-            return true;
         }
+        $em->flush();
+        return true;
     }
 
     /**
