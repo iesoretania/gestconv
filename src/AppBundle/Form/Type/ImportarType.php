@@ -20,6 +20,7 @@
 
 namespace AppBundle\Form\Type;
 
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -36,11 +37,11 @@ class ImportarType extends AbstractType
                 'label' => 'Fichero .CSV de Séneca',
                 'required' => true
             ])
-            ->add('eliminar', null, [
+            ->add('eliminar', 'checkbox', [
                 'label' => 'Eliminar los datos antes de importar (¡peligro!)',
                 'required' => false
             ])
-            ->add('actualizar', null, [
+            ->add('actualizar', 'checkbox', [
                 'label' => 'Actualizar los datos existentes',
                 'required' => false
             ])
