@@ -176,8 +176,7 @@ class UsuarioController extends Controller
         }
 
         $usuarios = $usuarios
-            ->addOrderBy('u.apellido1')
-            ->addOrderBy('u.apellido2')
+            ->addOrderBy('u.apellidos')
             ->addOrderBy('u.nombre')
             ->groupBy('u.id')
             ->getQuery()

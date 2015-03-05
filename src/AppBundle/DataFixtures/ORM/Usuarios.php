@@ -44,11 +44,12 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $nombre = Nombres::generateNombreCompleto($tipo);
 
         $usuario->setNombre($nombre['nombre']);
-        $usuario->setApellido1($nombre['apellido1']);
+        $apellidos = $nombre['apellido1'];
         // A veces no generar un segundo apellido
         if (rand(0,100) > 0) {
-            $usuario->setApellido2($nombre['apellido2']);
+            $apellidos .= ' ' . $nombre['apellido2'];
         }
+        $usuario->setApellidos($apellidos);
 
         $username = $nombre['nombre'][0] . mb_substr($nombre['apellido1'], 0, 3, 'UTF-8') .
             mb_substr($nombre['apellido2'], 0, 3, 'UTF-8');
@@ -82,7 +83,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $usuario->setNombreUsuario('admin')
             ->setPassword(password_hash('admin', PASSWORD_DEFAULT))
             ->setNombre('Administrador')
-            ->setApellido1('Admin')
+            ->setApellidos('Admin')
             ->setEsAdministrador(true)
             ->setEsRevisor(false)
             ->setEsDirectivo(false)
@@ -95,7 +96,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $usuario->setNombreUsuario('comisionario')
             ->setPassword(password_hash('comisionario', PASSWORD_DEFAULT))
             ->setNombre('Comisión')
-            ->setApellido1('Convivencia')
+            ->setApellidos('Convivencia')
             ->setEsAdministrador(false)
             ->setEsRevisor(true)
             ->setEsDirectivo(false)
@@ -108,8 +109,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface
         $usuario->setNombreUsuario('usuario')
             ->setPassword(password_hash('usuario', PASSWORD_DEFAULT))
             ->setNombre('Juan')
-            ->setApellido1('Nadie')
-            ->setApellido2('Nadie')
+            ->setApellidos('Nadie')
             ->setEsAdministrador(false)
             ->setEsRevisor(false)
             ->setEsDirectivo(false)

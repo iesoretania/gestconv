@@ -44,13 +44,9 @@ class UsuarioType extends AbstractType
                 'label' => 'Nombre*',
                 'required'  => true
             ])
-            ->add('apellido1', null, [
-                'label' => 'Primer apellido*',
+            ->add('apellidos', null, [
+                'label' => 'Apellidos*',
                 'required'  => true
-            ])
-            ->add('apellido2', null, [
-                'label' => 'Segundo apellido',
-                'required'  => false
             ])
             ->add('email', 'email', [
                 'label' => 'Correo electrónico',
