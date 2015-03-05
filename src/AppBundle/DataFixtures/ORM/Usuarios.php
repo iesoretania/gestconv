@@ -60,6 +60,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
             ->setEsRevisor(false)
             ->setEsDirectivo(false)
             ->setEstaActivo(true)
+            ->setNotificaciones(false)
             ->setEstaBloqueado(false);
 
         $manager->persist($usuario);
