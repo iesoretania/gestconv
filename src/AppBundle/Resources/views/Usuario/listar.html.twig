@@ -1,6 +1,6 @@
 {% extends '::layout.html.twig' %}
 
-{% block title 'Listado de grupos' %}
+{% block title 'Listado de usuarios' %}
 {% block content %}
     <ol class="breadcrumb">
         <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
@@ -16,7 +16,7 @@
     {% endembed %}
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
     {% if is_granted('ROLE_ADMIN') %}
-        &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success">Crear un usuario</a>
+        &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success">Crear un usuario</a>&nbsp;<a href="{{ path('usuario_importar') }}" class="btn btn-warning">Importar o actualizar usuarios desde Séneca</a>
     {% endif %}
 
 {% endblock %}

@@ -21,8 +21,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Usuario;
+use AppBundle\Form\Model\Importar;
+use AppBundle\Form\Type\ImportarType;
 use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Form\Type\UsuarioType;
+use AppBundle\Utils\CsvImporter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -187,6 +190,74 @@ class UsuarioController extends Controller
                 'formulario_fechas' => $form->createView(),
                 'items' => $usuarios,
                 'usuario' => $usuario
+            ]);
+    }
+
+    protected function importarUsuariosDesdeCsv($fichero)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $importer = new CsvImporter($fichero, true);
+        $encoder = $this->container->get('security.password_encoder');
+
+        while($data = $importer->get(100)) {
+            foreach($data as $usuarioData) {
+
+                $usuario = $em->getRepository('AppBundle:Usuario')
+                    ->findOneByNombreUsuario($usuarioData['Usuario IdEA']);
+                if (!$usuario) {
+
+                    $usuario = new Usuario();
+
+                    $completo = explode(', ', $usuarioData['Empleado/a']);
+
+                    $usuario->setNombreUsuario($usuarioData['Usuario IdEA'])
+                        ->setApellidos($completo[0])
+                        ->setNombre($completo[1])
+                        ->setPassword($encoder->encodePassword($usuario, $usuarioData['Usuario IdEA']))
+                        ->setNotificaciones(false)
+                        ->setEsAdministrador(false)
+                        ->setEsRevisor(false)
+                        ->setEsDirectivo(false)
+                        ->setEstaBloqueado(false)
+                        ->setEstaActivo(true);
+
+                    $em->persist($usuario);
+                }
+
+            }
+        }
+        $em->flush();
+        return true;
+    }
+
+    /**
+     * @Route("/importar", name="usuario_importar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_DIRECTIVO')")
+     */
+    public function importarAction(Request $request)
+    {
+        $datos = new Importar();
+        $form = $this->createForm(new ImportarType(), $datos);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($this->importarUsuariosDesdeCsv($datos->getFichero()->getPathname())) {
+                $this->addFlash('success', 'Los datos se han importado correctamente');
+            }
+            else {
+                $this->addFlash('error', 'Ha ocurrido un error en la importación');
+            }
+
+            return new RedirectResponse(
+                $this->generateUrl('usuario_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Usuario:importar.html.twig',
+            [
+                'formulario' => $form->createView()
             ]);
     }
 }
