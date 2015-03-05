@@ -76,7 +76,7 @@ class CursoController extends Controller
 
             // Guardar el usuario en la base de datos
             $em = $this->getDoctrine()->getManager();
-
+            $em->persist($curso);
             $em->flush();
 
             $this->addFlash('success', 'Curso creado correctamente');
