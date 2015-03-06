@@ -37,7 +37,7 @@
                 {% set estado = "" %}
             {% endif %}
             <tr class="{{ estado }}">
-                <td>{{ sancion.id }}</td>
+                <td>{{ sancion.id }} {% if sancion.registradoEnSeneca %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-close"></i>{% endif %}</td>
                 <td>{{ sancion.fechaSancion | date('d/m/Y H:i') }}{% if sancion.fechaComunicado %} <span class="text-muted small">({{ sancion.fechaComunicado | date('d/m/Y') }})</span>{% endif %}</td>
                 <td>{{ sancion.partes[0].alumno }}</td>
                 <td>

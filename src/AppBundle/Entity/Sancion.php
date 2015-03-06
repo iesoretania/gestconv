@@ -99,6 +99,11 @@ class Sancion
      */
     protected $actitudFamilia;
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * @var boolean
+     */
+    protected $registradoEnSeneca;
+    /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="sancion")
      * @var Collection
      *
@@ -371,9 +376,33 @@ class Sancion
     }
 
     /**
-     * Get medidasEfectivas
+     * Get registradoEnSeneca
      *
      * @return boolean 
+     */
+    public function getRegistradoEnSeneca()
+    {
+        return $this->registradoEnSeneca;
+    }
+
+
+    /**
+     * Set registradoEnSeneca
+     *
+     * @param boolean $registradoEnSeneca
+     * @return Sancion
+     */
+    public function setRegistradoEnSeneca($registradoEnSeneca)
+    {
+        $this->registradoEnSeneca = $registradoEnSeneca;
+
+        return $this;
+    }
+
+    /**
+     * Get medidasEfectivas
+     *
+     * @return boolean
      */
     public function getMedidasEfectivas()
     {

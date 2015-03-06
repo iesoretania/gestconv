@@ -65,6 +65,10 @@ class SancionType extends BaseSancionType
                 'placeholder' => 'Desconocida o no aplicable',
                 'required' => false
             ])
+            ->add('registradoEnSeneca', 'checkbox', [
+                'label' => 'Se ha registrado en Séneca',
+                'required' => false
+            ])
             ->add('enviar', 'submit', [
                 'label' => 'Grabar cambios de la sanción',
                 'attr' => ['class' => 'btn btn-success']
