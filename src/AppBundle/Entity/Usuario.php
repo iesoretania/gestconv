@@ -130,7 +130,6 @@ class Usuario implements AdvancedUserInterface
      */
     public function __construct()
     {
-        $this->tutorias = new ArrayCollection();
         $this->partes = new ArrayCollection();
         $this->sanciones = new ArrayCollection();
     }

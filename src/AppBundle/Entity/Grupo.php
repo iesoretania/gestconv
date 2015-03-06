@@ -64,6 +64,7 @@ class Grupo
     protected $alumnado=null;
 
     public function __construct() {
+        $this->tutores = new ArrayCollection();
         $this->alumnado = new ArrayCollection();
     }
     
