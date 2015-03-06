@@ -44,16 +44,16 @@ class UsuarioType extends AbstractType
                 'label' => 'Nombre*',
                 'required'  => true
             ])
-            ->add('apellido1', null, [
-                'label' => 'Primer apellido*',
+            ->add('apellidos', null, [
+                'label' => 'Apellidos*',
                 'required'  => true
-            ])
-            ->add('apellido2', null, [
-                'label' => 'Segundo apellido',
-                'required'  => false
             ])
             ->add('email', 'email', [
                 'label' => 'Correo electrónico',
+                'required' => false
+            ])
+            ->add('notificaciones', null, [
+                'label' => 'Marcar si se desea recibir notificaciones',
                 'required' => false
             ]);
 
@@ -138,13 +138,13 @@ class UsuarioType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
             'propio' => false,
             'nuevo' => false
-        ));
+        ]);
     }
 
     /**

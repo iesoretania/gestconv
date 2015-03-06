@@ -55,7 +55,37 @@ class CursoController extends Controller
 
         return $this->render('AppBundle:Curso:modificar.html.twig',
             [
-                'formulario' => $formulario->createView()
+                'formulario' => $formulario->createView(),
+                'curso' => $curso
+            ]);
+    }
+
+    /**
+     * @Route("/nuevo", name="curso_nuevo",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function nuevoAction(Request $peticion)
+    {
+        $curso = new Curso();
+
+        $formulario = $this->createForm(new CursoType(), $curso);
+
+        $formulario->handleRequest($peticion);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+
+            // Guardar el usuario en la base de datos
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($curso);
+            $em->flush();
+
+            $this->addFlash('success', 'Curso creado correctamente');
+        }
+
+        return $this->render('AppBundle:Curso:modificar.html.twig',
+            [
+                'formulario' => $formulario->createView(),
+                'curso' => $curso
             ]);
     }
 }

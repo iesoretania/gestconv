@@ -63,19 +63,19 @@ class Usuario implements AdvancedUserInterface
      * @ORM\Column(type="string")
      * @var string
      */
-    protected $apellido1;
-
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     * @var string
-     */
-    protected $apellido2;
+    protected $apellidos;
 
     /**
      * @ORM\Column(type="string", nullable=true)
      * @var string
      */
     protected $email;
+
+    /**
+     * @ORM\Column(type="boolean", options={"default": true})
+     * @var boolean
+     */
+    protected $notificaciones;
 
     /**
      * @ORM\Column(type="boolean", options={"default": false})
@@ -148,9 +148,9 @@ class Usuario implements AdvancedUserInterface
      *
      * @return string
      */
-    public function getApellido1()
+    public function getApellidos()
     {
-        return $this->apellido1;
+        return $this->apellidos;
     }
 
     /**
@@ -158,33 +158,13 @@ class Usuario implements AdvancedUserInterface
      * @param string $valor
      * @return Usuario
      */
-    public function setApellido1($valor)
+    public function setApellidos($valor)
     {
-        $this->apellido1 = $valor;
+        $this->apellidos = $valor;
 
         return $this;
     }
 
-    /**
-     *
-     * @return string
-     */
-    public function getApellido2()
-    {
-        return $this->apellido2;
-    }
-
-    /**
-     *
-     * @param string $valor
-     * @return Usuario
-     */
-    public function setApellido2($valor)
-    {
-        $this->apellido2 = $valor;
-
-        return $this;
-    }
 
     /**
      *
@@ -213,15 +193,6 @@ class Usuario implements AdvancedUserInterface
      */
     public function __toString() {
         return $this->getApellidos() . ', ' . $this->getNombre();
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public function getApellidos()
-    {
-        return $this->apellido1 . (($this->apellido2) ? (' ' . $this->apellido2) : '');
     }
 
     /**
@@ -309,6 +280,29 @@ class Usuario implements AdvancedUserInterface
     public function getPartes()
     {
         return $this->partes;
+    }
+
+    /**
+     * Get notificaciones
+     *
+     * @return boolean
+     */
+    public function getNotificaciones()
+    {
+        return $this->notificaciones;
+    }
+
+    /**
+     * Set notificaciones
+     *
+     * @param boolean $notificaciones
+     * @return Usuario
+     */
+    public function setNotificaciones($notificaciones)
+    {
+        $this->notificaciones = $notificaciones;
+
+        return $this;
     }
 
     /**

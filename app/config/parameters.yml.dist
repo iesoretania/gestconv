@@ -1,14 +1,17 @@
-# This file is a "template" of what your parameters.yml file should look like
+# Este fichero es un ejemplo de cómo deberían ser los contenidos de parameters.yml
 parameters:
-    database_driver:   pdo_sqlite
+    database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     gestconv
     database_user:     root
     database_password: ~
-    # You should uncomment this if you want use pdo_sqlite
+    # Si vas a usar SQLite, deberías modificar la línea siguiente para indicar donde almacenar la base de datos
     database_path: "%kernel.root_dir%/data.db3"
 
+    # En el caso de usar una cuenta de GMail para enviar notificaciones,
+    # cambia "smtp" por "gmail", "127.0.0.1" por "~"; en mailer_user coloca
+    # la cuenta de correo completa y en mailer_password la contraseña de acceso
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
@@ -21,20 +24,25 @@ parameters:
 
     session_name:      gestconv
 
-    localidad:         Linares
+    # Datos generales del centro educativo
     centro:            I.E.S. Oretania
     localidad:         Linares
     director:          Dª. Francisca Sánchez Ruiz
+
+    # Carpetas donde se encuentran los logos de los informes PDF
     logos:
                       centro: '../src/AppBundle/Resources/public/images/centro.png'
                       organizacion: '../src/AppBundle/Resources/public/images/organizacion.png'
                       sello: '../src/AppBundle/Resources/public/images/sello.png'
+
+    # Detalles sobre el modelo de parte
     parte:
                        modelo: MD750202
                        revision: REV.2
                        proceso: CONVIVENCIA
                        descripcion: Parte de incidencia
                        margen: 0
+    # Detalles sobre el modelo de sanción
     sancion:
                        modelo: MD750204
                        revision: REV.1

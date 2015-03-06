@@ -14,3 +14,7 @@ build:
                 symfony_app:
                     web_root: 'web/'
                     host: 'local.dev'
+
+    project_setup:
+        before:
+            - app/console doctrine:database:create

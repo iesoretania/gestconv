@@ -100,11 +100,11 @@ class AlumnoType extends BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'AppBundle\Entity\Alumno',
             'admin' => false,
             'bloqueado' => false
-        ));
+        ]);
     }
 
     /**
