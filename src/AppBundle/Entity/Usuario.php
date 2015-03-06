@@ -108,10 +108,10 @@ class Usuario implements AdvancedUserInterface
     protected $estaBloqueado;
 
     /**
-     * @ORM\OneToMany(targetEntity="Grupo", mappedBy="tutor")
-     * @var Collection
+     * @ORM\ManyToOne(targetEntity="Grupo", inversedBy="tutores")
+     * @var Grupo
      */
-    protected $tutorias = null;
+    protected $tutoria = null;
 
     /**
      * @ORM\OneToMany(targetEntity="Parte", mappedBy="usuario")
@@ -217,36 +217,25 @@ class Usuario implements AdvancedUserInterface
     }
 
     /**
-     * Add tutorias
+     * Get tutoria
      *
-     * @param Grupo $tutorias
+     * @return Grupo
+     */
+    public function getTutoria()
+    {
+        return $this->tutoria;
+    }
+
+    /**
+     *
+     * @param Grupo $tutoria
      * @return Usuario
      */
-    public function addTutoria(Grupo $tutorias)
+    public function setTutoria($tutoria)
     {
-        $this->tutorias[] = $tutorias;
+        $this->tutoria = $tutoria;
 
         return $this;
-    }
-
-    /**
-     * Remove tutorias
-     *
-     * @param Grupo $tutorias
-     */
-    public function removeTutoria(Grupo $tutorias)
-    {
-        $this->tutorias->removeElement($tutorias);
-    }
-
-    /**
-     * Get tutorias
-     *
-     * @return Collection
-     */
-    public function getTutorias()
-    {
-        return $this->tutorias;
     }
 
     /**
@@ -593,7 +582,7 @@ class Usuario implements AdvancedUserInterface
             $roles[] = new Role('ROLE_DIRECTIVO');
         }
 
-        if ($this->getTutorias()->count() > 0) {
+        if ($this->getTutoria()) {
             $roles[] = new Role('ROLE_TUTOR');
         }
 

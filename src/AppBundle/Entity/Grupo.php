@@ -52,10 +52,10 @@ class Grupo
     protected $curso;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="tutorias")
-     * @var Usuario
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="tutoria")
+     * @var Collection
      */
-    protected $tutor;
+    protected $tutores;
 
     /**
      * @ORM\OneToMany(targetEntity="Alumno", mappedBy="grupo")
@@ -131,7 +131,7 @@ class Grupo
     /**
      * Get alumnado
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getAlumnado()
     {
@@ -139,27 +139,38 @@ class Grupo
     }
 
     /**
-     * Set tutor
+     * Add tutores
      *
-     * @param Usuario $tutor
+     * @param Usuario $tutores
      * @return Grupo
      */
-    public function setTutor(Usuario $tutor = null)
+    public function addTutores(Usuario $tutores)
     {
-        $this->tutor = $tutor;
+        $this->tutores[] = $tutores;
 
         return $this;
     }
 
     /**
-     * Get tutor
+     * Remove tutores
      *
-     * @return Usuario
+     * @param Usuario $tutor
      */
-    public function getTutor()
+    public function removeTutor(Usuario $tutor)
     {
-        return $this->tutor;
+        $this->tutores->removeElement($tutor);
     }
+
+    /**
+     * Get tutores
+     *
+     * @return Collection
+     */
+    public function getTutores()
+    {
+        return $this->tutores;
+    }
+
 
     /**
      * Set curso

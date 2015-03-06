@@ -71,7 +71,7 @@ class ParteRepository extends EntityRepository
         $orX = $this->getEntityManager()->createQueryBuilder()
             ->expr()->orX()
             ->add('p.usuario = :usuario')
-            ->add('g.tutor = :usuario');
+            ->add('a.grupo = :grupo');
 
         return $this->getEntityManager()
             ->getRepository('AppBundle:Parte')
@@ -79,7 +79,8 @@ class ParteRepository extends EntityRepository
             ->innerJoin('p.alumno', 'a')
             ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
             ->andWhere($orX)
-            ->setParameter('usuario', $usuario);
+            ->setParameter('usuario', $usuario)
+            ->setParameter('grupo', $usuario->getTutoria());
     }
 
     public function findPorUsuario($usuario)
@@ -102,12 +103,13 @@ class ParteRepository extends EntityRepository
         $orX = $this->getEntityManager()->createQueryBuilder()
             ->expr()->orX()
             ->add('p.usuario = :usuario')
-            ->add('g.tutor = :usuario');
+            ->add('a.grupo = :grupo');
 
         return $this->findNoNotificados()
             ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
             ->andWhere($orX)
-            ->setParameter('usuario', $usuario);
+            ->setParameter('usuario', $usuario)
+            ->setParameter('grupo', $usuario->getTutoria());
     }
 
     public function findAllNoNotificadosPorUsuario($usuario)

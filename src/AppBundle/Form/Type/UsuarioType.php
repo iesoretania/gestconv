@@ -55,6 +55,11 @@ class UsuarioType extends AbstractType
             ->add('notificaciones', null, [
                 'label' => 'Marcar si se desea recibir notificaciones',
                 'required' => false
+            ])
+            ->add('tutoria', null, [
+                'label' => 'Tutor/a del grupo',
+
+                'required' => false
             ]);
 
         if ($options['admin']) {

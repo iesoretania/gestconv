@@ -62,8 +62,8 @@ class SancionRepository extends EntityRepository
     {
         return $this->findNoNotificados()
             ->join('a.grupo', 'g')
-            ->andWhere('g.tutor = :usuario')
-            ->setParameter('usuario', $usuario);
+            ->andWhere('a.grupo = :grupo')
+            ->setParameter('grupo', $usuario->getTutoria());
     }
 
     public function findAllNoNotificadosPorTutoria($usuario)

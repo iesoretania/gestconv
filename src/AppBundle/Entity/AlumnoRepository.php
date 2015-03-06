@@ -46,11 +46,12 @@ class AlumnoRepository extends EntityRepository
         $orX = $this->getEntityManager()->createQueryBuilder()
             ->expr()->orX()
             ->add('p.usuario = :usuario')
-            ->add('g.tutor = :usuario');
+            ->add('a.grupo = :grupo');
 
         return $this->findConPartesAunNoNotificados()
             ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
             ->andWhere($orX)
+            ->setParameter('grupo', $usuario->getTutoria())
             ->setParameter('usuario', $usuario);
     }
 
@@ -117,8 +118,8 @@ class AlumnoRepository extends EntityRepository
     {
         return $this->findConSancionesAunNoNotificadas()
             ->join('a.grupo', 'g')
-            ->andWhere('g.tutor = :usuario')
-            ->setParameter('usuario', $usuario)
+            ->andWhere('g = :grupo')
+            ->setParameter('grupo', $usuario->getTutoria())
             ->getQuery()
             ->getResult();
     }
@@ -165,9 +166,8 @@ class AlumnoRepository extends EntityRepository
 
         if ($tutor) {
             $resultado = $resultado
-                ->join('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-                ->andWhere('g.tutor = :usuario')
-                ->setParameter('usuario', $tutor);
+                ->andWhere('a.grupo = :grupo')
+                ->setParameter('grupo', $tutor->getTutoria());
         }
         return $resultado
             ->addOrderBy('a.apellido1')
