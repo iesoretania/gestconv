@@ -81,7 +81,7 @@ class AlumnoController extends Controller
 
         $formularioAlumno = $this->createForm(new AlumnoType(), $alumno, [
             'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_DIRECTIVO'),
-            'bloqueado' => ($alumno->getGrupo()->getTutor() != $usuario)
+            'bloqueado' => ($alumno->getGrupo() != $usuario->getTutoria())
         ]);
 
         $formularioAlumno->handleRequest($request);
