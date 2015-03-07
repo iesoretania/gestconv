@@ -37,6 +37,17 @@ class CursoType extends AbstractType
                 'label' => 'Descripción del curso*',
                 'required' => true
             ])
+            ->add('grupos', null, [
+                'label' => 'Grupos',
+                'required'  => false,
+                'class' => 'AppBundle\Entity\Grupo',
+                'multiple' => true,
+                'expanded' => false,
+                'by_reference' => false,
+                'attr' => [
+                    'placeholder' => 'Elija los grupos que pertenecen al curso'
+                ]
+            ])
             ->add('enviar', 'submit', [
                 'label' => 'Guardar cambios',
                 'attr' => ['class' => 'btn btn-success']
