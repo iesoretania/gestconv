@@ -176,7 +176,7 @@ class Usuario implements AdvancedUserInterface
 
     /**
      *
-     * @param string $valor
+     * @param string|null $valor
      * @return Usuario
      */
     public function setEmail($valor)
@@ -227,7 +227,7 @@ class Usuario implements AdvancedUserInterface
 
     /**
      *
-     * @param Grupo $tutoria
+     * @param Grupo|null $tutoria
      * @return Usuario
      */
     public function setTutoria($tutoria)
