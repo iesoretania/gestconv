@@ -118,7 +118,7 @@ class AlumnoRepository extends EntityRepository
     {
         return $this->findConSancionesAunNoNotificadas()
             ->join('a.grupo', 'g')
-            ->andWhere('g = :grupo')
+            ->andWhere('a.grupo = :grupo')
             ->setParameter('grupo', $usuario->getTutoria())
             ->getQuery()
             ->getResult();
