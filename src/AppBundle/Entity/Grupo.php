@@ -115,6 +115,7 @@ class Grupo
     public function addAlumnado(Alumno $alumnado)
     {
         $this->alumnado[] = $alumnado;
+        $alumnado->setGrupo($this);
 
         return $this;
     }
@@ -127,6 +128,7 @@ class Grupo
     public function removeAlumnado(Alumno $alumnado)
     {
         $this->alumnado->removeElement($alumnado);
+        $alumnado->setGrupo(null);
     }
 
     /**
@@ -145,9 +147,10 @@ class Grupo
      * @param Usuario $tutores
      * @return Grupo
      */
-    public function addTutores(Usuario $tutores)
+    public function addTutore(Usuario $tutores)
     {
         $this->tutores[] = $tutores;
+        $tutores->setTutoria($this);
 
         return $this;
     }
@@ -157,9 +160,10 @@ class Grupo
      *
      * @param Usuario $tutor
      */
-    public function removeTutor(Usuario $tutor)
+    public function removeTutore(Usuario $tutor)
     {
         $this->tutores->removeElement($tutor);
+        $tutor->setTutoria(null);
     }
 
     /**
@@ -172,6 +176,23 @@ class Grupo
         return $this->tutores;
     }
 
+    /**
+     * Set tutores
+     *
+     * @param Collection $tutores
+     * @return Grupo
+     */
+    public function setTutores($tutores)
+    {
+        dump($tutores);
+        foreach($this->tutores as $tutor) {
+            $tutor->setTutoria(null);
+        }
+        foreach($tutores as $tutor) {
+            $tutor->setTutoria($this);
+        }
+        return $this;
+    }
 
     /**
      * Set curso

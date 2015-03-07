@@ -47,6 +47,7 @@ class GrupoType extends AbstractType
                 'class' => 'AppBundle\Entity\Usuario',
                 'multiple' => true,
                 'expanded' => false,
+                'by_reference' => false,
                 'attr' => [
                     'placeholder' => 'Elija los tutores del grupo'
                 ]
