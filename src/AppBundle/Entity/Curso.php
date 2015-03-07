@@ -105,6 +105,7 @@ class Curso
     public function addGrupo(Grupo $grupos)
     {
         $this->grupos[] = $grupos;
+        $grupos->setCurso($this);
 
         return $this;
     }

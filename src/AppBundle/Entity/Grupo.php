@@ -52,10 +52,10 @@ class Grupo
     protected $curso;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="tutorias")
-     * @var Usuario
+     * @ORM\OneToMany(targetEntity="Usuario", mappedBy="tutoria")
+     * @var Collection
      */
-    protected $tutor;
+    protected $tutores;
 
     /**
      * @ORM\OneToMany(targetEntity="Alumno", mappedBy="grupo")
@@ -64,6 +64,7 @@ class Grupo
     protected $alumnado=null;
 
     public function __construct() {
+        $this->tutores = new ArrayCollection();
         $this->alumnado = new ArrayCollection();
     }
     
@@ -114,6 +115,7 @@ class Grupo
     public function addAlumnado(Alumno $alumnado)
     {
         $this->alumnado[] = $alumnado;
+        $alumnado->setGrupo($this);
 
         return $this;
     }
@@ -126,12 +128,13 @@ class Grupo
     public function removeAlumnado(Alumno $alumnado)
     {
         $this->alumnado->removeElement($alumnado);
+        $alumnado->setGrupo(null);
     }
 
     /**
      * Get alumnado
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return Collection
      */
     public function getAlumnado()
     {
@@ -139,26 +142,56 @@ class Grupo
     }
 
     /**
-     * Set tutor
+     * Add tutores
      *
-     * @param Usuario $tutor
+     * @param Usuario $tutores
      * @return Grupo
      */
-    public function setTutor(Usuario $tutor = null)
+    public function addTutore(Usuario $tutores)
     {
-        $this->tutor = $tutor;
+        $this->tutores[] = $tutores;
+        $tutores->setTutoria($this);
 
         return $this;
     }
 
     /**
-     * Get tutor
+     * Remove tutores
      *
-     * @return Usuario
+     * @param Usuario $tutor
      */
-    public function getTutor()
+    public function removeTutore(Usuario $tutor)
     {
-        return $this->tutor;
+        $this->tutores->removeElement($tutor);
+        $tutor->setTutoria(null);
+    }
+
+    /**
+     * Get tutores
+     *
+     * @return Collection
+     */
+    public function getTutores()
+    {
+        return $this->tutores;
+    }
+
+    /**
+     * Set tutores
+     *
+     * @param Collection $tutores
+     * @return Grupo
+     */
+    public function setTutores($tutores)
+    {
+        dump($tutores);
+        foreach($this->tutores as $tutor) {
+            $tutor->setTutoria(null);
+        }
+        foreach($tutores as $tutor) {
+            $tutor->setTutoria($this);
+        }
+        return $this;
     }
 
     /**

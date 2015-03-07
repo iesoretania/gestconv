@@ -164,7 +164,7 @@ class GrupoController extends Controller
 
         if ($formulario->isSubmitted() && $formulario->isValid()) {
 
-            // Guardar el usuario en la base de datos
+            // Guardar el grupo en la base de datos
             $em = $this->getDoctrine()->getManager();
             $em->persist($grupo);
             $em->flush();

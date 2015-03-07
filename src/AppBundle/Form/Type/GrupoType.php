@@ -41,11 +41,15 @@ class GrupoType extends AbstractType
                 'label' => 'Curso al que pertenece*',
                 'required'  => true
             ])
-            ->add('tutor', null, [
-                'label' => 'Tutor/a',
+            ->add('tutores', null, [
+                'label' => 'Tutores',
                 'required'  => false,
+                'class' => 'AppBundle\Entity\Usuario',
+                'multiple' => true,
+                'expanded' => false,
+                'by_reference' => false,
                 'attr' => [
-                    'placeholder' => 'Elija el tutor/a del grupo'
+                    'placeholder' => 'Elija los tutores del grupo'
                 ]
             ])
             ->add('enviar', 'submit', [

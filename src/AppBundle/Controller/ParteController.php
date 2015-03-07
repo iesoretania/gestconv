@@ -183,7 +183,7 @@ class ParteController extends Controller
         
         $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
 
-        if (!$esRevisor && !($parte->getAlumno()->getGrupo()->getTutor() == $usuario) && $parte->getUsuario() != $usuario) {
+        if (!$esRevisor && !($parte->getAlumno()->getGrupo() != $usuario->getTutoria()) && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException();
         }
 
@@ -236,7 +236,7 @@ class ParteController extends Controller
         $logos = $this->container->getParameter('logos');
 
         $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
-        $esTutor = ($parte->getAlumno()->getGrupo()->getTutor() == $usuario);
+        $esTutor = ($parte->getAlumno()->getGrupo() != $usuario->getTutoria());
 
         if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException();
