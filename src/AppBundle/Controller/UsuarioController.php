@@ -148,42 +148,7 @@ class UsuarioController extends Controller
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
         $form->handleRequest($request);
 
-        $usuarios = $em->getRepository('AppBundle:Usuario')
-            ->createQueryBuilder('u')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.usuario = u')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->select('u')
-            ->addSelect('count(p.id)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('sum(p.prescrito)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)');
-
-        if ($form->isValid()) {
-            // aplicar filtro de fechas
-            $data = $form->getData();
-            if ($data['desde']) {
-                $usuarios = $usuarios
-                    ->andWhere('p.fechaSuceso >= :desde')
-                    ->setParameter('desde', $data['desde']);
-            }
-            if ($data['hasta']) {
-                $usuarios = $usuarios
-                    ->andWhere('p.fechaSuceso <= :hasta')
-                    ->setParameter('hasta', $data['hasta']);
-            }
-        }
-
-        $usuarios = $usuarios
-            ->addOrderBy('u.apellidos')
-            ->addOrderBy('u.nombre')
-            ->groupBy('u.id')
-            ->getQuery()
-            ->getResult();
+        $usuarios = $em->getRepository('AppBundle:Usuario')->getResumenConvivencia($form->isValid() ? $form->getData() : $fechasPorDefecto);
 
         return $this->render('AppBundle:Usuario:listar.html.twig',
             [

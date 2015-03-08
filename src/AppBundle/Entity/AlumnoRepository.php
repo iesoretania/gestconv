@@ -21,6 +21,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * AlumnoRepository
@@ -176,5 +177,54 @@ class AlumnoRepository extends EntityRepository
             ->groupBy('a.id')
             ->getQuery()
             ->getResult();
+    }
+
+    public function getResumenConvivencia($tutor, $fechas)
+    {
+        $data = $this->getEntityManager()
+         ->getRepository('AppBundle:Alumno')
+         ->createQueryBuilder('a')
+         ->select('a')
+         ->addSelect('COUNT(p.id)')
+         ->addSelect('COUNT(p.fechaAviso)')
+         ->addSelect('COUNT(DISTINCT s.id)')
+         ->addSelect('COUNT(s.fechaComunicado)')
+         ->addSelect('COUNT(s.motivosNoAplicacion)')
+         ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
+         ->addSelect('SUM(p.prescrito)')
+         ->addSelect('MAX(p.fechaSuceso)')
+         ->addSelect('MAX(s.fechaSancion)')
+         ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
+         ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+         ->groupBy('a.id')
+         ->addGroupBy('s.id');
+
+        if ($fechas['desde']) {
+            $data = $data
+                ->andWhere('p.fechaSuceso >= :desde')
+                ->setParameter('desde', $fechas['desde']);
+        }
+
+        if ($fechas['hasta']) {
+            $data = $data
+                ->andWhere('p.fechaSuceso <= :hasta')
+                ->setParameter('hasta', $fechas['hasta']);
+        }
+
+        if ($tutor) {
+            $data = $data
+                ->andWhere('a.grupo = :grupo')
+                ->setParameter('grupo', $tutor->getTutoria());
+        }
+
+        $data = $data
+            ->addOrderBy('a.apellido1')
+            ->addOrderBy('a.apellido2')
+            ->addOrderBy('a.nombre')
+            ->groupBy('a.id')
+            ->getQuery()
+            ->getResult();
+
+        return $data;
     }
 }

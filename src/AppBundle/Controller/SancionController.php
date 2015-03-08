@@ -50,7 +50,8 @@ class SancionController extends Controller
         $usuario = $this->get('security.token_storage')->getToken()->getUser();
 
         $sancion->setFechaSancion(new \DateTime())
-            ->setUsuario($usuario);
+            ->setUsuario($usuario)
+            ->setRegistradoEnSeneca(false);
 
         $em = $this->getDoctrine()->getManager();
 

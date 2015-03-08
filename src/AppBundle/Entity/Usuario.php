@@ -29,8 +29,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\UsuarioRepository")
  */
 class Usuario implements AdvancedUserInterface
 {

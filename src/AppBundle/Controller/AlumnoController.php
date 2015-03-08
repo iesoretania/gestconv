@@ -57,14 +57,14 @@ class AlumnoController extends Controller
 
         $tutor = ($request->get('_route') == 'alumno_tutoria') ? $usuario : null;
 
-        $items = $em->getRepository('AppBundle:Alumno')->findResumenTutorPartesSancionesYExpulsionesEnFecha($tutor, $form->isValid() ? $form->getData() : $fechasPorDefecto);
+        $alumnado = $em->getRepository('AppBundle:Alumno')->getResumenConvivencia($tutor, $form->isValid() ? $form->getData() : $fechasPorDefecto);
 
         return $this->render(($request->get('_route') == 'alumno_tutoria')
                 ? 'AppBundle:Alumno:tutoria.html.twig'
                 : 'AppBundle:Alumno:listar.html.twig',
             [
                 'formulario_fechas' => $form->createView(),
-                'items' => $items,
+                'items' => $alumnado,
                 'usuario' => $usuario
             ]);
     }
