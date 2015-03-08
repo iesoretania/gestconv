@@ -22,8 +22,6 @@ namespace AppBundle\Entity;
 
 use AppBundle\Utils\RepositoryUtils;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * AlumnoRepository
