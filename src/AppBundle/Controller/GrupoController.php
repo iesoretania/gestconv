@@ -47,71 +47,11 @@ class GrupoController extends Controller
 
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto)->handleRequest($request);
 
-        $grupos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->leftJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->select('g')
-            ->addSelect('count(p.id)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('sum(p.prescrito)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)');
+        $fechas = ($form->isValid()) ? $fechasPorDefecto : ['desde' => null, 'hasta' => null];
 
-        $cursos = $em->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->leftJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-            ->leftJoin('AppBundle:Curso', 'c', 'WITH', 'g.curso = c')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->select('c')
-            ->addSelect('count(p.id)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('sum(p.prescrito)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)');
+        $grupos = $em->getRepository('AppBundle:Grupo')->getResumenPorFecha($fechas);
 
-        if ($form->isValid()) {
-            // aplicar filtro de fechas
-            $data = $form->getData();
-            if ($data['desde']) {
-                $grupos = $grupos
-                    ->andWhere('p.fechaSuceso >= :desde')
-                    ->setParameter('desde', $data['desde']);
-                $cursos = $cursos
-                    ->andWhere('p.fechaSuceso >= :desde')
-                    ->setParameter('desde', $data['desde']);
-            }
-            if ($data['hasta']) {
-                $grupos = $grupos
-                    ->andWhere('p.fechaSuceso <= :hasta')
-                    ->setParameter('hasta', $data['hasta']);
-                $cursos = $cursos
-                    ->andWhere('p.fechaSuceso <= :hasta')
-                    ->setParameter('hasta', $data['hasta']);
-            }
-        }
-
-        $grupos = $grupos
-            ->addOrderBy('g.descripcion')
-            ->groupBy('g.id')
-            ->getQuery()
-            ->getResult();
-
-        $cursos = $cursos
-            ->addOrderBy('c.descripcion')
-            ->groupBy('c.id')
-            ->getQuery()
-            ->getResult();
+        $cursos = $em->getRepository('AppBundle:Curso')->getResumenPorFecha($fechas);
 
         return $this->render('AppBundle:Grupo:listar.html.twig',
             [

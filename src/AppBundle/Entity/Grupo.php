@@ -26,8 +26,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 /**
- * @ORM\Entity
- * @ORM\Table
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\GrupoRepository")
  */
 class Grupo
 {
