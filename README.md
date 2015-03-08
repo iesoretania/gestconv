@@ -1,5 +1,6 @@
 # Gestconv
 [![Build Status](https://travis-ci.org/iesoretania/gestconv.png?branch=master)](https://travis-ci.org/iesoretania/gestconv) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd/mini.png)](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iesoretania/gestconv/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iesoretania/gestconv/?branch=master)
+[![Codacy Badge](https://www.codacy.com/project/badge/aeb2f9910f8e4120b76957664d86baa4)](https://www.codacy.com/public/lrlopez/gestconv)
 
 Aplicación web para la gestión de la convivencia en centros educativos
 (en desarrollo, aún no está lista para producción). Actualmente se encuentra desplegada en pruebas
@@ -40,4 +41,3 @@ Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 [Symfony2]: http://symfony.com/
 [Composer]: http://getcomposer.org
 [AGPL versión 3]: http://www.gnu.org/licenses/agpl.htmlu.org/licenses/agpl.html
-
