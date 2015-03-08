@@ -20,6 +20,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Utils\RepositoryUtils;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -33,32 +34,12 @@ class GrupoRepository extends EntityRepository
     {
         $data = $this->getEntityManager()
             ->getRepository('AppBundle:Grupo')
-            ->createQueryBuilder('g')
-            ->select('g')
-            ->addSelect('COUNT(p.id)')
-            ->addSelect('COUNT(p.fechaAviso)')
-            ->addSelect('COUNT(DISTINCT s.id)')
-            ->addSelect('COUNT(s.fechaComunicado)')
-            ->addSelect('COUNT(s.motivosNoAplicacion)')
-            ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
-            ->addSelect('SUM(p.prescrito)')
-            ->addSelect('MAX(p.fechaSuceso)')
-            ->addSelect('MAX(s.fechaSancion)')
+            ->createQueryBuilder('g');
+
+        $data = RepositoryUtils::resumenConvivencia($data, $fechas)
             ->innerJoin('AppBundle:Alumno', 'a', 'WITH', 'a.grupo = g')
             ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
             ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s');
-
-        if ($fechas['desde']) {
-            $data = $data
-                ->andWhere('p.fechaSuceso >= :desde')
-                ->setParameter('desde', $fechas['desde']);
-        }
-
-        if ($fechas['hasta']) {
-            $data = $data
-                ->andWhere('p.fechaSuceso <= :hasta')
-                ->setParameter('hasta', $fechas['hasta']);
-        }
 
         $data = $data
             ->addOrderBy('g.descripcion')

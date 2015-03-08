@@ -20,8 +20,10 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Utils\RepositoryUtils;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * AlumnoRepository
@@ -125,91 +127,16 @@ class AlumnoRepository extends EntityRepository
             ->getResult();
     }
 
-    public function getResumenPartesSancionesYExpulsiones()
-    {
-        return $this->getEntityManager()
-            ->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->select('a')
-            ->addSelect('count(p.id)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('sum(p.prescrito)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)');
-    }
-
-    public function getResumenPartesSancionesYExpulsionesEnFecha($data)
-    {
-        $alumnos = $this->getResumenPartesSancionesYExpulsiones();
-
-        if ($data['desde']) {
-            $alumnos = $alumnos
-                ->andWhere('p.fechaSuceso >= :desde')
-                ->setParameter('desde', $data['desde']);
-        }
-        if ($data['hasta']) {
-            $alumnos = $alumnos
-                ->andWhere('p.fechaSuceso <= :hasta')
-                ->setParameter('hasta', $data['hasta']);
-        }
-        return $alumnos;
-    }
-
-    public function findResumenTutorPartesSancionesYExpulsionesEnFecha($tutor, $data)
-    {
-        $resultado = $this->getResumenPartesSancionesYExpulsionesEnFecha($data);
-
-        if ($tutor) {
-            $resultado = $resultado
-                ->andWhere('a.grupo = :grupo')
-                ->setParameter('grupo', $tutor->getTutoria());
-        }
-        return $resultado
-            ->addOrderBy('a.apellido1')
-            ->addOrderBy('a.apellido2')
-            ->addOrderBy('a.nombre')
-            ->groupBy('a.id')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function getResumenConvivencia($tutor, $fechas)
     {
         $data = $this->getEntityManager()
             ->getRepository('AppBundle:Alumno')
             ->createQueryBuilder('a')
-            ->select('a')
-            ->addSelect('COUNT(p.id)')
-            ->addSelect('COUNT(p.fechaAviso)')
-            ->addSelect('COUNT(DISTINCT s.id)')
-            ->addSelect('COUNT(s.fechaComunicado)')
-            ->addSelect('COUNT(s.motivosNoAplicacion)')
-            ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
-            ->addSelect('SUM(p.prescrito)')
-            ->addSelect('MAX(p.fechaSuceso)')
-            ->addSelect('MAX(s.fechaSancion)')
+            ->select('a');
+
+        $data = RepositoryUtils::resumenConvivencia($data, $fechas)
             ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-            ->groupBy('a.id')
-            ->addGroupBy('s.id');
-
-        if ($fechas['desde']) {
-            $data = $data
-                ->andWhere('p.fechaSuceso >= :desde')
-                ->setParameter('desde', $fechas['desde']);
-        }
-
-        if ($fechas['hasta']) {
-            $data = $data
-                ->andWhere('p.fechaSuceso <= :hasta')
-                ->setParameter('hasta', $fechas['hasta']);
-        }
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s');
 
         if ($tutor) {
             $data = $data
