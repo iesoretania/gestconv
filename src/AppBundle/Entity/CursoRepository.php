@@ -31,39 +31,42 @@ class CursoRepository extends EntityRepository
 {
     public function getResumenPorFecha($fechas)
     {
-        $cursos = $this->getEntityManager()
-            ->getRepository('AppBundle:Alumno')
-            ->createQueryBuilder('a')
-            ->leftJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
-            ->leftJoin('AppBundle:Curso', 'c', 'WITH', 'g.curso = c')
-            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+        $data = $this->getEntityManager()
+            ->getRepository('AppBundle:Curso')
+            ->createQueryBuilder('c')
             ->select('c')
-            ->addSelect('count(p.id)')
-            ->addSelect('count(p.fechaAviso)')
-            ->addSelect('count(p.sancion)')
-            ->addSelect('count(s.fechaComunicado)')
-            ->addSelect('count(s.motivosNoAplicacion)')
-            ->addSelect('count(s.fechaInicioSancion)')
-            ->addSelect('sum(p.prescrito)')
-            ->addSelect('max(p.fechaSuceso)')
-            ->addSelect('max(s.fechaSancion)');
+            ->addSelect('COUNT(p.id)')
+            ->addSelect('COUNT(p.fechaAviso)')
+            ->addSelect('COUNT(DISTINCT s.id)')
+            ->addSelect('COUNT(s.fechaComunicado)')
+            ->addSelect('COUNT(s.motivosNoAplicacion)')
+            ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
+            ->addSelect('SUM(p.prescrito)')
+            ->addSelect('MAX(p.fechaSuceso)')
+            ->addSelect('MAX(s.fechaSancion)')
+            ->leftJoin('AppBundle:Grupo', 'g', 'WITH', 'g.curso = c')
+            ->innerJoin('AppBundle:Alumno', 'a', 'WITH', 'a.grupo = g')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s');
 
         if ($fechas['desde']) {
-            $cursos = $cursos
+            $data = $data
                 ->andWhere('p.fechaSuceso >= :desde')
                 ->setParameter('desde', $fechas['desde']);
         }
+
         if ($fechas['hasta']) {
-            $cursos = $cursos
+            $data = $data
                 ->andWhere('p.fechaSuceso <= :hasta')
                 ->setParameter('hasta', $fechas['hasta']);
         }
 
-        return $cursos
+        $data = $data
             ->addOrderBy('c.descripcion')
             ->groupBy('c.id')
             ->getQuery()
             ->getResult();
+
+        return $data;
     }
 }

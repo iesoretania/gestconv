@@ -182,22 +182,22 @@ class AlumnoRepository extends EntityRepository
     public function getResumenConvivencia($tutor, $fechas)
     {
         $data = $this->getEntityManager()
-         ->getRepository('AppBundle:Alumno')
-         ->createQueryBuilder('a')
-         ->select('a')
-         ->addSelect('COUNT(p.id)')
-         ->addSelect('COUNT(p.fechaAviso)')
-         ->addSelect('COUNT(DISTINCT s.id)')
-         ->addSelect('COUNT(s.fechaComunicado)')
-         ->addSelect('COUNT(s.motivosNoAplicacion)')
-         ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
-         ->addSelect('SUM(p.prescrito)')
-         ->addSelect('MAX(p.fechaSuceso)')
-         ->addSelect('MAX(s.fechaSancion)')
-         ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
-         ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
-         ->groupBy('a.id')
-         ->addGroupBy('s.id');
+            ->getRepository('AppBundle:Alumno')
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->addSelect('COUNT(p.id)')
+            ->addSelect('COUNT(p.fechaAviso)')
+            ->addSelect('COUNT(DISTINCT s.id)')
+            ->addSelect('COUNT(s.fechaComunicado)')
+            ->addSelect('COUNT(s.motivosNoAplicacion)')
+            ->addSelect('COUNT(DISTINCT s.fechaInicioSancion)')
+            ->addSelect('SUM(p.prescrito)')
+            ->addSelect('MAX(p.fechaSuceso)')
+            ->addSelect('MAX(s.fechaSancion)')
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.alumno = a')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->groupBy('a.id')
+            ->addGroupBy('s.id');
 
         if ($fechas['desde']) {
             $data = $data
