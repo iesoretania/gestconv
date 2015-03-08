@@ -40,4 +40,4 @@ Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 [VirtualBox]: https://www.virtualbox.org
 [Symfony2]: http://symfony.com/
 [Composer]: http://getcomposer.org
-[AGPL versión 3]: http://www.gnu.org/licenses/agpl.htmlu.org/licenses/agpl.html
+[AGPL versión 3]: http://www.gnu.org/licenses/agpl.html
