@@ -15,7 +15,7 @@ class CsvImporter
     private $delimiter;
     private $length;
 
-    function __construct($file_name, $parse_header=true, $delimiter=",", $length=0)
+    public function __construct($file_name, $parse_header=true, $delimiter=",", $length=0)
     {
         $this->fp = fopen($file_name, "r");
         $this->parse_header = $parse_header;
@@ -31,14 +31,14 @@ class CsvImporter
 
     }
 
-    function __destruct()
+    public function __destruct()
     {
         if ($this->fp) {
             fclose($this->fp);
         }
     }
 
-    function get($max_lines=0)
+    public function get($max_lines=0)
     {
         //if $max_lines is set to 0, then get all the data
 
@@ -58,6 +58,7 @@ class CsvImporter
             }
 
             if ($this->parse_header) {
+                $row_new = [];
                 foreach ($this->header as $i => $heading_i) {
                     $row_new[$heading_i] = $row[$i];
                 }
