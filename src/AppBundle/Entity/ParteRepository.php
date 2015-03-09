@@ -179,4 +179,20 @@ class ParteRepository extends EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findAllSancionablesPorAlumno($alumno)
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('AppBundle\Entity\Parte', 'p', 'p.id')
+            ->andWhere('p.fechaAviso IS NOT NULL')
+            ->andWhere('p.sancion IS NULL')
+            ->andWhere('p.prescrito = false')
+            ->andWhere('p.alumno = :alumno')
+            ->orderBy('p.fechaSuceso')
+            ->setParameter('alumno', $alumno)
+            ->getQuery()
+            ->getResult();
+    }
 }

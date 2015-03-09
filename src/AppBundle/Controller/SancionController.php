@@ -55,18 +55,7 @@ class SancionController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $partes = $em
-            ->createQueryBuilder()
-            ->select('p')
-            ->from('AppBundle\Entity\Parte', 'p', 'p.id')
-            ->andWhere('p.fechaAviso IS NOT NULL')
-            ->andWhere('p.sancion IS NULL')
-            ->andWhere('p.prescrito = false')
-            ->andWhere('p.alumno = :alumno')
-            ->orderBy('p.fechaSuceso')
-            ->setParameter('alumno', $alumno)
-            ->getQuery()
-            ->getResult();
+        $partes = $em->getRepository('AppBundle:Parte')->findAllSancionablesPorAlumno($alumno);
 
         $formulario = $this->createForm(new NuevaSancionType(), $sancion, [
             'alumno' => $alumno
