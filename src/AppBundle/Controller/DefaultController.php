@@ -24,6 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
+use TCPDF;
 
 class DefaultController extends Controller
 {
@@ -98,5 +99,63 @@ class DefaultController extends Controller
                 'last_username' => $sesion->get(Security::LAST_USERNAME),
                 'error' => $error
             ]);
+    }
+
+    /**
+     * Genera un objeto documento PDF
+     *
+     * @param Controller $context
+     * @param $titulo
+     * @param $logos
+     * @param $plantilla
+     * @param $codigo
+     * @return TCPDF
+     */
+    public static function generarPdf($context, $titulo, $logos, $plantilla, $margen = 0, $codigo = null)
+    {
+        $pdf = $context->get('white_october.tcpdf')->create();
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Gestconv');
+        $pdf->SetTitle($titulo);
+        $pdf->SetKeywords('');
+        $pdf->SetExtendedHeaderData(
+            [
+                $logos['centro'],
+                $logos['organizacion'],
+                $logos['sello']
+            ],
+            [
+                $context->container->getParameter('centro') . ' - ' . $context->container->getParameter('localidad'),
+                $plantilla['proceso'],
+                $plantilla['descripcion'],
+                $plantilla['modelo'],
+                $plantilla['revision']
+            ]
+        );
+        if ($codigo) {
+            $pdf->setBarcode($codigo);
+        }
+        $pdf->setFooterData([0, 0, 128], [0, 64, 128]);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+        // mostrar cabecera
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
+
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM - $margen);
+
+        $pdf->SetFont('helvetica', '', 10, '', true);
+
+        $pdf->AddPage();
+
+        return $pdf;
     }
 }

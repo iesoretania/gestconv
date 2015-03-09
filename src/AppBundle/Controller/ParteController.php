@@ -246,46 +246,7 @@ class ParteController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        $pdf = $this->get('white_october.tcpdf')->create();
-
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Gestconv');
-        $pdf->SetTitle('Parte #' . $parte->getId());
-        $pdf->SetSubject($parte->getAlumno());
-        $pdf->SetKeywords('');
-        $pdf->SetExtendedHeaderData(
-            [
-                $logos['centro'], $logos['organizacion'], $logos['sello']
-            ],
-            [
-                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
-                    $plantilla['proceso'],
-                    $plantilla['descripcion'],
-                    $plantilla['modelo'],
-                    $plantilla['revision']
-            ]
-        );
-        $pdf->setBarcode('P' . $parte->getId());
-        $pdf->setFooterData([0,0,128], [0,64,128]);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-        // mostrar cabecera
-        $pdf->setPrintHeader(true);
-        $pdf->setPrintFooter(true);
-
-        // set default monospaced font
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-        // set margins
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-
-        // set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-        $pdf->SetFont('helvetica', '', 10, '', true);
-
-        $pdf->AddPage();
+        $pdf = DefaultController::generarPdf($this, 'Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
 
         $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
             [
@@ -301,4 +262,6 @@ class ParteController extends Controller
 
         return $response;
     }
+
+
 }

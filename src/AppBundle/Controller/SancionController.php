@@ -233,46 +233,7 @@ class SancionController extends Controller
         $plantilla = $this->container->getParameter('sancion');
         $logos = $this->container->getParameter('logos');
 
-        $pdf = $this->get('white_october.tcpdf')->create();
-
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Gestconv');
-        $pdf->SetTitle('Sancion #' . $sancion->getId());
-        $pdf->SetSubject($sancion->getPartes()->first()->getAlumno());
-        $pdf->SetKeywords('');
-        $pdf->SetExtendedHeaderData(
-            [
-                $logos['centro'], $logos['organizacion'], $logos['sello']
-            ],
-            [
-                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
-                $plantilla['proceso'],
-                $plantilla['descripcion'],
-                $plantilla['modelo'],
-                $plantilla['revision']
-            ]
-        );
-        $pdf->setBarcode('S' . $sancion->getId());
-        $pdf->setFooterData([0,0,128], [0,64,128]);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-        // mostrar cabecera
-        $pdf->setPrintHeader(true);
-        $pdf->setPrintFooter(true);
-
-        // set default monospaced font
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-        // set margins
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-
-        // set auto page breaks
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM - 15);
-
-        $pdf->SetFont('helvetica', '', 10, '', true);
-
-        $pdf->AddPage();
+        $pdf = DefaultController::generarPdf($this, 'Sancion #' . $sancion->getId(), $logos, $plantilla, -15, 'S' . $sancion->getId());
 
         $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
             [
