@@ -102,6 +102,9 @@ class AlumnoController extends Controller
             $em->persist($alumno);
             $em->flush();
             $this->addFlash('success', 'Los cambios han sido registrados correctamente');
+            return new RedirectResponse(
+                $this->generateUrl($vuelta['ruta'])
+            );
         }
 
         return $this->render('AppBundle:Alumno:detalle.html.twig',

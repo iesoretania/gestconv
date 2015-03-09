@@ -70,8 +70,8 @@ class UsuarioController extends Controller
             // Si es solicitado, cambiar la contraseña
             $passwordSubmit = $formulario->get('cambiarPassword');
             if (($passwordSubmit instanceof SubmitButton) && $passwordSubmit->isClicked()) {
-                $encoder = $this->container->get('security.password_encoder');
-                $password = $encoder->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
+                $password = $this->container->get('security.password_encoder')
+                    ->encodePassword($usuario, $formulario->get('newPassword')->get('first')->getData());
                 $usuario->setPassword($password);
                 $this->addFlash('success', 'Datos guardados correctamente y contraseña cambiada');
             }
@@ -79,6 +79,10 @@ class UsuarioController extends Controller
                 $this->addFlash('success', 'Datos guardados correctamente');
             }
             $this->getDoctrine()->getManager()->flush();
+
+            return new RedirectResponse(
+                $this->generateUrl('usuario_listar')
+            );
         }
 
         return $this->render('AppBundle:Usuario:modificar.html.twig',

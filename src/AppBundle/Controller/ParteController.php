@@ -215,6 +215,10 @@ class ParteController extends Controller
 
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('success', 'Se han registrado correctamente los cambios en el parte');
+
+            return new RedirectResponse(
+                $this->generateUrl('parte_listar')
+            );
         }
 
         return $this->render('AppBundle:Parte:detalle.html.twig',

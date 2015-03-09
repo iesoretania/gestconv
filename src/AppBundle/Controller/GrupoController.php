@@ -80,6 +80,10 @@ class GrupoController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Datos guardados correctamente');
+
+            return new RedirectResponse(
+                $this->generateUrl('grupo_listar')
+            );
         }
 
         return $this->render('AppBundle:Grupo:modificar.html.twig',
@@ -110,6 +114,10 @@ class GrupoController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Grupo creado correctamente');
+
+            return new RedirectResponse(
+                $this->generateUrl('grupo_listar')
+            );
         }
 
         return $this->render('AppBundle:Grupo:modificar.html.twig',

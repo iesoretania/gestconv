@@ -51,6 +51,10 @@ class CursoController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Datos guardados correctamente');
+
+            return new RedirectResponse(
+                $this->generateUrl('grupo_listar')
+            );
         }
 
         return $this->render('AppBundle:Curso:modificar.html.twig',
@@ -80,6 +84,10 @@ class CursoController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Curso creado correctamente');
+
+            return new RedirectResponse(
+                $this->generateUrl('grupo_listar')
+            );
         }
 
         return $this->render('AppBundle:Curso:modificar.html.twig',
