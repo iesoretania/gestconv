@@ -42,6 +42,7 @@ parameters:
                        proceso: CONVIVENCIA
                        descripcion: Parte de incidencia
                        margen: 0
+
     # Detalles sobre el modelo de sanción
     sancion:
                        modelo: MD750204
@@ -49,3 +50,9 @@ parameters:
                        proceso: CONVIVENCIA
                        descripcion: Comunicación de correcciones y medidas disciplinarias a familias
                        margen: -4
+
+    # Prefijo de las notificaciones
+    prefijo_notificacion: "[Gestconv]"
+    remite_notificacion: moodle@iesoretania.es
+
+

@@ -26,6 +26,7 @@ use AppBundle\Entity\Parte;
 use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevoParteType;
 use AppBundle\Form\Type\ParteType;
+use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -118,6 +119,10 @@ class ParteController extends Controller
                 }
 
                 $em->persist($avisoParte);
+
+                foreach ($parte->getAlumno()->getGrupo()->getTutores() as $tutor) {
+                    Notificaciones::notificarParte($this, $this->get('mailer'), $this->container, $tutor, $parte);
+                }
             }
             $em->flush();
         }
