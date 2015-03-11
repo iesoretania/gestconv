@@ -79,7 +79,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/entrar", name="usuario_entrar",methods={"GET", "POST"})
+     * @Route("/entrar", name="usuario_entrar",methods={"GET"})
      */
     public function entrarAction(Request $peticion)
     {
