@@ -23,9 +23,69 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Parte;
 use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use TCPDF;
 
 abstract class BaseController extends Controller
 {
+
+    /**
+     * Genera un objeto documento PDF
+     *
+     * @param $titulo
+     * @param $logos
+     * @param $plantilla
+     * @param $margen
+     * @param $codigo
+     * @return TCPDF
+     */
+    protected function generarPdf($titulo, $logos, $plantilla, $margen = 0, $codigo = null)
+    {
+        $pdf = $this->get('white_october.tcpdf')->create();
+        $pdf->SetCreator(PDF_CREATOR);
+        $pdf->SetAuthor('Gestconv');
+        $pdf->SetTitle($titulo);
+        $pdf->SetKeywords('');
+        $pdf->SetExtendedHeaderData(
+            [
+                $logos['centro'],
+                $logos['organizacion'],
+                $logos['sello']
+            ],
+            [
+                $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
+                $plantilla['proceso'],
+                $plantilla['descripcion'],
+                $plantilla['modelo'],
+                $plantilla['revision']
+            ]
+        );
+        if ($codigo) {
+            $pdf->setBarcode($codigo);
+        }
+        $pdf->setFooterData([0, 0, 128], [0, 64, 128]);
+        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+        // mostrar cabecera
+        $pdf->setPrintHeader(true);
+        $pdf->setPrintFooter(true);
+
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+        // set margins
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(true, PDF_MARGIN_BOTTOM - $margen);
+
+        $pdf->SetFont('helvetica', '', 10, '', true);
+
+        $pdf->AddPage();
+
+        return $pdf;
+    }
+
     protected function notificarParte($usuarios, Parte $parte)
     {
         $enviados = 0;
@@ -39,7 +99,7 @@ abstract class BaseController extends Controller
                     $plantilla = $this->container->getParameter('parte');
                     $logos = $this->container->getParameter('logos');
 
-                    $pdf = DefaultController::generarPdf($this, 'Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
+                    $pdf = $this->generarPdf('Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
 
                     $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
                         [

@@ -29,7 +29,6 @@ use AppBundle\Form\Type\NuevaSancionType;
 use AppBundle\Form\Type\SancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +37,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route("/sancion")
  */
 
-class SancionController extends Controller
+class SancionController extends BaseController
 {
     /**
      * @Route("/nueva/{alumno}", name="parte_sancionar",methods={"GET", "POST"})
@@ -233,7 +232,7 @@ class SancionController extends Controller
         $plantilla = $this->container->getParameter('sancion');
         $logos = $this->container->getParameter('logos');
 
-        $pdf = DefaultController::generarPdf($this, 'Sancion #' . $sancion->getId(), $logos, $plantilla, -15, 'S' . $sancion->getId());
+        $pdf = $this->generarPdf('Sancion #' . $sancion->getId(), $logos, $plantilla, -15, 'S' . $sancion->getId());
 
         $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
             [

@@ -247,7 +247,7 @@ class ParteController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        $pdf = DefaultController::generarPdf($this, 'Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
+        $pdf = $this->generarPdf('Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
 
         $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
             [
