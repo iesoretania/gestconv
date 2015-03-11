@@ -26,10 +26,8 @@ use AppBundle\Entity\Parte;
 use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevoParteType;
 use AppBundle\Form\Type\ParteType;
-use AppBundle\Utils\Notificaciones;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +36,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @Route("/parte")
  */
 
-class ParteController extends Controller
+class ParteController extends BaseController
 {
     /**
      * @Route("/nuevo", name="parte_nuevo",methods={"GET", "POST"})
@@ -120,9 +118,7 @@ class ParteController extends Controller
 
                 $em->persist($avisoParte);
 
-                foreach ($parte->getAlumno()->getGrupo()->getTutores() as $tutor) {
-                    Notificaciones::notificarParte($this, $this->get('mailer'), $this->container, $tutor, $parte);
-                }
+                $this->notificarParte($parte->getAlumno()->getGrupo()->getTutores(), $parte);
             }
             $em->flush();
         }
