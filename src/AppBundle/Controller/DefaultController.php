@@ -33,7 +33,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
 

@@ -47,7 +47,7 @@ class AlumnoController extends Controller
      */
     public function listarAction(Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $fechasPorDefecto = ['desde' => null, 'hasta' => null];
@@ -76,11 +76,11 @@ class AlumnoController extends Controller
      */
     public function detalleAction(Alumno $alumno, Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $formularioAlumno = $this->createForm(new AlumnoType(), $alumno, [
-            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_DIRECTIVO'),
+            'admin' => $this->isGranted('ROLE_DIRECTIVO'),
             'bloqueado' => ($alumno->getGrupo() != $usuario->getTutoria())
         ]);
 

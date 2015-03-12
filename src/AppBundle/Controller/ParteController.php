@@ -46,7 +46,7 @@ class ParteController extends Controller
     public function nuevoAction(Request $peticion)
     {
         $parte = new Parte();
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
 
         $parte->setFechaCreacion(new \DateTime())
             ->setFechaSuceso(new \DateTime())
@@ -54,7 +54,7 @@ class ParteController extends Controller
             ->setPrescrito(false);
 
         $formulario = $this->createForm(new NuevoParteType(), $parte, [
-            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')
+            'admin' => $this->isGranted('ROLE_REVISOR')
         ]);
 
         $formulario->handleRequest($peticion);
@@ -94,14 +94,14 @@ class ParteController extends Controller
      */
     public function listadoNotificarAction(Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
 
             $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 
-            $partes = ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR'))
+            $partes = ($this->isGranted('ROLE_REVISOR'))
             ? $em->getRepository('AppBundle:Parte')->findAllNoNotificadosPorAlumno($id)
             : $em->getRepository('AppBundle:Parte')->findAllNoNotificadosPorAlumnoYUsuario($id, $usuario);
 
@@ -127,7 +127,7 @@ class ParteController extends Controller
             $em->flush();
         }
 
-        $alumnos = ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR'))
+        $alumnos = ($this->isGranted('ROLE_REVISOR'))
             ? $em->getRepository('AppBundle:Alumno')->findAllConPartesAunNoNotificados()
             : $em->getRepository('AppBundle:Alumno')->findAllConPartesAunNoNotificadosPorUsuario($usuario);
 
@@ -151,7 +151,7 @@ class ParteController extends Controller
      */
     public function pendienteAction()
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         return $this->render('AppBundle:Parte:pendiente.html.twig',
@@ -166,7 +166,7 @@ class ParteController extends Controller
      */
     public function listarAction()
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $partes = $em->getRepository('AppBundle:Parte')
@@ -184,9 +184,9 @@ class ParteController extends Controller
      */
     public function detalleAction(Parte $parte, Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         
-        $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esRevisor = $this->isGranted('ROLE_REVISOR');
 
         if (!$esRevisor && !($parte->getAlumno()->getGrupo() != $usuario->getTutoria()) && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException();
@@ -240,11 +240,11 @@ class ParteController extends Controller
      */
     public function detallePdfAction(Parte $parte)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $plantilla = $this->container->getParameter('parte');
         $logos = $this->container->getParameter('logos');
 
-        $esRevisor = $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR');
+        $esRevisor = $this->isGranted('ROLE_REVISOR');
         $esTutor = ($parte->getAlumno()->getGrupo() != $usuario->getTutoria());
 
         if (!$esRevisor && !$esTutor && $parte->getUsuario() != $usuario) {
@@ -267,6 +267,4 @@ class ParteController extends Controller
 
         return $response;
     }
-
-
 }

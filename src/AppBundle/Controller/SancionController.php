@@ -47,7 +47,7 @@ class SancionController extends Controller
     public function sancionarAction(Alumno $alumno, Request $peticion)
     {
         $sancion = new Sancion();
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
 
         $sancion->setFechaSancion(new \DateTime())
             ->setUsuario($usuario)
@@ -97,7 +97,7 @@ class SancionController extends Controller
      */
     public function listadoNotificarAction(Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
@@ -125,7 +125,7 @@ class SancionController extends Controller
             $em->flush();
         }
 
-        $alumnos = ($this->get('security.authorization_checker')->isGranted('ROLE_REVISOR'))
+        $alumnos = ($this->isGranted('ROLE_REVISOR'))
             ? $em->getRepository('AppBundle:Alumno')->findAllConSancionesAunNoNotificadas()
             : $em->getRepository('AppBundle:Alumno')->findAllConSancionesAunNoNotificadasPorTutoria($usuario);
 
@@ -150,7 +150,7 @@ class SancionController extends Controller
      */
     public function listarAction()
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $sanciones = $em->getRepository('AppBundle:Sancion')
@@ -172,7 +172,7 @@ class SancionController extends Controller
      */
     public function detalleAction(Sancion $sancion, Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $formularioSancion = $this->createForm(new SancionType(), $sancion, [
@@ -189,7 +189,7 @@ class SancionController extends Controller
             ->setUsuario($usuario);
 
         $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
-            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')
+            'admin' => $this->isGranted('ROLE_ADMIN')
         ]);
 
         $formularioObservacion->handleRequest($request);
@@ -229,7 +229,7 @@ class SancionController extends Controller
      */
     public function detallePdfAction(Sancion $sancion)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $plantilla = $this->container->getParameter('sancion');
         $logos = $this->container->getParameter('logos');
 

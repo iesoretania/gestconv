@@ -41,7 +41,7 @@ class GrupoController extends Controller
      */
     public function listarAction(Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $fechasPorDefecto = ['desde' => null, 'hasta' => null];

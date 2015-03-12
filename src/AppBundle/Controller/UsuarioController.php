@@ -43,7 +43,7 @@ class UsuarioController extends Controller
      */
     public function modificarPropioAction()
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         return $this->forward('AppBundle:Usuario:modificar', ['usuario' => $usuario->getId()]);
     }
 
@@ -52,13 +52,13 @@ class UsuarioController extends Controller
      */
     public function modificarAction(Usuario $usuario, Request $peticion)
     {
-        $usuarioActivo = $this->get('security.token_storage')->getToken()->getUser();
-        if ($usuario->getId() != $usuarioActivo->getId() && !$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+        $usuarioActivo = $this->getUser();
+        if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
             return $this->createAccessDeniedException();
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, [
-            'admin' => $this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'),
-            'propio' => ($usuarioActivo->getId() == $usuario->getId())
+            'admin' => $this->isGranted('ROLE_ADMIN'),
+            'propio' => ($usuarioActivo->getId() === $usuario->getId())
         ]);
 
         $formulario->handleRequest($peticion);
@@ -144,7 +144,7 @@ class UsuarioController extends Controller
      */
     public function listarAction(Request $request)
     {
-        $usuario = $this->get('security.token_storage')->getToken()->getUser();
+        $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
         $fechasPorDefecto = ['desde' => null, 'hasta' => null];
