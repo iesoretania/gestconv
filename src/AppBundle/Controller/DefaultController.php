@@ -43,10 +43,10 @@ class DefaultController extends Controller
         $partesPendientesPropiosYTutoria = $em->getRepository('AppBundle:Parte')
             ->countNoNotificadosPorUsuarioOTutoria($usuario);
 
-        $partesTotales = $em->getRepository('AppBundle:Parte')
-            ->countPorUsuario($usuario);
-
         if (true === $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
+
+            $partesTotales = $em->getRepository('AppBundle:Parte')->countAll();
+
             $partesSancionables = $em->getRepository('AppBundle:Parte')
                 ->countSancionables();
 
@@ -57,6 +57,9 @@ class DefaultController extends Controller
                 ->countAll();
         }
         else {
+            $partesTotales = $em->getRepository('AppBundle:Parte')
+                ->countPorUsuario($usuario);
+
             $partesSancionables = 0;
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
                 ->countNoNotificadosPorTutoria($usuario);
