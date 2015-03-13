@@ -81,7 +81,7 @@ class UsuarioController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             return new RedirectResponse(
-                $this->generateUrl($this->is_granted('ROLE_ADMIN') ? 'usuario_listar' : 'portada')
+                $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'usuario_listar' : 'portada')
             );
         }
 
