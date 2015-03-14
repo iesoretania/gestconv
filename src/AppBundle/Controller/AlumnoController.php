@@ -41,8 +41,8 @@ use Symfony\Component\HttpFoundation\Request;
 class AlumnoController extends Controller
 {
     /**
-     * @Route("/tutoria", name="alumno_tutoria",methods={"GET", "POST"})
-     * @Route("/todo", name="alumno_listar_todo",methods={"GET", "POST"})
+     * @Route("/tutoria", name="alumno_tutoria",methods={"GET"})
+     * @Route("/todo", name="alumno_listar_todo",methods={"GET"})
      * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria')")
      */
     public function listarAction(Request $request)

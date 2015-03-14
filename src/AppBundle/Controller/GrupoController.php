@@ -36,7 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GrupoController extends Controller
 {
     /**
-     * @Route("/listar", name="grupo_listar",methods={"GET", "POST"})
+     * @Route("/listar", name="grupo_listar",methods={"GET"})
      * @Security("has_role('ROLE_DIRECTIVO')")
      */
     public function listarAction(Request $request)

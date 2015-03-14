@@ -32,6 +32,7 @@ class RangoFechasType extends BaseSancionType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->setMethod('GET')
             ->add('desde', 'date', [
                 'label' => 'Desde',
                 'required' => false,
@@ -63,6 +64,6 @@ class RangoFechasType extends BaseSancionType
      */
     public function getName()
     {
-        return 'appbundle_rangofechas';
+        return 'fechas';
     }
 }

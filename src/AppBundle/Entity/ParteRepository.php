@@ -128,6 +128,15 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
+    public function countAll()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
     public function countNoNotificados()
     {

@@ -81,7 +81,7 @@ class UsuarioController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             return new RedirectResponse(
-                $this->generateUrl('usuario_listar')
+                $this->generateUrl($this->isGranted('ROLE_ADMIN') ? 'usuario_listar' : 'portada')
             );
         }
 
@@ -139,7 +139,7 @@ class UsuarioController extends Controller
     }
 
     /**
-     * @Route("/listar", name="usuario_listar",methods={"GET", "POST"})
+     * @Route("/listar", name="usuario_listar",methods={"GET"})
      * @Security("has_role('ROLE_REVISOR')")
      */
     public function listarAction(Request $request)
