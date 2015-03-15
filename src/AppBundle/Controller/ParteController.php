@@ -95,7 +95,7 @@ class ParteController extends BaseController
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        if (($request->getMethod() == 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
+        if (($request->getMethod() === 'POST') && (($request->request->get('noNotificada')) || ($request->request->get('notificada')))) {
 
             $id = $request->request->get(($request->request->get('notificada')) ? 'notificada' : 'noNotificada');
 

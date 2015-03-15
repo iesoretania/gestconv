@@ -55,11 +55,11 @@ class AlumnoController extends Controller
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
         $form->handleRequest($request);
 
-        $tutor = ($request->get('_route') == 'alumno_tutoria') ? $usuario : null;
+        $tutor = ($request->get('_route') === 'alumno_tutoria') ? $usuario : null;
 
         $alumnado = $em->getRepository('AppBundle:Alumno')->getResumenConvivencia($tutor, $form->isValid() ? $form->getData() : $fechasPorDefecto);
 
-        return $this->render(($request->get('_route') == 'alumno_tutoria')
+        return $this->render(($request->get('_route') === 'alumno_tutoria')
                 ? 'AppBundle:Alumno:tutoria.html.twig'
                 : 'AppBundle:Alumno:listar.html.twig',
             [
@@ -86,7 +86,7 @@ class AlumnoController extends Controller
 
         $formularioAlumno->handleRequest($request);
 
-        $vuelta = ($request->get('_route') == 'alumno_tutoria_detalle')
+        $vuelta = ($request->get('_route') === 'alumno_tutoria_detalle')
             ? [
                 'ruta' => 'alumno_tutoria',
                 'descripcion' => 'Gestionar tutoría',
