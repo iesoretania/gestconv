@@ -43,7 +43,7 @@ class DefaultController extends Controller
         $partesPendientesPropiosYTutoria = $em->getRepository('AppBundle:Parte')
             ->countNoNotificadosPorUsuarioOTutoria($usuario);
 
-        if (true === $this->get('security.authorization_checker')->isGranted('ROLE_REVISOR')) {
+        if (true === $this->isGranted('ROLE_REVISOR')) {
 
             $partesTotales = $em->getRepository('AppBundle:Parte')->countAll();
 
