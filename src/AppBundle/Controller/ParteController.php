@@ -23,6 +23,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\AvisoParte;
 use AppBundle\Entity\ObservacionParte;
 use AppBundle\Entity\Parte;
+use AppBundle\Entity\Usuario;
 use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevoParteType;
 use AppBundle\Form\Type\ParteType;
@@ -44,6 +45,10 @@ class ParteController extends BaseController
     public function nuevoAction(Request $peticion)
     {
         $parte = new Parte();
+
+        /**
+         * @var Usuario
+         */
         $usuario = $this->getUser();
 
         $parte->setFechaCreacion(new \DateTime())
