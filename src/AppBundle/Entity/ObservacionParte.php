@@ -25,7 +25,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table
  */
 class ObservacionParte extends Observacion
 {
