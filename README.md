@@ -28,7 +28,10 @@ instaladas.
 - Ejecutar `bower install`.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
 - Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
-- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.
+- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.i
+- Para crear la base de datos: `app/console doctrine:database:create`.
+- Para crear las tablas: `app/console doctrine:schema:create`.
+- Para insertar los datos iniciales: `app/console doctrine:fixtures:load`.
 
 ## Entorno de desarrollo
 
