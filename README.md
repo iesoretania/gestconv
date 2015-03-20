@@ -11,7 +11,7 @@ de los mismos a las familias y simplificando su revisión por parte de la Comisi
 del Consejo Escolar del centro.
 
 Este proyecto utiliza [Symfony2] y otros muchos componentes que se instalan usando
-[Composer].
+[Composer] y [Bower].
 
 Para facilitar el desarrollo se proporciona un entorno [Vagrant] con todas las dependencias ya
 instaladas.
@@ -25,8 +25,10 @@ instaladas.
 ## Instalación
 
 - Ejecutar `composer install` desde la carpeta del proyecto.
+- Ejecutar `bower install`.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
 - Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
+- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.
 
 ## Entorno de desarrollo
 
@@ -41,3 +43,4 @@ Esta aplicación se ofrece bajo licencia [AGPL versión 3].
 [Symfony2]: http://symfony.com/
 [Composer]: http://getcomposer.org
 [AGPL versión 3]: http://www.gnu.org/licenses/agpl.html
+[Bower]: http://bower.io/
