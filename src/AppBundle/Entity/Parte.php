@@ -21,7 +21,6 @@
 namespace AppBundle\Entity;
 
 
-use AppBundle\Validator\Constraints\DateRange as AssertDateRange;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
