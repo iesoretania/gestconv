@@ -1,4 +1,4 @@
-# Gestconv
+# ![Gestconv](/src/AppBundle/Resources/public/images/titulo.png)
 [![Build Status](https://travis-ci.org/iesoretania/gestconv.svg?branch=master)](https://travis-ci.org/iesoretania/gestconv) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd/mini.png)](https://insight.sensiolabs.com/projects/4ed2d6a5-0669-46f0-aa87-b33d9c113bcd) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/iesoretania/gestconv/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/iesoretania/gestconv/?branch=master)
 [![Codacy Badge](https://www.codacy.com/project/badge/aeb2f9910f8e4120b76957664d86baa4)](https://www.codacy.com/public/lrlopez/gestconv)
 
@@ -28,7 +28,7 @@ instaladas.
 - Ejecutar `bower install`.
 - Configurar el sitio de Apache2 para que el `DocumentRoot` sea la carpeta `web/`
 - Modificar el fichero `parameters.yml` con los datos de acceso al sistema gestor de bases de datos.
-- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.i
+- Ejecutar `app/console assets:install` para completar la instalación de los recursos en la carpeta `web/`.
 - Para crear la base de datos: `app/console doctrine:database:create`.
 - Para crear las tablas: `app/console doctrine:schema:create`.
 - Para insertar los datos iniciales: `app/console doctrine:fixtures:load`.
