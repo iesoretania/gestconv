@@ -21,6 +21,8 @@ instaladas.
 - PHP 5.4.x o superior
 - Servidor web Apache2 (podría funcionar con nginx, pero no se ha probado)
 - Cualquier sistema gestor de bases de datos que funcione bajo Doctrine (p.ej. MySQL, MariaDB, PosgreSQL, SQLite, etc.)
+- PHP [Composer]
+- Bower
 
 ## Instalación
 
