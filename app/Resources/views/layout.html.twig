@@ -18,8 +18,16 @@
             <div class="collapse navbar-collapse" id="navbar-principal">
                 {% block navbarcontent %}
                     {% if is_granted('ROLE_USUARIO') %}
-                        <p class="navbar-text navbar-right"></p>
-                        <p class="navbar-text navbar-right">Conectado como {{ app.user.nombre }} {{ app.user.apellidos }}</p>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Conectado como {{ app.user.nombre }} {{ app.user.apellidos }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('usuario_modificar') }}"><i class="fa fa-cog"></i> Modificar datos personales</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="{{ path('usuario_salir') }}"><i class="fa fa-power-off"></i> Salir de la aplicación</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                     {% endif %}
                 {% endblock %}
             </div>
