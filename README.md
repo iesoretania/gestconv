@@ -35,6 +35,11 @@ instaladas.
 - Para crear las tablas: `app/console doctrine:schema:create`.
 - Para insertar los datos iniciales: `app/console doctrine:fixtures:load`.
 
+## Importación de datos de alumnado y profesorado
+
+La aplicación permite una importación en lote de todo el alumnado y profesorado del centro a partir de la
+información extraída de la plataforma Séneca de la Junta de Andalucía.
+
 ## Entorno de desarrollo
 
 Para poder ejecutar la aplicación en un entorno de desarrollo basta con tener [Vagrant] instalado junto con [VirtualBox]
