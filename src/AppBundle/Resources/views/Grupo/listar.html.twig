@@ -15,7 +15,7 @@
         {% block lista_extra_fila %}<td><a href="{{ path('grupo_modificar', {'grupo': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Modificar</a></td>{% endblock %}
     {% endembed %}
 
-    {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('grupo_nuevo') }}" class="btn btn-success">Crear un grupo</a>{% endif %}
+    {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('grupo_nuevo') }}" class="btn btn-success"><i class="fa fa-plus"></i> Crear un grupo</a>{% endif %}
 
     <h1 class="well">Listado de niveles del centro</h1>
 
@@ -26,7 +26,7 @@
             {% block lista_extra_fila %}<td><a href="{{ path('curso_modificar', {'curso': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Modificar</a></td>{% endblock %}
     {% endembed %}
 
-    {% if is_granted('ROLE_ADMIN') %}<p><a href="{{ path('curso_nuevo') }}" class="btn btn-success">Crear un curso</a></p>{% endif %}
+    {% if is_granted('ROLE_ADMIN') %}<p><a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="fa fa-plus"></i> Crear un curso</a></p>{% endif %}
 
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
 {% endblock %}

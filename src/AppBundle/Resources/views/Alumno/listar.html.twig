@@ -15,5 +15,5 @@
         {% block lista_extra_fila %}<td><a href="{{ path('alumno_detalle', {'alumno': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-search"></i> Detalles</a></td>{% endblock %}
     {% endembed %}
 
-    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>&nbsp;<a href="{{ path('alumno_importar') }}" class="btn btn-warning">Importar o actualizar alumnado desde Séneca</a>
+    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>&nbsp;<a href="{{ path('alumno_importar') }}" class="btn btn-warning"><i class="fa fa-upload"></i> Importar o actualizar alumnado desde Séneca</a>
 {% endblock %}

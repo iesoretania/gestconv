@@ -16,7 +16,7 @@
     {% endembed %}
     <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
     {% if is_granted('ROLE_ADMIN') %}
-        &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success">Crear un usuario</a>&nbsp;<a href="{{ path('usuario_importar') }}" class="btn btn-warning">Importar o actualizar usuarios desde Séneca</a>
+        &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success"><i class="fa fa-user-plus"></i> Crear un usuario</a>&nbsp;<a href="{{ path('usuario_importar') }}" class="btn btn-warning"><i class="fa fa-upload"></i> Importar o actualizar usuarios desde Séneca</a>
     {% endif %}
 
 {% endblock %}
