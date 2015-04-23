@@ -53,7 +53,7 @@ class AvisoSancion extends Aviso
     {
         $this->sancion = $sancion;
 
-        return $sancion;
+        return $this;
     }
 
 }
