@@ -50,7 +50,7 @@ class AlumnoController extends Controller
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $fechasPorDefecto = ['desde' => null, 'hasta' => null];
+        $fechasPorDefecto = array('desde' => null, 'hasta' => null);
 
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
         $form->handleRequest($request);
@@ -62,11 +62,11 @@ class AlumnoController extends Controller
         return $this->render(($request->get('_route') === 'alumno_tutoria')
                 ? 'AppBundle:Alumno:tutoria.html.twig'
                 : 'AppBundle:Alumno:listar.html.twig',
-            [
+            array(
                 'formulario_fechas' => $form->createView(),
                 'items' => $alumnado,
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -79,24 +79,24 @@ class AlumnoController extends Controller
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $formularioAlumno = $this->createForm(new AlumnoType(), $alumno, [
+        $formularioAlumno = $this->createForm(new AlumnoType(), $alumno, array(
             'admin' => $this->isGranted('ROLE_DIRECTIVO'),
             'bloqueado' => ($alumno->getGrupo() != $usuario->getTutoria())
-        ]);
+        ));
 
         $formularioAlumno->handleRequest($request);
 
         $vuelta = ($request->get('_route') === 'alumno_tutoria_detalle')
-            ? [
+            ? array(
                 'ruta' => 'alumno_tutoria',
                 'descripcion' => 'Gestionar tutoría',
                 'boton' => 'Volver al listado del grupo'
-            ]
-            : [
+            )
+            : array(
                 'ruta' => 'alumno_listar_todo',
                 'descripcion' => 'Gestionar alumnado',
                 'boton' => 'Volver al listado de alumnado'
-            ];
+            );
 
         if ($formularioAlumno->isSubmitted() && $formularioAlumno->isValid()) {
             $em->persist($alumno);
@@ -108,12 +108,12 @@ class AlumnoController extends Controller
         }
 
         return $this->render('AppBundle:Alumno:detalle.html.twig',
-            [
+            array(
                 'vuelta' => $vuelta,
                 'alumno' => $alumno,
                 'formulario_alumno' => $formularioAlumno->createView(),
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     protected function importarAlumnadoDesdeCsv($fichero)
@@ -131,7 +131,7 @@ class AlumnoController extends Controller
             $em->persist($curso);
         }
 
-        $grupos = [];
+        $grupos = array();
 
         while($data = $importer->get(100)) {
             foreach($data as $alumnoData) {
@@ -203,8 +203,8 @@ class AlumnoController extends Controller
         }
 
         return $this->render('AppBundle:Alumno:importar.html.twig',
-            [
+            array(
                 'formulario' => $form->createView()
-            ]);
+            ));
     }
 }

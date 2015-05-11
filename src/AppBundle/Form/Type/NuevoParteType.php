@@ -36,26 +36,26 @@ class NuevoParteType extends AbstractType
     {
         if ($options['admin']) {
             $builder
-                ->add('usuario', null, [
+                ->add('usuario', null, array(
                     'label' => 'Docente u ordenanza*'
-                ]);
+                ));
         }
 
         $builder
-            ->add('fechaSuceso', null, [
+            ->add('fechaSuceso', null, array(
                 'label' => 'Fecha y hora del suceso*',
                 'required'  => true
-            ])
-            ->add('tramo', null, [
+            ))
+            ->add('tramo', null, array(
                 'label' => 'Dónde ha sucedido*',
                 'required'  => true
-            ])
-            ->add('alumnos', 'entity', [
+            ))
+            ->add('alumnos', 'entity', array(
                 'label' => 'Alumnado implicado*',
                 'class' => 'AppBundle\Entity\Alumno',
                 'mapped' => false,
                 'multiple' => true,
-                'attr' => ['data-placeholder' => 'Escriba parte del nombre o el grupo al que pertenece'],
+                'attr' => array('data-placeholder' => 'Escriba parte del nombre o el grupo al que pertenece'),
                 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.apellido1', 'ASC')
@@ -63,38 +63,38 @@ class NuevoParteType extends AbstractType
                         ->addOrderBy('u.nombre', 'ASC');
                 },
                 'required'  => false
-            ])
-            ->add('conductas', null, [
+            ))
+            ->add('conductas', null, array(
                 'label' => 'Conductas que provocan el parte*',
                 'required' => true,
                 'expanded' => true
-            ])
-            ->add('anotacion', 'textarea', [
+            ))
+            ->add('anotacion', 'textarea', array(
                 'label' => 'Detalle de lo acontecido*',
                 'required' => true,
-                'attr' => ['rows' => '8']
+                'attr' => array('rows' => '8')
 
-            ])
-            ->add('hayExpulsion', null, [
+            ))
+            ->add('hayExpulsion', null, array(
                 'label' => 'Marcar si se expulsó al alumnado implicado del aula',
                 'required' => false
-            ])
-            ->add('actividades', 'textarea', [
+            ))
+            ->add('actividades', 'textarea', array(
                 'label' => 'Actividades a realizar por el alumnado expulsado del aula',
                 'required' => false,
-                'attr' => ['rows' => '5']
-            ])
-            ->add('actividadesRealizadas', 'choice', [
+                'attr' => array('rows' => '5')
+            ))
+            ->add('actividadesRealizadas', 'choice', array(
                 'label' => '¿Se realizaron las actividades durante la expulsión?',
-                'choices' => [null => 'No se sabe', true => 'Sí', false => 'No'],
+                'choices' => array(null => 'No se sabe', true => 'Sí', false => 'No'),
                 'expanded' => true,
                 'multiple' => false,
                 'required' => false
-            ])
-            ->add('enviar', 'submit', [
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Registrar parte',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
     }
 
     /**
@@ -102,17 +102,17 @@ class NuevoParteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Parte',
             'admin' => false,
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if ($data->getHayExpulsion() === true)
-                    return ['Default', 'expulsion'];
+                    return array('Default', 'expulsion');
                 else
-                    return ['Default'];
+                    return array('Default');
             }
-        ]);
+        ));
     }
 
     /**

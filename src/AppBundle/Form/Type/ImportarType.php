@@ -33,14 +33,14 @@ class ImportarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fichero', 'file', [
+            ->add('fichero', 'file', array(
                 'label' => 'Fichero .CSV de Séneca',
                 'required' => true
-            ])
-            ->add('enviar', 'submit', [
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Importar fichero',
-                'attr' => ['class' => 'btn btn-danger']
-            ]);
+                'attr' => array('class' => 'btn btn-danger')
+            ));
     }
 
     /**
@@ -48,9 +48,9 @@ class ImportarType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Form\Model\Importar'
-        ]);
+        ));
     }
 
     /**

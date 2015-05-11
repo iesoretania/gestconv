@@ -33,20 +33,20 @@ class RangoFechasType extends BaseSancionType
     {
         $builder
             ->setMethod('GET')
-            ->add('desde', 'date', [
+            ->add('desde', 'date', array(
                 'label' => 'Desde',
                 'required' => false,
                 'widget' => 'single_text'
-            ])
-            ->add('hasta', 'date', [
+            ))
+            ->add('hasta', 'date', array(
                 'label' => 'Hasta',
                 'required' => false,
                 'widget' => 'single_text'
-            ])
-            ->add('enviar', 'submit', [
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Filtrar partes en el intervalo',
-                'attr' => ['class' => 'btn btn-info']
-            ]);
+                'attr' => array('class' => 'btn btn-info')
+            ));
     }
 
     /**
@@ -54,9 +54,7 @@ class RangoFechasType extends BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
-
-        ]);
+        $resolver->setDefaults(array());
     }
 
     /**

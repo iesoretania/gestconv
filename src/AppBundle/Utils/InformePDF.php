@@ -26,13 +26,13 @@ class InformePDF extends \TCPDF
      * Header image logos.
      * @protected
      */
-    protected $header_logos = [];
+    protected $header_logos = array();
 
     /**
      * Header contents
      * @protected
      */
-    protected $header_texts = [];
+    protected $header_texts = array();
 
     /**
      * Set header data.
@@ -40,7 +40,7 @@ class InformePDF extends \TCPDF
      * @param $texts (string) header image logo width in mm
      * @public
      */
-    public function setExtendedHeaderData($ln=[], $texts=[])
+    public function setExtendedHeaderData($ln = array(), $texts = array())
     {
         $this->header_logos = $ln;
         $this->header_texts = $texts;

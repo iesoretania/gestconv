@@ -34,7 +34,7 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('partes', 'entity', [
+            ->add('partes', 'entity', array(
                 'label' => 'Partes a sancionar*',
                 'class' => 'AppBundle\Entity\Parte',
                 'multiple' => true,
@@ -54,15 +54,15 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
                     return $qb;
                 },
                 'required'  => true
-            ]);
+            ));
 
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('enviar', 'submit', [
+            ->add('enviar', 'submit', array(
                 'label' => 'Grabar sanción',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
     }
 
     /**
@@ -70,16 +70,16 @@ class NuevaSancionType extends \AppBundle\Form\Type\BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Sancion',
             'alumno' => null,
             'validation_groups' => function(FormInterface $form) {
                 if ($form->get('sinSancion')->getData() === true)
-                    return ['Default', 'sin_sancion'];
+                    return array('Default', 'sin_sancion');
                 else
-                    return ['Default'];
+                    return array('Default');
             }
-        ]);
+        ));
     }
 
     /**

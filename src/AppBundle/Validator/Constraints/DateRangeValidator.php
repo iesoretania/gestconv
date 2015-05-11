@@ -48,23 +48,23 @@ class DateRangeValidator extends ConstraintValidator
 
         if (!($value instanceof \DateTime)) {
             $this->addViolation($constraint->invalidMessage,
-                ['{{ value }}' => $value]);
+                array('{{ value }}' => $value));
 
             return;
         }
 
         if (null !== $constraint->max && $value > $constraint->max) {
-            $this->addViolation($constraint->maxMessage, [
+            $this->addViolation($constraint->maxMessage, array(
                 '{{ value }}' => $this->formatDate($value),
                 '{{ limit }}' => $this->formatDate($constraint->max)
-            ]);
+            ));
         }
 
         if (null !== $constraint->min && $value < $constraint->min) {
-            $this->addViolation($constraint->minMessage, [
+            $this->addViolation($constraint->minMessage, array(
                 '{{ value }}' => $this->formatDate($value),
                 '{{ limit }}' => $this->formatDate($constraint->min)
-            ]);
+            ));
         }
     }
 

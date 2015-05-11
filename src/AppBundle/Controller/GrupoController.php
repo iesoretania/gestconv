@@ -44,23 +44,23 @@ class GrupoController extends Controller
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $fechasPorDefecto = ['desde' => null, 'hasta' => null];
+        $fechasPorDefecto = array('desde' => null, 'hasta' => null);
 
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto)->handleRequest($request);
 
-        $fechas = ($form->isValid()) ? $fechasPorDefecto : ['desde' => null, 'hasta' => null];
+        $fechas = ($form->isValid()) ? $fechasPorDefecto : array('desde' => null, 'hasta' => null);
 
         $grupos = $em->getRepository('AppBundle:Grupo')->getResumenPorFecha($fechas);
 
         $cursos = $em->getRepository('AppBundle:Curso')->getResumenPorFecha($fechas);
 
         return $this->render('AppBundle:Grupo:listar.html.twig',
-            [
+            array(
                 'formulario_fechas' => $form->createView(),
                 'items' => $grupos,
                 'items2' => $cursos,
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -88,10 +88,10 @@ class GrupoController extends Controller
         }
 
         return $this->render('AppBundle:Grupo:modificar.html.twig',
-            [
+            array(
                 'formulario' => $formulario->createView(),
                 'grupo' => $grupo
-            ]);
+            ));
     }
 
 
@@ -122,9 +122,9 @@ class GrupoController extends Controller
         }
 
         return $this->render('AppBundle:Grupo:modificar.html.twig',
-            [
+            array(
                 'formulario' => $formulario->createView(),
                 'grupo' => $grupo
-            ]);
+            ));
     }
 }

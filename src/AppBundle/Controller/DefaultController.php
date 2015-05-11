@@ -66,17 +66,17 @@ class DefaultController extends Controller
             $sancionesTotales = 0;
         }
 
-        return $this->render('AppBundle:App:portada.html.twig', [
-            'cuenta' => [
+        return $this->render('AppBundle:App:portada.html.twig', array(
+            'cuenta' => array(
                 'partes_pendientes' => $partesPendientes,
                 'partes_pendientes_propios_y_tutoria' => $partesPendientesPropiosYTutoria,
                 'partes_totales' => $partesTotales,
                 'partes_pendientes_propios' => $partesPendientesPropios,
                 'partes_sancionables' => $partesSancionables
-            ],
+            ),
             'sanciones_notificables' => $sancionesNotificables,
             'sanciones_totales' => $sancionesTotales
-        ]);
+        ));
     }
 
     /**
@@ -87,10 +87,10 @@ class DefaultController extends Controller
         $helper = $this->get('security.authentication_utils');
 
         return $this->render('AppBundle:App:entrada.html.twig',
-            [
+            array(
                 'last_username' => $helper->getLastUsername(),
                 'error'         => $helper->getLastAuthenticationError()
-            ]);
+            ));
     }
 
 }

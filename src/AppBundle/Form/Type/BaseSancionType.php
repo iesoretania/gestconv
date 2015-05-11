@@ -32,35 +32,35 @@ abstract class BaseSancionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('medidas', null, [
+            ->add('medidas', null, array(
                 'label' => 'Medidas tomadas*',
                 'required' => true,
                 'expanded' => true
-            ])
-            ->add('anotacion', 'textarea', [
+            ))
+            ->add('anotacion', 'textarea', array(
                 'label' => 'Detalle de la sanción impuesta*',
                 'required' => true,
-                'attr' => ['rows' => '8']
-            ])
-            ->add('fechaInicioSancion', 'date', [
+                'attr' => array('rows' => '8')
+            ))
+            ->add('fechaInicioSancion', 'date', array(
                 'label' => 'Sanción efectiva desde',
                 'widget' => 'single_text',
                 'required' => false
-            ])
-            ->add('fechaFinSancion', 'date', [
+            ))
+            ->add('fechaFinSancion', 'date', array(
                 'label' => 'Sanción efectiva hasta',
                 'widget' => 'single_text',
                 'required' => false
-            ])
-            ->add('sinSancion', 'checkbox', [
+            ))
+            ->add('sinSancion', 'checkbox', array(
                 'label' => 'No se aplica corrección/medida disciplinaria',
                 'mapped' => false,
                 'required' => false
-            ])
-            ->add('motivosNoAplicacion', 'textarea', [
+            ))
+            ->add('motivosNoAplicacion', 'textarea', array(
                 'label' => 'Motivos de la no aplicación de sanción',
-                'attr' => ['rows' => '8'],
+                'attr' => array('rows' => '8'),
                 'required' => false
-            ]);
+            ));
     }
 }

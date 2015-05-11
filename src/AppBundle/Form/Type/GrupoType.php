@@ -33,29 +33,29 @@ class GrupoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion', null, [
+            ->add('descripcion', null, array(
                 'label' => 'Descripción del grupo*',
                 'required' => true
-            ])
-            ->add('curso', null, [
+            ))
+            ->add('curso', null, array(
                 'label' => 'Curso al que pertenece*',
                 'required'  => true
-            ])
-            ->add('tutores', null, [
+            ))
+            ->add('tutores', null, array(
                 'label' => 'Tutores',
                 'required'  => false,
                 'class' => 'AppBundle\Entity\Usuario',
                 'multiple' => true,
                 'expanded' => false,
                 'by_reference' => false,
-                'attr' => [
+                'attr' => array(
                     'placeholder' => 'Elija los tutores del grupo'
-                ]
-            ])
-            ->add('enviar', 'submit', [
+                )
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Guardar cambios',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
 
     }
 
@@ -64,9 +64,9 @@ class GrupoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Grupo'
-        ]);
+        ));
     }
 
     /**

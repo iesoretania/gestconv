@@ -36,73 +36,73 @@ class ParteType extends AbstractType
         $desactivado = !$options['admin'] && $options['bloqueado'];
 
         $builder
-            ->add('usuario', null, [
+            ->add('usuario', null, array(
                 'label' => 'Docente u ordenanza*',
                 'disabled' => (!$options['admin'])
-            ])
-            ->add('fechaSuceso', null, [
+            ))
+            ->add('fechaSuceso', null, array(
                 'label' => 'Fecha y hora del suceso*',
                 'required'  => true,
                 'disabled' => $desactivado
-            ])
-            ->add('fechaCreacion', null, [
+            ))
+            ->add('fechaCreacion', null, array(
                 'label' => 'Fecha y hora del registro*',
                 'required'  => true,
                 'disabled' => (!$options['admin'])
-            ])
-            ->add('tramo', null, [
+            ))
+            ->add('tramo', null, array(
                 'label' => 'Dónde ha sucedido*',
                 'required'  => true,
                 'disabled' => ($desactivado)
-            ])
-            ->add('alumno', 'entity', [
+            ))
+            ->add('alumno', 'entity', array(
                 'label' => 'Alumnado implicado*',
                 'class' => 'AppBundle\Entity\Alumno',
                 'required'  => false,
                 'disabled' => true
-            ])
-            ->add('conductas', null, [
+            ))
+            ->add('conductas', null, array(
                 'label' => 'Conductas que provocan el parte*',
                 'required' => true,
                 'expanded' => true,
                 'disabled' => ($desactivado)
-            ])
-            ->add('anotacion', 'textarea', [
+            ))
+            ->add('anotacion', 'textarea', array(
                 'label' => 'Detalle de lo acontecido*',
                 'required' => true,
-                'attr' => ['rows' => '8'],
+                'attr' => array('rows' => '8'),
                 'disabled' => ($desactivado)
-            ])
-            ->add('prescrito', null, [
+            ))
+            ->add('prescrito', null, array(
                 'label' => 'El parte ha prescrito',
                 'required' => false,
                 'disabled' => (!$options['admin'])
-            ])
-            ->add('hayExpulsion', null, [
+            ))
+            ->add('hayExpulsion', null, array(
                 'label' => 'Marcar si se expulsó al alumnado implicado del aula',
                 'required' => false,
                 'disabled' => ($desactivado)
-            ])
-            ->add('actividades', 'textarea', [
+            ))
+            ->add('actividades', 'textarea', array(
                 'label' => 'Actividades a realizar por el alumnado expulsado del aula',
                 'required' => false,
-                'attr' => ['rows' => '5'],
+                'attr' => array('rows' => '5'),
                 'disabled' => ($desactivado)
-            ])
-            ->add('actividadesRealizadas', 'choice', [
+            ))
+            ->add('actividadesRealizadas', 'choice', array(
                 'label' => '¿Se realizaron las actividades durante la expulsión?',
-                'choices' => [null => 'No se sabe', true => 'Sí', false => 'No'],
+                'choices' => array(null => 'No se sabe', true => 'Sí', false => 'No'),
                 'expanded' => true,
                 'multiple' => false,
                 'required' => false
-            ]);
+            ));
 
         if (false === $desactivado) {
             $builder
-                ->add('enviar', 'submit', [
+                ->add('enviar', 'submit', array(
                     'label' => 'Modificar parte',
-                    'attr' => ['class' => 'btn btn-success']
-                ]);
+                    'attr' => array('class' => 'btn btn-success')
+                ));
         }
     }
 
@@ -111,18 +111,18 @@ class ParteType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Parte',
             'admin' => false,
             'bloqueado' => false,
             'validation_groups' => function(FormInterface $form) {
                 $data = $form->getData();
                 if ($data->getHayExpulsion() === true)
-                    return ['Default', 'expulsion'];
+                    return array('Default', 'expulsion');
                 else
-                    return ['Default'];
+                    return array('Default');
             }
-        ]);
+        ));
     }
 
     /**

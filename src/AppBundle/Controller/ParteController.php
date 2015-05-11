@@ -56,9 +56,9 @@ class ParteController extends BaseController
             ->setUsuario($usuario)
             ->setPrescrito(false);
 
-        $formulario = $this->createForm(new NuevoParteType(), $parte, [
+        $formulario = $this->createForm(new NuevoParteType(), $parte, array(
             'admin' => $this->isGranted('ROLE_REVISOR')
-        ]);
+        ));
 
         $formulario->handleRequest($peticion);
 
@@ -86,10 +86,10 @@ class ParteController extends BaseController
         }
 
         return $this->render('AppBundle:Parte:nuevo.html.twig',
-            [
+            array(
                 'parte' => $parte,
                 'formulario' => $formulario->createView()
-            ]);
+            ));
     }
 
     /**
@@ -139,11 +139,11 @@ class ParteController extends BaseController
             );
         }
         return $this->render('AppBundle:Parte:notificar.html.twig',
-            [
+            array(
                 'usuario' => $usuario,
                 'alumnos' => $alumnos,
                 'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
-            ]);
+            ));
     }
 
     /**
@@ -156,10 +156,10 @@ class ParteController extends BaseController
         $em = $this->getDoctrine()->getManager();
 
         return $this->render('AppBundle:Parte:pendiente.html.twig',
-            [
+            array(
                 'alumnos' => $em->getRepository('AppBundle:Alumno')->findAllConPartesPendientesSancion(),
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -174,10 +174,10 @@ class ParteController extends BaseController
             ->findAllPorUsuarioOTutoria($usuario);
 
         return $this->render('AppBundle:Parte:listar.html.twig',
-            [
+            array(
                 'partes' => $partes,
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -193,19 +193,19 @@ class ParteController extends BaseController
             throw $this->createAccessDeniedException();
         }
 
-        $formularioParte = $this->createForm(new ParteType(), $parte, [
+        $formularioParte = $this->createForm(new ParteType(), $parte, array(
             'admin' => $esRevisor,
             'bloqueado' => (false === is_null($parte->getSancion()))
-        ]);
+        ));
 
         $observacion = (new ObservacionParte())
             ->setParte($parte)
             ->setFecha(new \DateTime())
             ->setUsuario($usuario);
 
-        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
+        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, array(
             'admin' => $esRevisor
-        ]);
+        ));
 
         $formularioObservacion->handleRequest($request);
 
@@ -228,12 +228,12 @@ class ParteController extends BaseController
         }
 
         return $this->render('AppBundle:Parte:detalle.html.twig',
-            [
+            array(
                 'parte' => $parte,
                 'formulario_parte' => $formularioParte->createView(),
                 'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -255,11 +255,11 @@ class ParteController extends BaseController
         $pdf = $this->generarPdf('Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
 
         $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
-            [
+            array(
                 'parte' => $parte,
                 'usuario' => $usuario,
                 'localidad' => $this->container->getParameter('localidad')
-            ]);
+            ));
 
         $pdf->writeHTML($html);
 
