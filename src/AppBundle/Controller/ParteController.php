@@ -198,8 +198,8 @@ class ParteController extends BaseController
             'bloqueado' => (false === is_null($parte->getSancion()))
         ));
 
-        $observacion = (new ObservacionParte())
-            ->setParte($parte)
+        $observacion = new ObservacionParte();
+        $observacion->setParte($parte)
             ->setFecha(new \DateTime())
             ->setUsuario($usuario);
 
