@@ -21,7 +21,8 @@
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
         "beelab/bowerphp": "1.*@dev",
-        "whiteoctober/tcpdf-bundle": "1.*"
+        "whiteoctober/tcpdf-bundle": "1.*",
+        "ircmaxell/password-compat": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
