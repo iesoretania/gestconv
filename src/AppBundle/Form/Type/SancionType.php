@@ -33,46 +33,46 @@ class SancionType extends BaseSancionType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fechaSancion', 'datetime', [
+            ->add('fechaSancion', 'datetime', array(
                 'label' => 'Sanción creada el*',
                 'required' => true
-            ])
-            ->add('fechaComunicado', 'date', [
+            ))
+            ->add('fechaComunicado', 'date', array(
                 'label' => 'Sanción comunicada',
                 'widget' => 'single_text',
                 'required' => false,
                 'disabled' => true
-            ])
-            ->add('fechaRegistro', 'date', [
+            ))
+            ->add('fechaRegistro', 'date', array(
                 'label' => 'Fecha del registro de salida',
                 'widget' => 'single_text',
                 'required' => false
-            ]);
+            ));
 
         parent::buildForm($builder, $options);
 
         $builder
-            ->add('medidasEfectivas', 'checkbox', [
+            ->add('medidasEfectivas', 'checkbox', array(
                 'label' => 'Las medidas han sido efectivas',
                 'required' => false
-            ])
-            ->add('reclamacion', 'checkbox', [
+            ))
+            ->add('reclamacion', 'checkbox', array(
                 'label' => 'La familia ha presentado una reclamación a la sanción',
                 'required' => false
-            ])
-            ->add('actitudFamilia', null, [
+            ))
+            ->add('actitudFamilia', null, array(
                 'label' => 'Actitud de la familia ante la sanción',
                 'placeholder' => 'Desconocida o no aplicable',
                 'required' => false
-            ])
-            ->add('registradoEnSeneca', 'checkbox', [
+            ))
+            ->add('registradoEnSeneca', 'checkbox', array(
                 'label' => 'Se ha registrado en Séneca',
                 'required' => false
-            ])
-            ->add('enviar', 'submit', [
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Grabar cambios de la sanción',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
     }
 
     /**
@@ -80,17 +80,17 @@ class SancionType extends BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Sancion',
             'admin' => false,
             'bloqueado' => false,
             'validation_groups' => function(FormInterface $form) {
                 if ($form->get('sinSancion')->getData() === true)
-                    return ['Default', 'sin_sancion'];
+                    return array('Default', 'sin_sancion');
                 else
-                    return ['Default'];
+                    return array('Default');
             }
-        ]);
+        ));
     }
 
     /**

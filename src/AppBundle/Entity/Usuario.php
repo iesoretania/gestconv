@@ -566,7 +566,7 @@ class Usuario implements AdvancedUserInterface
     {
         // realmente new Role() no es necesario, pero para que el valor
         // devuelto se corresponda con la anotación lo hacemos así
-        $roles = [new Role('ROLE_USUARIO')];
+        $roles = array(new Role('ROLE_USUARIO'));
 
         if ($this->getEsAdministrador()) {
             $roles[] = new Role('ROLE_ADMIN');

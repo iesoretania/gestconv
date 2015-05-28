@@ -44,7 +44,7 @@ class UsuarioController extends Controller
     public function modificarPropioAction()
     {
         $usuario = $this->getUser();
-        return $this->forward('AppBundle:Usuario:modificar', ['usuario' => $usuario->getId()]);
+        return $this->forward('AppBundle:Usuario:modificar', array('usuario' => $usuario->getId()));
     }
 
     /**
@@ -56,10 +56,10 @@ class UsuarioController extends Controller
         if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
             return $this->createAccessDeniedException();
         }
-        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+        $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => $this->isGranted('ROLE_ADMIN'),
             'propio' => ($usuarioActivo->getId() === $usuario->getId())
-        ]);
+        ));
 
         $formulario->handleRequest($peticion);
 
@@ -86,10 +86,10 @@ class UsuarioController extends Controller
         }
 
         return $this->render('AppBundle:Usuario:modificar.html.twig',
-            [
+            array(
                 'usuario' => $usuario,
                 'formulario' => $formulario->createView()
-            ]);
+            ));
     }
 
     /**
@@ -103,11 +103,11 @@ class UsuarioController extends Controller
             ->setEstaActivo(true)
             ->setEstaBloqueado(false);
 
-        $formulario = $this->createForm(new UsuarioType(), $usuario, [
+        $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => true,
             'propio' => false,
             'nuevo' => true
-        ]);
+        ));
 
         $formulario->handleRequest($peticion);
 
@@ -132,10 +132,10 @@ class UsuarioController extends Controller
         }
 
         return $this->render('AppBundle:Usuario:modificar.html.twig',
-            [
+            array(
                 'usuario' => $usuario,
                 'formulario' => $formulario->createView()
-            ]);
+            ));
     }
 
     /**
@@ -147,7 +147,7 @@ class UsuarioController extends Controller
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $fechasPorDefecto = ['desde' => null, 'hasta' => null];
+        $fechasPorDefecto = array('desde' => null, 'hasta' => null);
 
         $form = $this->createForm(new RangoFechasType(), $fechasPorDefecto);
         $form->handleRequest($request);
@@ -155,11 +155,11 @@ class UsuarioController extends Controller
         $usuarios = $em->getRepository('AppBundle:Usuario')->getResumenConvivencia($form->isValid() ? $form->getData() : $fechasPorDefecto);
 
         return $this->render('AppBundle:Usuario:listar.html.twig',
-            [
+            array(
                 'formulario_fechas' => $form->createView(),
                 'items' => $usuarios,
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     protected function importarUsuariosDesdeCsv($fichero)
@@ -225,8 +225,8 @@ class UsuarioController extends Controller
         }
 
         return $this->render('AppBundle:Usuario:importar.html.twig',
-            [
+            array(
                 'formulario' => $form->createView()
-            ]);
+            ));
     }
 }

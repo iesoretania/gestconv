@@ -59,10 +59,10 @@ class CursoController extends Controller
         }
 
         return $this->render('AppBundle:Curso:modificar.html.twig',
-            [
+            array(
                 'formulario' => $formulario->createView(),
                 'curso' => $curso
-            ]);
+            ));
     }
 
     /**
@@ -92,9 +92,9 @@ class CursoController extends Controller
         }
 
         return $this->render('AppBundle:Curso:modificar.html.twig',
-            [
+            array(
                 'formulario' => $formulario->createView(),
                 'curso' => $curso
-            ]);
+            ));
     }
 }

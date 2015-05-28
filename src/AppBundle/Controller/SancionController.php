@@ -56,9 +56,9 @@ class SancionController extends BaseController
 
         $partes = $em->getRepository('AppBundle:Parte')->findAllSancionablesPorAlumno($alumno);
 
-        $formulario = $this->createForm(new NuevaSancionType(), $sancion, [
+        $formulario = $this->createForm(new NuevaSancionType(), $sancion, array(
             'alumno' => $alumno
-        ]);
+        ));
 
         $formulario->handleRequest($peticion);
 
@@ -81,13 +81,13 @@ class SancionController extends BaseController
         }
 
         return $this->render('AppBundle:Parte:sancionar.html.twig',
-            [
+            array(
                 'alumno' => $alumno,
                 'partes' => $partes,
                 'sanciones' => $em->getRepository('AppBundle:Sancion')->findAllPorAlumno($alumno),
                 'formulario' => $formulario->createView(),
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -135,11 +135,11 @@ class SancionController extends BaseController
             );
         }
         return $this->render('AppBundle:Sancion:notificar.html.twig',
-            [
+            array(
                 'usuario' => $usuario,
                 'alumnos' => $alumnos,
                 'tipos' => $em->getRepository('AppBundle:CategoriaAviso')->findAll()
-            ]);
+            ));
     }
 
 
@@ -159,10 +159,10 @@ class SancionController extends BaseController
             ->getResult();
 
         return $this->render('AppBundle:Sancion:listar.html.twig',
-            [
+            array(
                 'sanciones' => $sanciones,
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
     /**
@@ -174,10 +174,10 @@ class SancionController extends BaseController
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $formularioSancion = $this->createForm(new SancionType(), $sancion, [
+        $formularioSancion = $this->createForm(new SancionType(), $sancion, array(
             'admin' => true,
             'bloqueado' => false
-        ]);
+        ));
 
         $formularioSancion->get('sinSancion')->setData($sancion->getMotivosNoAplicacion() !== null);
         
@@ -187,9 +187,9 @@ class SancionController extends BaseController
             ->setFecha(new \DateTime())
             ->setUsuario($usuario);
 
-        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, [
+        $formularioObservacion = $this->createForm(new NuevaObservacionType(), $observacion, array(
             'admin' => $this->isGranted('ROLE_ADMIN')
-        ]);
+        ));
 
         $formularioObservacion->handleRequest($request);
 
@@ -213,12 +213,12 @@ class SancionController extends BaseController
         }
 
         return $this->render('AppBundle:Sancion:detalle.html.twig',
-            [
+            array(
                 'sancion' => $sancion,
                 'formulario_sancion' => $formularioSancion->createView(),
                 'formulario_observacion' => $formularioObservacion->createView(),
                 'usuario' => $usuario
-            ]);
+            ));
     }
 
 
@@ -235,12 +235,12 @@ class SancionController extends BaseController
         $pdf = $this->generarPdf('Sancion #' . $sancion->getId(), $logos, $plantilla, -15, 'S' . $sancion->getId());
 
         $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
-            [
+            array(
                 'sancion' => $sancion,
                 'usuario' => $usuario,
                 'localidad' => $this->container->getParameter('localidad'),
                 'director' => $this->container->getParameter('director')
-            ]);
+            ));
 
         $pdf->writeHTML($html);
 

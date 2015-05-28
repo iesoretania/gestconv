@@ -46,23 +46,23 @@ abstract class BaseController extends Controller
         $pdf->SetTitle($titulo);
         $pdf->SetKeywords('');
         $pdf->SetExtendedHeaderData(
-            [
+            array(
                 $logos['centro'],
                 $logos['organizacion'],
                 $logos['sello']
-            ],
-            [
+            ),
+            array(
                 $this->container->getParameter('centro') . ' - ' . $this->container->getParameter('localidad'),
                 $plantilla['proceso'],
                 $plantilla['descripcion'],
                 $plantilla['modelo'],
                 $plantilla['revision']
-            ]
+            )
         );
         if ($codigo) {
             $pdf->setBarcode($codigo);
         }
-        $pdf->setFooterData([0, 0, 128], [0, 64, 128]);
+        $pdf->setFooterData(array(0, 0, 128), array(0, 64, 128));
         $pdf->SetHeaderMargin(PDF_MARGIN_HEADER + $plantilla['margen']);
         $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -102,11 +102,11 @@ abstract class BaseController extends Controller
                     $pdf = $this->generarPdf('Parte #' . $parte->getId(), $logos, $plantilla, 0, 'P' . $parte->getId());
 
                     $html = $this->renderView('AppBundle:Parte:imprimir.html.twig',
-                        [
+                        array(
                             'parte' => $parte,
                             'usuario' => $usuario,
                             'localidad' => $this->container->getParameter('localidad')
-                        ]);
+                        ));
 
                     $pdf->writeHTML($html);
 
@@ -116,7 +116,7 @@ abstract class BaseController extends Controller
                 $mensaje = $mailer->createMessage()
                     ->setSubject($this->container->getParameter('prefijo_notificacion') . ' Nuevo parte notificado de ' . $parte->getAlumno())
                     ->setFrom($this->container->getParameter('remite_notificacion'))
-                    ->setTo([$usuario->getEmail() => $usuario->__toString()])
+                    ->setTo(array($usuario->getEmail() => $usuario->__toString()))
                     ->setBody('La familia del estudiante ' . $parte->getAlumno() . ' ha sido notificada del parte que se incluye adjunto en el mensaje.')
                     ->attach($adjunto);
 

@@ -36,106 +36,105 @@ class UsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nombreUsuario', null, [
+            ->add('nombreUsuario', null, array(
                 'label' => 'Nombre de usuario*',
                 'disabled' => !$options['admin']
-            ])
-            ->add('nombre', null, [
+            ))
+            ->add('nombre', null, array(
                 'label' => 'Nombre*',
                 'required'  => true
-            ])
-            ->add('apellidos', null, [
+            ))
+            ->add('apellidos', null, array(
                 'label' => 'Apellidos*',
                 'required'  => true
-            ])
-            ->add('email', 'email', [
+            ))
+            ->add('email', 'email', array(
                 'label' => 'Correo electrónico',
                 'required' => false
-            ])
-            ->add('notificaciones', null, [
+            ))
+            ->add('notificaciones', null, array(
                 'label' => 'Marcar si se desea recibir notificaciones',
                 'required' => false
-            ])
-            ->add('tutoria', null, [
+            ))
+            ->add('tutoria', null, array(
                 'label' => 'Tutor/a del grupo',
-
                 'required' => false
-            ]);
+            ));
 
         if ($options['admin']) {
             $builder
-                ->add('estaActivo', null, [
+                ->add('estaActivo', null, array(
                     'label' => 'El usuario está activo',
                     'required' => false
-                ])
-                ->add('estaBloqueado', null, [
+                ))
+                ->add('estaBloqueado', null, array(
                     'label' => 'El usuario está bloqueado',
                     'required' => false
-                ])
-                ->add('esAdministrador', null, [
+                ))
+                ->add('esAdministrador', null, array(
                     'label' => 'Es administrador',
                     'required' => false,
                     'disabled' => $options['propio']
-                ])
-                ->add('esRevisor', null, [
+                ))
+                ->add('esRevisor', null, array(
                     'label' => 'Pertenece a la comisión de convivencia',
                     'required' => false
-                ])
-                ->add('esDirectivo', null, [
+                ))
+                ->add('esDirectivo', null, array(
                     'label' => 'Pertenece al equipo directivo',
                     'required' => false
-                ]);
+                ));
         }
 
         if (!$options['nuevo']) {
             $builder
-                ->add('enviar', 'submit', [
+                ->add('enviar', 'submit', array(
                     'label' => 'Guardar cambios',
-                    'attr' => ['class' => 'btn btn-success']
-                ]);
+                    'attr' => array('class' => 'btn btn-success')
+                ));
 
             if (!$options['admin']) {
                 $builder
-                    ->add('oldPassword', 'password', [
+                    ->add('oldPassword', 'password', array(
                         'label' => 'Contraseña antigua',
                         'required' => false,
                         'mapped' => false,
-                        'constraints' => new UserPassword([
-                            'groups' => ['password']
-                        ])
-                    ]);
+                        'constraints' => new UserPassword(array(
+                            'groups' => array('password')
+                        ))
+                    ));
             }
         }
 
         $builder
-            ->add('newPassword', 'repeated', [
+            ->add('newPassword', 'repeated', array(
                 'label' => 'Correo electrónico',
                 'required' => false,
                 'type' => 'password',
                 'mapped' => false,
                 'invalid_message' => 'password.no_match',
-                'first_options' => [
+                'first_options' => array(
                     'label' => 'Nueva contraseña',
-                    'constraints' => [
-                        new Length([
+                    'constraints' => array(
+                        new Length(array(
                             'min' => 7,
                             'minMessage' => 'password.min_length',
-                            'groups' => ['password']
-                        ]),
-                        new NotNull([
-                            'groups' => ['password']
-                        ])
-                    ]
-                ],
-                'second_options' => [
+                            'groups' => array('password')
+                        )),
+                        new NotNull(array(
+                            'groups' => array('password')
+                        ))
+                    )
+                ),
+                'second_options' => array(
                     'label' => 'Repita nueva contraseña'
-                ]
-            ])
-            ->add('cambiarPassword', 'submit', [
+                )
+            ))
+            ->add('cambiarPassword', 'submit', array(
                 'label' => 'Guardar los cambios y cambiar la contraseña',
-                'attr' => ['class' => 'btn btn-success'],
-                'validation_groups' => ['Default', 'password']
-            ]);
+                'attr' => array('class' => 'btn btn-success'),
+                'validation_groups' => array('Default', 'password')
+            ));
     }
 
     /**
@@ -143,13 +142,13 @@ class UsuarioType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
             'propio' => false,
             'nuevo' => false
-        ]);
+        ));
     }
 
     /**

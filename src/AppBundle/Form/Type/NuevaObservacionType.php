@@ -34,26 +34,26 @@ class NuevaObservacionType extends AbstractType
     {
         if ($options['admin']) {
             $builder
-                ->add('usuario', 'entity', [
+                ->add('usuario', 'entity', array(
                     'label' => 'Usuario fuente de la observación*',
                     'class' => 'AppBundle\Entity\Usuario',
                     'required' => true,
-                ])
-                ->add('fecha', 'datetime', [
+                ))
+                ->add('fecha', 'datetime', array(
                     'label' => 'Fecha de registro de la observacion*',
                     'required' => true
-                ]);
+                ));
         }
         $builder
-            ->add('anotacion', 'textarea', [
+            ->add('anotacion', 'textarea', array(
                 'label' => 'Observación a incorporar*',
                 'required' => true,
-                'attr' => ['rows' => '8']
-            ])
-            ->add('enviar', 'submit', [
+                'attr' => array('rows' => '8')
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Registrar observación',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
     }
 
     /**
@@ -61,10 +61,10 @@ class NuevaObservacionType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Observacion',
             'admin' => false
-        ]);
+        ));
     }
 
     /**

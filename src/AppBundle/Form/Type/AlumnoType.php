@@ -32,67 +32,67 @@ class AlumnoType extends BaseSancionType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nie', 'integer', [
+            ->add('nie', 'integer', array(
                 'label' => 'NIE*',
                 'required' => true,
                 'disabled' => !$options['admin']
-            ])
-            ->add('nombre', null, [
+            ))
+            ->add('nombre', null, array(
                 'label' => 'Nombre*',
                 'required' => true,
                 'disabled' => !$options['admin']
-            ])
-            ->add('apellido1', null, [
+            ))
+            ->add('apellido1', null, array(
                 'label' => 'Primer apellido*',
                 'required' => true,
                 'disabled' => !$options['admin']
-            ])
-            ->add('apellido2', null, [
+            ))
+            ->add('apellido2', null, array(
                 'label' => 'Segundo apellido*',
                 'required' => false,
                 'disabled' => !$options['admin']
-            ])
-            ->add('grupo', null, [
+            ))
+            ->add('grupo', null, array(
                 'label' => 'Grupo al que pertenece*',
                 'required' => true,
                 'disabled' => !$options['admin']
-            ])
-            ->add('fechaNacimiento', 'date', [
+            ))
+            ->add('fechaNacimiento', 'date', array(
                 'label' => 'Fecha de nacimiento*',
                 'widget' => 'single_text',
                 'required' => true,
                 'disabled' => !$options['admin']
-            ])
-            ->add('tutor1', null, [
+            ))
+            ->add('tutor1', null, array(
                 'label' => 'Nombre completo del primer tutor',
                 'required' => false,
                 'disabled' => $options['bloqueado']
-            ])
-            ->add('tutor2', null, [
+            ))
+            ->add('tutor2', null, array(
                 'label' => 'Nombre completo del segundo tutor',
                 'required' => false,
                 'disabled' => $options['bloqueado']
-            ])
-            ->add('telefono1', null, [
+            ))
+            ->add('telefono1', null, array(
                 'label' => 'Teléfono de contacto 1',
                 'required' => false
-            ])
-            ->add('notaTelefono1', null, [
+            ))
+            ->add('notaTelefono1', null, array(
                 'label' => 'Notas del teléfono de contacto 1',
                 'required' => false
-            ])
-            ->add('telefono2', null, [
+            ))
+            ->add('telefono2', null, array(
                 'label' => 'Teléfono de contacto 2',
                 'required' => false
-            ])
-            ->add('notaTelefono2', null, [
+            ))
+            ->add('notaTelefono2', null, array(
                 'label' => 'Notas del teléfono de contacto 2',
                 'required' => false
-            ])
-            ->add('enviar', 'submit', [
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Grabar cambios en los datos',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
     }
 
     /**
@@ -100,11 +100,11 @@ class AlumnoType extends BaseSancionType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Alumno',
             'admin' => false,
             'bloqueado' => false
-        ]);
+        ));
     }
 
     /**

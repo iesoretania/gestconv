@@ -30,14 +30,14 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
 {
     public function generateTramoParte(ObjectManager $manager)
     {
-        $tramos = [
+        $tramos = array(
             'En clase',
             'En el intercambio de clases',
             'Entrada/Salida',
             'Recreo',
             'Durante las actividades extraescolares',
             'Otros'
-        ];
+        );
 
         foreach($tramos as $descripcion) {
             $tramo = new TramoParte();
@@ -76,10 +76,10 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
 
     public function generateTiposConducta(ObjectManager $manager)
     {
-        $niveles = [1, 2, 0];
-        $conductas = [
+        $niveles = array(1, 2, 0);
+        $conductas = array(
             'Conductas contrarias' =>
-                [
+                array(
                     'Perturbación del normal desarrollo de las actividades de clase',
                     'Falta de colaboración sistemática en la realización de las actividades',
                     'Impedir o dificultar el estudio a sus compañeros',
@@ -87,9 +87,9 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                     'Faltas injustificadas de asistencia a clase',
                     'Actuaciones incorrectas hacia algún miembro de la comunidad educativa',
                     'Daños en instalaciones o docum. del Centro o en pertenencias de un miembro'
-                ],
+                ),
             'Conductas graves' =>
-                [
+                array(
                     'Agresión física a un miembro de la comunidad educativa',
                     'Injurias y ofensas contra un miembro de la comunidad educativa',
                     'Acoso escolar',
@@ -101,46 +101,46 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
                     'Reiteración en un mismo curso de conductas contrarias a normas de convivencia',
                     'Impedir el normal desarrollo de las actividades del centro',
                     'Incumplimiento de las correcciones impuestas'
-                ],
+                ),
             'Otras conductas contrarias' =>
-                [
+                array(
                     'Las descritas con detalle más abajo'
-                ]
-        ];
+                )
+        );
 
         self::createItemsCategoria($manager, $conductas, $niveles, 'CategoriaConducta', 'TipoConducta');
     }
 
     public function generateTiposMedida(ObjectManager $manager)
     {
-        $niveles = [1, 2, 0];
-        $medidas = [
+        $niveles = array(1, 2, 0);
+        $medidas = array(
             'Correciones a las conductas contrarias' =>
-                [
+                array(
                     'Amonestación oral',
                     'Apercibimiento por escrito',
                     'Realizar tareas dentro y fuera del horario lectivo en el Centro',
                     'Suspender el derecho de asistencia a determinadas clases entre 1 y 3 días',
                     'Suspender el derecho de asistencia al centro entre 1 y 3 días',
 
-                ],
+                ),
             'Medidas disciplinarias por conductas gravemente perjudiciales' =>
-                [
+                array(
                     'Realizar tareas fuera del horario lectivo en el Centro',
                     'Suspender el derecho de participación en actividades extraescolares del Centro',
                     'Suspender el derecho de asistencia a determinadas clases entre 4 y 14 días',
                     'Suspender el derecho de asistencia al centro entre 4 y 30 días',
                     'Cambio de centro docente'
-                ],
+                ),
             'Otras medidas' =>
-                [
+                array(
                     'Mediación escolar',
                     'Aula de convivencia',
                     'Tutoría compartida',
                     'Compromiso de convivencia',
                     'Otras incluidas en el plan de convivencia'
-                ]
-        ];
+                )
+        );
 
         self::createItemsCategoria($manager, $medidas, $niveles, 'CategoriaMedida', 'TipoMedida');
     }
@@ -162,25 +162,25 @@ class DatosIniciales extends AbstractFixture implements OrderedFixtureInterface
 
     public function generateCategoriasAviso(ObjectManager $manager)
     {
-        $categorias = [
+        $categorias = array(
             'Llamada telefónica',
             'Mensaje en el contestador',
             'SMS',
             'Entrevista personal',
             'Correo electrónico',
             'Otro (detallar)'
-        ];
+        );
 
         self::createItems($manager, $categorias, 'CategoriaAviso');
     }
 
     public function generateActitudFamilia(ObjectManager $manager)
     {
-        $actitudes = [
+        $actitudes = array(
             'Colabora',
             'No colabora',
             'Impide la corrección'
-        ];
+        );
 
         self::createItems($manager, $actitudes, 'ActitudFamiliaSancion');
     }

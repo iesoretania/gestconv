@@ -58,7 +58,7 @@ class CsvImporter
             }
 
             if ($this->parse_header) {
-                $row_new = [];
+                $row_new = array();
                 foreach ($this->header as $i => $heading_i) {
                     $row_new[$heading_i] = $row[$i];
                 }

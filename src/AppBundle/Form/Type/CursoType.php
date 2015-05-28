@@ -33,25 +33,25 @@ class CursoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion', null, [
+            ->add('descripcion', null, array(
                 'label' => 'Descripción del curso*',
                 'required' => true
-            ])
-            ->add('grupos', null, [
+            ))
+            ->add('grupos', null, array(
                 'label' => 'Grupos',
                 'required'  => false,
                 'class' => 'AppBundle\Entity\Grupo',
                 'multiple' => true,
                 'expanded' => false,
                 'by_reference' => false,
-                'attr' => [
+                'attr' => array(
                     'placeholder' => 'Elija los grupos que pertenecen al curso'
-                ]
-            ])
-            ->add('enviar', 'submit', [
+                )
+            ))
+            ->add('enviar', 'submit', array(
                 'label' => 'Guardar cambios',
-                'attr' => ['class' => 'btn btn-success']
-            ]);
+                'attr' => array('class' => 'btn btn-success')
+            ));
 
     }
 
@@ -60,9 +60,9 @@ class CursoType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Curso'
-        ]);
+        ));
     }
 
     /**
