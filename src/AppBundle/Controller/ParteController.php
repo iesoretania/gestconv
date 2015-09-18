@@ -170,8 +170,14 @@ class ParteController extends BaseController
         $usuario = $this->getUser();
         $em = $this->getDoctrine()->getManager();
 
-        $partes = $em->getRepository('AppBundle:Parte')
-            ->findAllPorUsuarioOTutoria($usuario);
+        if (!$this->isGranted('ROLE_REVISOR')) {
+            $partes = $em->getRepository('AppBundle:Parte')
+                ->findAllPorUsuarioOTutoria($usuario);
+        }
+        else {
+            $partes = $em->getRepository('AppBundle:Parte')
+                ->findAll();
+        }
 
         return $this->render('AppBundle:Parte:listar.html.twig',
             array(
