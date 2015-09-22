@@ -53,7 +53,7 @@ class UsuarioController extends Controller
     public function modificarAction(Usuario $usuario, Request $peticion)
     {
         $usuarioActivo = $this->getUser();
-        if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN')) {
+        if ($usuario->getId() !== $usuarioActivo->getId() && !$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_DIRECTIVO')) {
             return $this->createAccessDeniedException();
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
