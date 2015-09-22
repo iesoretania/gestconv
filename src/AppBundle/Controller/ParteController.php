@@ -195,7 +195,7 @@ class ParteController extends BaseController
         
         $esRevisor = $this->isGranted('ROLE_REVISOR');
 
-        if (!$esRevisor && !($parte->getAlumno()->getGrupo() != $usuario->getTutoria()) && $parte->getUsuario() != $usuario) {
+        if (!$esRevisor && !($parte->getAlumno()->getGrupo() == $usuario->getTutoria()) && $parte->getUsuario() != $usuario) {
             throw $this->createAccessDeniedException();
         }
 
