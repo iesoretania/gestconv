@@ -58,6 +58,7 @@ class UsuarioController extends Controller
         }
         $formulario = $this->createForm(new UsuarioType(), $usuario, array(
             'admin' => $this->isGranted('ROLE_ADMIN'),
+            'directivo' => $this->isGranted('ROLE_DIRECTIVO'),
             'propio' => ($usuarioActivo->getId() === $usuario->getId())
         ));
 

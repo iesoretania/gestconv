@@ -55,11 +55,15 @@ class UsuarioType extends AbstractType
             ->add('notificaciones', null, array(
                 'label' => 'Marcar si se desea recibir notificaciones',
                 'required' => false
-            ))
-            ->add('tutoria', null, array(
-                'label' => 'Tutor/a del grupo',
-                'required' => false
             ));
+
+        if ($options['directivo']) {
+            $builder
+                ->add('tutoria', null, array(
+                    'label' => 'Tutor/a del grupo',
+                    'required' => false
+                ));
+        }
 
         if ($options['admin']) {
             $builder
@@ -93,7 +97,7 @@ class UsuarioType extends AbstractType
                     'attr' => array('class' => 'btn btn-success')
                 ));
 
-            if (!$options['admin']) {
+            if (!$options['directivo']) {
                 $builder
                     ->add('oldPassword', 'password', array(
                         'label' => 'Contraseña antigua',
@@ -146,6 +150,7 @@ class UsuarioType extends AbstractType
             'data_class' => 'AppBundle\Entity\Usuario',
             'cascade_validation' => true,
             'admin' => false,
+            'directivo' => false,
             'propio' => false,
             'nuevo' => false
         ));
