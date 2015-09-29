@@ -12,9 +12,9 @@
     {% embed 'AppBundle:App:partial_listar_resumen.html.twig' %}
         {% block lista_item "Usuario" %}
         {% block lista_extra_cabecera %}<th></th>{% endblock %}
-        {% block lista_extra_fila %}<td><a href="{{ path('usuario_modificar_otro', {'usuario': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Modificar</a></td>{% endblock %}
+        {% block lista_extra_fila %}<td><a href="{{ path('usuario_modificar_otro', {'usuario': item[0].id}) }}" class="btn btn-default btn-xs btn-block"><i class="fa fa-edit"></i> Detalles</a></td>{% endblock %}
     {% endembed %}
-    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+    <a href="{{ path('portada') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver a la portada</a>
     {% if is_granted('ROLE_ADMIN') %}
         &nbsp;<a href="{{ path('usuario_nuevo') }}" class="btn btn-success"><i class="fa fa-user-plus"></i> Crear un usuario</a>&nbsp;<a href="{{ path('usuario_importar') }}" class="btn btn-warning"><i class="fa fa-upload"></i> Importar o actualizar usuarios desde Séneca</a>
     {% endif %}

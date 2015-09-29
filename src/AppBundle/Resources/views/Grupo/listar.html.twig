@@ -28,5 +28,5 @@
 
     {% if is_granted('ROLE_ADMIN') %}<p><a href="{{ path('curso_nuevo') }}" class="btn btn-success"><i class="fa fa-plus"></i> Crear un curso</a></p>{% endif %}
 
-    <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+    <a href="{{ path('portada') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver a la portada</a>
 {% endblock %}

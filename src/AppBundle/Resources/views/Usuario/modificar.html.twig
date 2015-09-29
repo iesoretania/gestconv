@@ -17,12 +17,12 @@
 
         {{ form(formulario) }}
         {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('usuario_listar') }}" class="btn btn-info">Volver a la lista de usuarios</a>
+            <a href="{{ path('usuario_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver a la lista de usuarios</a>
         {% else %}
-            <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
+            <a href="{{ path('portada') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver a la portada</a>
         {% endif %}
         {% if is_granted('ROLE_PERMITE_IMPERSONAR') %}
-            <a href="{{ path('portada', {'_acceder_como': usuario.nombreUsuario}) }}" class="btn btn-warning"><i class="fa fa-user-secret"></i>Acceder como el usuario</a>
+            <a href="{{ path('portada', {'_acceder_como': usuario.nombreUsuario}) }}" class="btn btn-warning"><i class="fa fa-user-secret"></i> Acceder como el usuario</a>
         {% endif %}
     </div>
 {% endblock %}
