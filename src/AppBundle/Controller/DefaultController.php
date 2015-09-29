@@ -58,7 +58,7 @@ class DefaultController extends Controller
         }
         else {
             $partesTotales = $em->getRepository('AppBundle:Parte')
-                ->countPorUsuario($usuario);
+                ->countPorUsuarioOTutoria($usuario);
 
             $partesSancionables = 0;
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
