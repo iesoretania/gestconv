@@ -21,5 +21,8 @@
         {% else %}
             <a href="{{ path('portada') }}" class="btn btn-info">Volver a la portada</a>
         {% endif %}
+        {% if is_granted('ROLE_PERMITE_IMPERSONAR') %}
+            <a href="{{ path('portada', {'_acceder_como': usuario.nombreUsuario}) }}" class="btn btn-warning"><i class="fa fa-user-secret"></i>Acceder como el usuario</a>
+        {% endif %}
     </div>
 {% endblock %}
