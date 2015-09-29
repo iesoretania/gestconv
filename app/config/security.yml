@@ -7,9 +7,9 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USUARIO, ROLE_DIRECTIVO]
+        ROLE_ADMIN:       [ROLE_USUARIO, ROLE_DIRECTIVO, ROLE_PERMITE_IMPERSONAR]
         ROLE_DIRECTIVO:   [ROLE_REVISOR]
-        ROLE_SUPER_ADMIN: [ROLE_USUARIO, ROLE_ADMIN, ROLE_PERMITE_IMPERSONAR]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
@@ -39,6 +39,9 @@ security:
             logout:
                 path:   usuario_salir
                 target: usuario_entrar
+            switch_user:
+                role: ROLE_PERMITE_IMPERSONAR
+                parameter: _acceder_como
             #anonymous: ~
             #http_basic:
             #    realm: "Secured Demo Area"
