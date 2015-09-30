@@ -16,10 +16,10 @@
         </div>
         <button type="submit" class="btn btn-success" name="notificada" value="{{ alumno.id }}"
                 {% if mensaje %} onClick="javascript:return confirm('{{ mensaje | e('js') }}');" {% endif %}>
-            Familia notificada
+            <i class="fa fa-thumbs-up"></i> Familia notificada
         </button>
         <button type="submit" class="btn btn-warning" name="noNotificada" value="{{ alumno.id }}">
-            Familia no notificada
+            <i class="fa fa-thumbs-down"></i> Familia no notificada
         </button>
     </form>
 </div>

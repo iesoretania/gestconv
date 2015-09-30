@@ -25,7 +25,7 @@
                                     <li><a href="{{ path('usuario_modificar') }}"><i class="fa fa-cog"></i> Modificar datos personales</a></li>
                                     {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
                                         <li class="divider"></li>
-                                        <li><a href="{{ path('portada', {'_acceder_como': '_exit'}) }}"><i class="fa fa-user-times"></i> Volver al usuario normal</a></li>
+                                        <li><a href="{{ path('portada', {'_acceder_como': '_exit'}) }}"><i class="fa fa-user-secret"></i> Volver al usuario normal</a></li>
                                     {% endif %}
                                     <li class="divider"></li>
                                     <li><a href="{{ path('usuario_salir') }}"><i class="fa fa-power-off"></i> Salir de la aplicación</a></li>
