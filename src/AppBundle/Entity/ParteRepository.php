@@ -29,6 +29,16 @@ use Doctrine\ORM\EntityRepository;
  */
 class ParteRepository extends EntityRepository
 {
+    public function findAllOrdered()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->orderBy('p.fechaSuceso', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findNotificados()
     {
         return $this->getEntityManager()
@@ -53,6 +63,7 @@ class ParteRepository extends EntityRepository
             ->andWhere('p.alumno = :alumno')
             ->setParameter('usuario', $usuario)
             ->setParameter('alumno', $alumno)
+            ->orderBy('p.fechaSuceso', 'DESC')
             ->getQuery()
             ->getResult();
     }
@@ -62,6 +73,7 @@ class ParteRepository extends EntityRepository
         return $this->findNoNotificados()
             ->andWhere('p.alumno = :alumno')
             ->setParameter('alumno', $alumno)
+            ->orderBy('p.fechaSuceso', 'DESC')
             ->getQuery()
             ->getResult();
     }

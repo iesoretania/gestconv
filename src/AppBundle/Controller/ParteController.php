@@ -176,7 +176,7 @@ class ParteController extends BaseController
         }
         else {
             $partes = $em->getRepository('AppBundle:Parte')
-                ->findAll();
+                ->findAllOrdered();
         }
 
         return $this->render('AppBundle:Parte:listar.html.twig',
