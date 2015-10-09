@@ -51,7 +51,7 @@ class DefaultController extends Controller
                 ->countSancionables();
 
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
-                ->countNoNotificados();
+                ->countAlumnosNoNotificados();
 
             $sancionesTotales = $em->getRepository('AppBundle:Sancion')
                 ->countAll();
