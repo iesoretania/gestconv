@@ -52,9 +52,24 @@ class SancionRepository extends EntityRepository
     public function findAllNoNotificadosPorAlumno($alumno)
     {
         return $this->findNoNotificados()
-            ->groupBy('s.id')
             ->andWhere('p.alumno = :alumno')
             ->setParameter('alumno', $alumno)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAlumnosNoNotificados()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Sancion')
+            ->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->innerJoin('AppBundle:Parte', 'p', 'WITH', 'p.sancion = s')
+            ->join('p.alumno', 'a')
+            ->andWhere('s.fechaComunicado IS NULL')
+            ->andWhere('s.motivosNoAplicacion IS NULL')
+            ->groupBy('a.id')
+            ->orderBy('a.id')
             ->getQuery()
             ->getResult();
     }
@@ -87,18 +102,7 @@ class SancionRepository extends EntityRepository
 
     public function countAlumnosNoNotificados()
     {
-        return count($this->getEntityManager()
-            ->getRepository('AppBundle:Sancion')
-            ->createQueryBuilder('s')
-            ->select('COUNT(s.id)')
-            ->innerJoin('AppBundle:Parte', 'p', 'WITH', 'p.sancion = s')
-            ->join('p.alumno', 'a')
-            ->andWhere('s.fechaComunicado IS NULL')
-            ->andWhere('s.motivosNoAplicacion IS NULL')
-            ->groupBy('a.id')
-            ->orderBy('a.id')
-            ->getQuery()
-            ->getResult());
+        return count($this->findAlumnosNoNotificados());
     }
 
 
