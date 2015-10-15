@@ -102,6 +102,11 @@ class Parte
      * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
+    protected $prioritario;
+    /**
+     * @ORM\Column(type="boolean", nullable=false)
+     * @var boolean
+     */
     protected $hayExpulsion;
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -422,6 +427,29 @@ class Parte
     public function getPrescrito()
     {
         return $this->prescrito;
+    }
+
+    /**
+     * Set prioritario
+     *
+     * @param boolean $prioritario
+     * @return Parte
+     */
+    public function setPrioritario($prioritario)
+    {
+        $this->prioritario = $prioritario;
+
+        return $this;
+    }
+
+    /**
+     * Get prioritario
+     *
+     * @return boolean
+     */
+    public function getPrioritario()
+    {
+        return $this->prioritario;
     }
 
     /**

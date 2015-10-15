@@ -75,6 +75,10 @@ class NuevoParteType extends AbstractType
                 'attr' => array('rows' => '8')
 
             ))
+            ->add('prioritario', null, array(
+                'label' => 'Marcar si es un parte prioritario',
+                'required' => false
+            ))
             ->add('hayExpulsion', null, array(
                 'label' => 'Marcar si se expulsó al alumnado implicado del aula',
                 'required' => false

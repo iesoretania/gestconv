@@ -73,6 +73,10 @@ class ParteType extends AbstractType
                 'attr' => array('rows' => '8'),
                 'disabled' => ($desactivado)
             ))
+            ->add('prioritario', null, array(
+                'label' => 'El parte es prioritario',
+                'required' => false
+            ))
             ->add('prescrito', null, array(
                 'label' => 'El parte ha prescrito',
                 'required' => false,
