@@ -114,7 +114,10 @@ abstract class BaseController extends Controller
                 }
 
                 $mensaje = $mailer->createMessage()
-                    ->setSubject($this->container->getParameter('prefijo_notificacion') . ' Nuevo parte notificado de ' . $parte->getAlumno())
+                    ->setSubject(
+                        $this->container->getParameter('prefijo_notificacion') . ' Nuevo parte notificado de ' . $parte->getAlumno() .
+                        ($parte->getPrioritario() ? " (PRIORITARIO)" : "")
+                    )
                     ->setFrom($this->container->getParameter('remite_notificacion'))
                     ->setTo(array($usuario->getEmail() => $usuario->__toString()))
                     ->setBody('La familia del estudiante ' . $parte->getAlumno() . ' ha sido notificada del parte que se incluye adjunto en el mensaje.')

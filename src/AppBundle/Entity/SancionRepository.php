@@ -58,6 +58,22 @@ class SancionRepository extends EntityRepository
             ->getResult();
     }
 
+    public function findAlumnosNoNotificados()
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Sancion')
+            ->createQueryBuilder('s')
+            ->select('COUNT(s.id)')
+            ->innerJoin('AppBundle:Parte', 'p', 'WITH', 'p.sancion = s')
+            ->join('p.alumno', 'a')
+            ->andWhere('s.fechaComunicado IS NULL')
+            ->andWhere('s.motivosNoAplicacion IS NULL')
+            ->groupBy('a.id')
+            ->orderBy('a.id')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findNoNotificadosPorTutoria($usuario)
     {
         return $this->findNoNotificados()
@@ -83,6 +99,12 @@ class SancionRepository extends EntityRepository
         return $this->count($this->findNoNotificados());
 
     }
+
+    public function countAlumnosNoNotificados()
+    {
+        return count($this->findAlumnosNoNotificados());
+    }
+
 
     public function findTodos()
     {

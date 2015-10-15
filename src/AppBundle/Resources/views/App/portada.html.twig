@@ -51,7 +51,10 @@
                     </div>
                     <div class="text-holder">
                         <h4>Revisar y sancionar</h4>
-                        <p>Hay {{ cuenta['partes_sancionables'] }} {{ cuenta['partes_sancionables'] == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar</p>
+                        <p>
+                            Hay {{ cuenta['partes_sancionables'] }} {{ cuenta['partes_sancionables'] == 1 ? 'parte sancionable pendiente' : 'partes sancionables pendientes' }} de revisar
+                            {% if cuenta['partes_sancionables_prioritarios'] %}({{ cuenta['partes_sancionables_prioritarios'] }} prioritario{{ cuenta['partes_sancionables_prioritarios'] > 1 ? 's' }}){% endif %}
+                        </p>
                     </div>
                 </a>
             </article>

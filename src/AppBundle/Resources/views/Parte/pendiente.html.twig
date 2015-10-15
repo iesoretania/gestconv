@@ -12,21 +12,21 @@
         <tr>
             <th class="col-md-7">Estudiante</th>
             <th class="col-md-3">Fechas</th>
-            <th class="col-md-1">Partes a considerar</th>
+            <th class="col-md-1">Partes a considerar<small class="text-muted"> (prioritarios)</small></th>
             <th class="col-md-1"></th>
         </tr>
         </thead>
         <tbody>
         {% for alumno in alumnos %}
             <tr>
-                <td>{{ alumno[0] }}</td>
+                <td>{% if alumno[4]>0 %}<span class="text-danger">{% endif %}{{ alumno[0] }}{% if alumno[4]>0 %}</span>{% endif %}</td>
                 <td>
                     {{ alumno[2] | date('d/m/Y') }}
                     {% if alumno[2] != alumno[3] %}
                         a {{ alumno[3] | date('d/m/Y') }}
                     {% endif %}
                 </td>
-                <td>{{ alumno[1] }}</td>
+                <td>{{ alumno[1] }}{% if alumno[4]>0 %}<span class="text-danger"> ({{ alumno[4] }})</span>{% endif %}</td>
                 <td>
                     <a href="{{ path('parte_sancionar', {'alumno': alumno[0].id }) }}" class="btn btn-warning btn-sm btn-block"><i class="fa fa-gavel"></i> Sancionar</a>
                 </td>

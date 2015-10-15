@@ -79,6 +79,7 @@ class AlumnoRepository extends EntityRepository
             ->addSelect('COUNT(p.id)')
             ->addSelect('MIN(p.fechaSuceso)')
             ->addSelect('MAX(p.fechaSuceso)')
+            ->addSelect('SUM(p.prioritario)')
             ->innerJoin('AppBundle:Alumno', 'a')
             ->where('p.fechaAviso IS NOT NULL')
             ->andWhere('p.sancion IS NULL')

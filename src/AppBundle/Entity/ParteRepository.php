@@ -201,6 +201,17 @@ class ParteRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+    public function countSancionablesPrioritarios()
+    {
+        return $this->findNotificados()
+            ->select('COUNT(p.id)')
+            ->andWhere('p.prescrito = false')
+            ->andWhere('p.sancion IS NULL')
+            ->andWhere('p.prioritario = true')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function findAllSancionablesPorAlumno($alumno)
     {
         return $this->getEntityManager()
