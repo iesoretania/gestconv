@@ -50,6 +50,9 @@ class DefaultController extends Controller
             $partesSancionables = $em->getRepository('AppBundle:Parte')
                 ->countSancionables();
 
+            $partesSancionablesPrioritarios = $em->getRepository('AppBundle:Parte')
+                ->countSancionablesPrioritarios();
+
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
                 ->countAlumnosNoNotificados();
 
@@ -72,7 +75,8 @@ class DefaultController extends Controller
                 'partes_pendientes_propios_y_tutoria' => $partesPendientesPropiosYTutoria,
                 'partes_totales' => $partesTotales,
                 'partes_pendientes_propios' => $partesPendientesPropios,
-                'partes_sancionables' => $partesSancionables
+                'partes_sancionables' => $partesSancionables,
+                'partes_sancionables_prioritarios' => $partesSancionablesPrioritarios
             ),
             'sanciones_notificables' => $sancionesNotificables,
             'sanciones_totales' => $sancionesTotales
