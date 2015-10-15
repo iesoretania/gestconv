@@ -72,6 +72,9 @@ class SancionController extends BaseController
             $em->persist($sancion);
             $em->flush();
 
+            $this->notificarSancion($alumno->getGrupo()->getTutores(), $sancion);
+            $this->notificarSancion($em->getRepository('AppBundle:Usuario')->getUsuariosDeSancion($sancion), $sancion);
+
             $this->addFlash('success', 'Se ha registrado la sanción');
 
             // redireccionar a la portada

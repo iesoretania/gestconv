@@ -61,4 +61,19 @@ class UsuarioRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getUsuariosDeSancion(Sancion $sancion)
+    {
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Usuario')
+            ->createQueryBuilder('u')
+            ->select('u')
+            ->distinct()
+            ->leftJoin('AppBundle:Parte', 'p', 'WITH', 'p.usuario = u')
+            ->leftJoin('AppBundle:Sancion', 's', 'WITH', 'p.sancion = s')
+            ->where('s = :sancion')
+            ->setParameter('sancion', $sancion)
+            ->getQuery()
+            ->getResult();
+    }
 }

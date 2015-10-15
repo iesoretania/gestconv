@@ -21,6 +21,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Parte;
+use AppBundle\Entity\Sancion;
 use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TCPDF;
@@ -93,7 +94,7 @@ abstract class BaseController extends Controller
         $adjunto = null;
 
         foreach($usuarios as $usuario) {
-            if ($usuario->getNotificaciones() && $usuario->getEmail()) {
+            if ($usuario->getEstaActivo() && $usuario->getNotificaciones() && $usuario->getEmail()) {
 
                 if (is_null($adjunto)) {
                     $plantilla = $this->container->getParameter('parte');
@@ -121,6 +122,53 @@ abstract class BaseController extends Controller
                     ->setFrom($this->container->getParameter('remite_notificacion'))
                     ->setTo(array($usuario->getEmail() => $usuario->__toString()))
                     ->setBody('La familia del estudiante ' . $parte->getAlumno() . ' ha sido notificada del parte que se incluye adjunto en el mensaje.')
+                    ->attach($adjunto);
+
+                $enviados++;
+
+                $mailer->send($mensaje);
+            }
+        }
+
+        return $enviados;
+    }
+
+    protected function notificarSancion($usuarios, Sancion $sancion)
+    {
+        $enviados = 0;
+        $mailer = $this->get('mailer');
+        $adjunto = null;
+
+        foreach($usuarios as $usuario) {
+            if ($usuario->getEstaActivo() && $usuario->getNotificaciones() && $usuario->getEmail()) {
+
+                if (is_null($adjunto)) {
+                    $plantilla = $this->container->getParameter('sancion');
+                    $logos = $this->container->getParameter('logos');
+
+                    $pdf = $this->generarPdf('Sancion #' . $sancion->getId(), $logos, $plantilla, -15, 'S' . $sancion->getId());
+
+                    $html = $this->renderView('AppBundle:Sancion:imprimir.html.twig',
+                        array(
+                            'sancion' => $sancion,
+                            'usuario' => $usuario,
+                            'localidad' => $this->container->getParameter('localidad'),
+                            'director' => $this->container->getParameter('director')
+                        ));
+
+                    $pdf->writeHTML($html);
+
+                    $adjunto = Swift_Attachment::newInstance($pdf->getPDFData(), 'S' . $sancion->getId() . '.pdf', 'application/pdf')->setDisposition('inline');
+                }
+
+                $partes = $sancion->getPartes();
+                $alumno = $partes[0]->getAlumno();
+
+                $mensaje = $mailer->createMessage()
+                    ->setSubject($this->container->getParameter('prefijo_notificacion') . ' Nueva sanción a ' . $alumno)
+                    ->setFrom($this->container->getParameter('remite_notificacion'))
+                    ->setTo(array($usuario->getEmail() => $usuario->__toString()))
+                    ->setBody('La comisión de convivencia ha sancionado al alumno/a ' . $alumno . '. Los detalles se incluyen en el documento adjunto.')
                     ->attach($adjunto);
 
                 $enviados++;
