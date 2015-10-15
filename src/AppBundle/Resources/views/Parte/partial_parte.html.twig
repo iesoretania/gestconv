@@ -1,7 +1,9 @@
 <div class="panel-heading">
     <h3 class="panel-title">
         {% if marcar %}<input type="checkbox" class="casilla" name="{{ marcar.full_name }}" value="{{ parte.id }}" {{ marcar.checked ? 'checked' }}>{% endif %}
-        <strong>Parte #{{ parte.id }}</strong> - Registrado por {{ parte.usuario }}
+        <strong>
+            {% if parte.prioritario %}<span class="text-danger">{% endif %}Parte #{{ parte.id }}{% if parte.prioritario %}</span>{% endif %}
+        </strong> - Registrado por {{ parte.usuario }}
         - {{ parte.fechaSuceso | date('d/m/Y H:i') }}
         {% if parte.fechaAviso %} - Notificado el {{ parte.fechaAviso | date('d/m/Y H:i') }}{% endif %}
         {% if parte.prescrito %} - <strong>Prescrito</strong>{% endif %}

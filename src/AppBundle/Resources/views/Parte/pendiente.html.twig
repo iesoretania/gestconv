@@ -19,7 +19,7 @@
         <tbody>
         {% for alumno in alumnos %}
             <tr>
-                <td>{{ alumno[0] }}</td>
+                <td>{% if alumno[4]>0 %}<span class="text-danger">{% endif %}{{ alumno[0] }}{% if alumno[4]>0 %}</span>{% endif %}</td>
                 <td>
                     {{ alumno[2] | date('d/m/Y') }}
                     {% if alumno[2] != alumno[3] %}
