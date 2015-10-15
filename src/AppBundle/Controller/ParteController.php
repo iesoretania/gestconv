@@ -124,6 +124,7 @@ class ParteController extends BaseController
                 $em->persist($avisoParte);
 
                 $this->notificarParte($parte->getAlumno()->getGrupo()->getTutores(), $parte);
+                $this->notificarParte($em->getRepository('AppBundle:Usuario')->getRevisores(), $parte);
             }
             $em->flush();
         }
