@@ -56,8 +56,10 @@ class UsuarioRepository extends EntityRepository
         return $this->getEntityManager()
             ->getRepository('AppBundle:Usuario')
             ->createQueryBuilder('u')
-            ->where('u.estaActivo', true)
-            ->where('u.esRevisor', true)
+            ->where('u.estaActivo = :activo')
+            ->andWhere('u.esRevisor = :revisor')
+            ->setParameter('activo', true)
+            ->setParameter('revisor', true)
             ->getQuery()
             ->getResult();
     }
