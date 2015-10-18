@@ -51,6 +51,14 @@ parameters:
                        descripcion: Comunicación de correcciones y medidas disciplinarias a familias
                        margen: -4
 
+    # Detalles sobre el modelo de listado de sanciones
+    listado:
+                       modelo: ~
+                       revision: ~
+                       proceso: CONVIVENCIA
+                       descripcion: Correcciones y medidas disciplinarias
+                       margen: 0
+
     # Prefijo de las notificaciones
     prefijo_notificacion: "[Gestconv]"
     remite_notificacion: moodle@iesoretania.es

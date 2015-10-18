@@ -1,0 +1,54 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Informe de sanciones' %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li class="active">Informe de sanciones</li>
+    </ol>
+
+    <h1 class="well">Listado de sanciones registradas en un intervalo de fechas por estudiante</h1>
+
+    {{ form(formulario_fechas) }}
+
+    <table class="table table-bordered table-hover table-striped table-responsive listado">
+        <thead>
+        <tr>
+            <th class="col-md-4">Estudiante</th>
+            <th class="col-md-1">Partes sancionados</th>
+            <th class="col-md-1">Fecha de sanción</th>
+            <th class="col-md-1">Fecha de comunicación</th>
+            <th class="col-md-5">Sanción impuesta por la comisión</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item[0].partes[0].alumno }}</td>
+                <td>
+                    {{ item[1] }}
+                </td>
+                <td>{{ item[0].fechaSancion | date('d/m/Y') }}</td>
+                <td>
+                    {% if item[0].fechaComunicado %}
+                        {{ item[0].fechaComunicado | date('d/m/Y') }}
+                    {% else %}
+                        No notificado
+                    {% endif %}
+                </td>
+                <td>
+                    {{ item[0].anotacion | nl2br }}
+                    <br />
+                    {% if item[0].fechaInicioSancion %}<strong>Desde {{ item[0].fechaInicioSancion | date('d/m/Y')}} hasta {{ item[0].fechaFinSancion | date('d/m/Y') }}</strong>{% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No hay sanciones que mostrar</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('portada') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver a la portada</a>
+{% endblock %}

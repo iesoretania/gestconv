@@ -20,11 +20,10 @@
 
 namespace AppBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class RangoFechasType extends AbstractType
+class RangoFechasInformeType extends RangoFechasType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -32,37 +31,14 @@ class RangoFechasType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
-            ->setMethod('GET')
-            ->add('desde', 'date', array(
-                'label' => 'Desde',
-                'required' => false,
-                'widget' => 'single_text'
-            ))
-            ->add('hasta', 'date', array(
-                'label' => 'Hasta',
-                'required' => false,
-                'widget' => 'single_text'
-            ))
-            ->add('enviar', 'submit', array(
-                'label' => 'Filtrar en el intervalo de fechas',
-                'attr' => array('class' => 'btn btn-info')
-            ));
-    }
-
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults(array());
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'fechas';
+            ->setMethod('POST')
+            ->add('generar', 'submit',
+                array(
+                    'label' => 'Crear informe',
+                    'attr' => array('class' => 'btn btn-primary')
+                )
+            );
     }
 }

@@ -75,6 +75,17 @@
     {% endif %}
     {% if is_granted('ROLE_REVISOR') %}
         {% if sanciones_totales > 0 %}
+            <article class="col-md-4 tile tile-col-4 tile-lightblue">
+                <a class="tile-link" href="{{ path('sancion_informe') }}">
+                    <div class="tile-icon-holder">
+                        <i class="fa fa-file-text fa-4x"></i>
+                    </div>
+                    <div class="text-holder">
+                        <h4>Imprimir informe de sanciones</h4>
+                        <p>Genera un listado de sanciones</p>
+                    </div>
+                </a>
+            </article>
             <article class="col-md-4 tile tile-col-4 tile-bluedark">
                 <a class="tile-link" href="{{ path('sancion_listar') }}">
                     <div class="tile-icon-holder">

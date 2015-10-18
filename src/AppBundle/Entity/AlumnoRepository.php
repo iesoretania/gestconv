@@ -153,4 +153,38 @@ class AlumnoRepository extends EntityRepository
 
         return $data;
     }
+
+    public function getSancionadosPorFecha($fechas)
+    {
+        $data = $this->getEntityManager()
+            ->getRepository('AppBundle:Sancion')
+            ->createQueryBuilder('s')
+            ->select('s, p, a, g')
+            ->addSelect('COUNT(p)')
+            ->leftJoin('s.partes', 'p')
+            ->leftJoin('p.alumno', 'a')
+            ->leftJoin('a.grupo', 'g');
+
+        if ($fechas['desde']) {
+            $data = $data
+                ->andWhere('s.fechaSancion >= :desde')
+                ->setParameter('desde', $fechas['desde']);
+        }
+
+        if ($fechas['hasta']) {
+            $data = $data
+                ->andWhere('s.fechaSancion <= :hasta')
+                ->setParameter('hasta', $fechas['hasta']);
+        }
+
+        $data = $data
+            ->addOrderBy('a.apellido1')
+            ->addOrderBy('a.apellido2')
+            ->addOrderBy('a.nombre')
+            ->groupBy('s.id')
+            ->getQuery()
+            ->getResult();
+
+        return $data;
+    }
 }

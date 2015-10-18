@@ -26,6 +26,8 @@ use AppBundle\Entity\ObservacionSancion;
 use AppBundle\Entity\Sancion;
 use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevaSancionType;
+use AppBundle\Form\Type\RangoFechasInformeType;
+use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Form\Type\SancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -226,6 +228,52 @@ class SancionController extends BaseController
 
 
     /**
+     * @Route("/informe", name="sancion_informe",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_REVISOR')")
+     */
+    public function informeAction(Request $request)
+    {
+        $usuario = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $fechasPorDefecto = array('desde' => null, 'hasta' => null);
+
+        $formFechas = $this->createForm(new RangoFechasInformeType(), $fechasPorDefecto)
+            ->handleRequest($request);
+
+        $fechas = ($formFechas->isValid()) ? $formFechas->getData() : array('desde' => null, 'hasta' => null);
+
+        $alumnado = $em->getRepository('AppBundle:Alumno')->getSancionadosPorFecha($fechas);
+
+        if ($formFechas->isValid() && $formFechas->get('generar')->isClicked()) {
+            $plantilla = $this->container->getParameter('listado');
+            $logos = $this->container->getParameter('logos');
+
+            $pdf = $this->generarPdf('Informe de sanciones', $logos, $plantilla, -15);
+
+            $html = $this->renderView('AppBundle:Sancion:imprimir_informe.html.twig',
+                array(
+                    'items' => $alumnado,
+                    'fechas' => $fechas
+                ));
+
+            $pdf->writeHTML($html);
+
+            $response = new Response($pdf->Output( 'Informe_de_sanciones_' . date('Y-m-d H-i-s') . '.pdf'));
+            $response->headers->set('Content-Type', 'application/pdf');
+
+            return $response;
+        }
+
+        return $this->render('AppBundle:Sancion:listar_informe.html.twig',
+            array(
+                'formulario_fechas' => $formFechas->createView(),
+                'items' => $alumnado,
+                'usuario' => $usuario
+            ));
+    }
+
+     /**
      * @Route("/imprimir/{sancion}", name="sancion_detalle_pdf",methods={"GET"})
      * @Security("has_role('ROLE_REVISOR')")
      */

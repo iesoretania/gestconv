@@ -1,0 +1,34 @@
+<h1 align="center">Listado de sanciones registradas por estudiante
+{% if fechas.desde %} desde el {{ fechas.desde | date('d/m/Y') }}{% endif %}
+{% if fechas.hasta %} hasta el {{ fechas.hasta | date('d/m/Y') }}{% endif %}
+</h1>
+
+<table cellspacing="0" cellpadding="3" border="1">
+    <thead>
+    <tr style="background-color:#caeff2;color:#0000FF;">
+        <th width="20%" align="center">Estudiante</th>
+        <th width="10%" align="center">Nº de partes</th>
+        <th width="15%" align="center">Fecha de sanción</th>
+        <th width="15%" align="center">Fecha de comunicación</th>
+        <th width="40%" align="center">Sanción impuesta por la comisión</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for item in items %}
+        <tr valign="middle">
+            <td width="20%">{{ item[0].partes[0].alumno }}</td>
+            <td width="10%" align="center">{{ item[1] }}</td>
+            <td width="15%" align="center">{{ item[0].fechaSancion | date('d/m/Y') }}</td>
+            <td width="15%" align="center">{% if item[0].fechaComunicado %}{{ item[0].fechaComunicado | date('d/m/Y') }}{% else %}No notificado{% endif %}</td>
+            <td width="40%">{{ item[0].anotacion | nl2br }}
+                <br />
+                {% if item[0].fechaInicioSancion %}<strong>Desde {{ item[0].fechaInicioSancion | date('d/m/Y')}} hasta {{ item[0].fechaFinSancion | date('d/m/Y') }}</strong>{% endif %}
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="5">No hay sanciones que mostrar</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
