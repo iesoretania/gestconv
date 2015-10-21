@@ -29,6 +29,9 @@ parameters:
     localidad:         Linares
     director:          Dª. Francisca Sánchez Ruiz
 
+    dias_prescripcion: 30
+    dias_aviso_previo: 25
+
     # Carpetas donde se encuentran los logos de los informes PDF
     logos:
                       centro: '../src/AppBundle/Resources/public/images/centro.png'

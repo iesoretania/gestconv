@@ -88,6 +88,7 @@ class ParteRepository extends EntityRepository
         return $this->getEntityManager()
             ->getRepository('AppBundle:Parte')
             ->createQueryBuilder('p')
+            ->select('p')
             ->innerJoin('p.alumno', 'a')
             ->innerJoin('AppBundle:Grupo', 'g', 'WITH', 'a.grupo = g')
             ->andWhere($orX)
@@ -224,6 +225,22 @@ class ParteRepository extends EntityRepository
             ->andWhere('p.alumno = :alumno')
             ->orderBy('p.fechaSuceso')
             ->setParameter('alumno', $alumno)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPrescritos($plazo)
+    {
+        $fecha = new \DateTime();
+        $fecha->sub(new \DateInterval('P' . $plazo . 'D'));
+
+        return $this->getEntityManager()
+            ->getRepository('AppBundle:Parte')
+            ->createQueryBuilder('p')
+            ->where('p.sancion IS NULL')
+            ->andWhere('p.prescrito = false')
+            ->andWhere('p.fechaSuceso < :fechaLimite')
+            ->setParameter('fechaLimite', $fecha)
             ->getQuery()
             ->getResult();
     }
