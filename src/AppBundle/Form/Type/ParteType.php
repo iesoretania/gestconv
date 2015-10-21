@@ -58,8 +58,8 @@ class ParteType extends AbstractType
             ->add('alumno', 'entity', array(
                 'label' => 'Alumnado implicado*',
                 'class' => 'AppBundle\Entity\Alumno',
-                'required'  => false,
-                'disabled' => true
+                'required'  => true,
+                'disabled' => (!$options['admin'])
             ))
             ->add('conductas', null, array(
                 'label' => 'Conductas que provocan el parte*',
