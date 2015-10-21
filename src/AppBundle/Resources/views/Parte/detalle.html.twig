@@ -35,6 +35,10 @@
         {% include 'AppBundle:Sancion:partial_sancion.html.twig' %}
     {% endif %}
 
-    <a href="{{ path('parte_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado de partes</a>&nbsp;<a href="{{ path('parte_detalle_pdf', { 'parte': parte.id }) }}" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Imprimir el parte</a>
+    <a href="{{ path('parte_listar') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al listado de partes</a>&nbsp;
+    <a href="{{ path('parte_detalle_pdf', { 'parte': parte.id }) }}" class="btn btn-primary" target="_blank"><i class="fa fa-print"></i> Imprimir el parte</a>&nbsp;
+    {% if is_granted('ROLE_DIRECTIVO') and not parte.sancion %}
+        <a href="{{ path('parte_eliminar', { 'parte': parte.id }) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Eliminar el parte</a>&nbsp;
+    {% endif %}
 
 {% endblock %}

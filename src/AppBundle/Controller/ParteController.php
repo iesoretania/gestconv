@@ -277,4 +277,52 @@ class ParteController extends BaseController
 
         return $response;
     }
+
+    /**
+     * @Route("/eliminar/{parte}", name="parte_eliminar",methods={"GET", "POST"})
+     * @Security("has_role('ROLE_DIRECTIVO')")
+     */
+    public function eliminarAction(Parte $parte, Request $request)
+    {
+        if ($parte->getSancion()) {
+            // los partes sancionados no se pueden eliminar
+            return $this->createAccessDeniedException();
+        }
+
+        $formulario = $this->createFormBuilder()
+            ->add('eliminar', 'submit',
+                array(
+                    'label' => 'Confirmar eliminación',
+                    'attr' => array('class' => 'btn btn-danger')
+                )
+            )->getForm();
+
+        $formulario->handleRequest($request);
+
+        if ($formulario->isSubmitted() && $formulario->isValid()) {
+            $this->notificar($parte->getAlumno()->getGrupo()->getTutores(), "Parte #" . $parte->getId() . " eliminado",
+                "El parte #" . $parte->getId() . " de " . $parte->getAlumno() . " ha sido eliminado por " . $this->getUser());
+
+            foreach($parte->getAvisos() as $aviso) {
+                $this->getDoctrine()->getManager()->remove($aviso);
+            }
+            foreach($parte->getObservaciones() as $observacion) {
+                $this->getDoctrine()->getManager()->remove($observacion);
+            }
+            $this->getDoctrine()->getManager()->remove($parte);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash('success', 'El parte ha sido eliminado correctamente de la base de datos');
+
+            return new RedirectResponse(
+                $this->generateUrl('parte_listar')
+            );
+        }
+
+        return $this->render('AppBundle:Parte:eliminar.html.twig',
+            array(
+                'parte' => $parte,
+                'formulario' => $formulario->createView()
+            ));
+    }
 }

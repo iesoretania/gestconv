@@ -179,4 +179,27 @@ abstract class BaseController extends Controller
 
         return $enviados;
     }
+
+    protected function notificar($usuarios, $titulo, $cuerpo)
+    {
+        $enviados = 0;
+        $mailer = $this->get('mailer');
+
+        foreach($usuarios as $usuario) {
+            if ($usuario->getEstaActivo() && $usuario->getNotificaciones() && $usuario->getEmail()) {
+
+                $mensaje = $mailer->createMessage()
+                    ->setSubject($this->container->getParameter('prefijo_notificacion') . ' ' . $titulo)
+                    ->setFrom($this->container->getParameter('remite_notificacion'))
+                    ->setTo(array($usuario->getEmail() => $usuario->__toString()))
+                    ->setBody($cuerpo);
+
+                $enviados++;
+
+                $mailer->send($mensaje);
+            }
+        }
+
+        return $enviados;
+    }
 }

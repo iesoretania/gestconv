@@ -1,0 +1,22 @@
+{% extends '::layout.html.twig' %}
+
+{% block title 'Eliminación del parte #' ~ parte.id %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('portada') }}"><i class="fa fa-home fa-2x"></i></a></li>
+        <li><a href="{{ path('parte_listar') }}">Gestionar partes</a></li>
+        <li><a href="{{ path('parte_detalle', {'parte': parte.id}) }}">Parte #{{ parte.id }}</a></li>
+        <li class="active">Eliminar</li>
+    </ol>
+
+    <h1 class="well">Confirmación de eliminación del parte #{{ parte.id }} de {{ parte.alumno }}</h1>
+
+    <div class="alert alert-warning" role="alert">
+        <strong>¡Atención!</strong> La eliminación de un parte no se puede deshacer. Junto con él desaparecerá el historial
+        de observaciones y notificaciones a la familia. Se informará al tutor del estudiante de la operación.
+    </div>
+
+    {{ form(formulario) }}
+
+    <a href="{{ path('parte_detalle', {'parte': parte.id}) }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Volver al parte sin eliminarlo</a>
+{% endblock %}
