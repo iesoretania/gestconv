@@ -172,29 +172,35 @@ class UsuarioController extends Controller
 
         while($data = $importer->get(100)) {
             foreach($data as $usuarioData) {
+                $ahora = new \Datetime();
+                if ((\DateTime::createFromFormat('d/m/Y', $usuarioData['Fecha de toma de posesión']) <= $ahora)
+                    && (!$usuarioData['Fecha de cese'])
+                    || ($usuarioData['Fecha de cese'] && (\DateTime::createFromFormat('d/m/Y',
+                                $usuarioData['Fecha de cese']) > $ahora))
+                ) {
 
-                $usuario = $em->getRepository('AppBundle:Usuario')
-                    ->findOneByNombreUsuario($usuarioData['Usuario IdEA']);
-                if (!$usuario) {
+                    $usuario = $em->getRepository('AppBundle:Usuario')
+                        ->findOneByNombreUsuario($usuarioData['Usuario IdEA']);
+                    if (!$usuario) {
 
-                    $usuario = new Usuario();
+                        $usuario = new Usuario();
 
-                    $completo = explode(', ', $usuarioData['Empleado/a']);
+                        $completo = explode(', ', $usuarioData['Empleado/a']);
 
-                    $usuario->setNombreUsuario($usuarioData['Usuario IdEA'])
-                        ->setApellidos($completo[0])
-                        ->setNombre($completo[1])
-                        ->setPassword($encoder->encodePassword($usuario, $usuarioData['Usuario IdEA']))
-                        ->setNotificaciones(false)
-                        ->setEsAdministrador(false)
-                        ->setEsRevisor(false)
-                        ->setEsDirectivo(false)
-                        ->setEstaBloqueado(false)
-                        ->setEstaActivo(true);
+                        $usuario->setNombreUsuario($usuarioData['Usuario IdEA'])
+                            ->setApellidos($completo[0])
+                            ->setNombre($completo[1])
+                            ->setPassword($encoder->encodePassword($usuario, $usuarioData['Usuario IdEA']))
+                            ->setNotificaciones(false)
+                            ->setEsAdministrador(false)
+                            ->setEsRevisor(false)
+                            ->setEsDirectivo(false)
+                            ->setEstaBloqueado(false)
+                            ->setEstaActivo(true);
 
-                    $em->persist($usuario);
+                        $em->persist($usuario);
+                    }
                 }
-
             }
         }
         $em->flush();
