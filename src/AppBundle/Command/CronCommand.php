@@ -21,7 +21,6 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\Usuario;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -38,7 +37,7 @@ class CronCommand extends ContainerAwareCommand
 
     /**
      * @param OutputInterface $output
-     * @param Usuario[]|Collection $usuarios
+     * @param Usuario[]|Doctrine\Common\Collections\Collection $usuarios
      * @param string $titulo
      * @param string $cuerpo
      * @param $rol

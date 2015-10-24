@@ -21,7 +21,6 @@
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RangoFechasInformeType extends RangoFechasType
 {

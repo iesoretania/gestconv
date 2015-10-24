@@ -27,7 +27,6 @@ use AppBundle\Entity\Sancion;
 use AppBundle\Form\Type\NuevaObservacionType;
 use AppBundle\Form\Type\NuevaSancionType;
 use AppBundle\Form\Type\RangoFechasInformeType;
-use AppBundle\Form\Type\RangoFechasType;
 use AppBundle\Form\Type\SancionType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
