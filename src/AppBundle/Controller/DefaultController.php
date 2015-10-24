@@ -64,6 +64,7 @@ class DefaultController extends Controller
                 ->countPorUsuarioOTutoria($usuario);
 
             $partesSancionables = 0;
+            $partesSancionablesPrioritarios = 0;
             $sancionesNotificables = $em->getRepository('AppBundle:Sancion')
                 ->countNoNotificadosPorTutoria($usuario);
             $sancionesTotales = 0;
