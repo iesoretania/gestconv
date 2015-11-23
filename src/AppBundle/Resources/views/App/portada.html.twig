@@ -99,7 +99,7 @@
             </article>
         {% endif %}
     {% endif %}
-    {% if is_granted('ROLE_DIRECTIVO') %}
+    {% if is_granted('ROLE_DIRECTIVO') or is_granted('ROLE_ORIENTADOR') %}
         <article class="col-md-4 tile tile-col-4 tile-yellow">
             <a class="tile-link" href="{{ path('alumno_listar_todo') }}">
                 <div class="tile-icon-holder">

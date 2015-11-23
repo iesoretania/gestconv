@@ -12,7 +12,7 @@
 
     {{ form(formulario_alumno) }}
 
-    {% if (is_granted('ROLE_REVISOR') or (usuario.tutoria and usuario.tutoria == alumno.grupo)) %}
+    {% if (is_granted('ROLE_REVISOR') or is_granted('ROLE_ORIENTADOR') or (usuario.tutoria and usuario.tutoria == alumno.grupo)) %}
         <h1 class="well">Resumen</h1>
         <div class="panel panel-default">
             <div class="panel-body">

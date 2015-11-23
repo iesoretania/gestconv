@@ -84,6 +84,10 @@ class UsuarioType extends AbstractType
                     'label' => 'Pertenece a la comisión de convivencia',
                     'required' => false
                 ))
+                ->add('esOrientador', null, array(
+                    'label' => 'Es orientador',
+                    'required' => false
+                ))
                 ->add('esDirectivo', null, array(
                     'label' => 'Pertenece al equipo directivo',
                     'required' => false

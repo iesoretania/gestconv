@@ -43,7 +43,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/tutoria", name="alumno_tutoria",methods={"GET"})
      * @Route("/todo", name="alumno_listar_todo",methods={"GET"})
-     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria')")
+     * @Security("has_role('ROLE_DIRECTIVO') or has_role('ROLE_ORIENTADOR') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria')")
      */
     public function listarAction(Request $request)
     {
@@ -72,7 +72,7 @@ class AlumnoController extends Controller
     /**
      * @Route("/detalle/tutoria/{alumno}", name="alumno_tutoria_detalle", methods={"GET", "POST"})
      * @Route("/detalle/{alumno}", name="alumno_detalle", methods={"GET", "POST"})
-     * @Security("has_role('ROLE_DIRECTIVO') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria_detalle')")
+     * @Security("has_role('ROLE_DIRECTIVO') or has_role('ROLE_ORIENTADOR') or (has_role('ROLE_TUTOR') and request.get('_route') == 'alumno_tutoria_detalle')")
      */
     public function detalleAction(Alumno $alumno, Request $request)
     {

@@ -95,6 +95,12 @@ class Usuario implements AdvancedUserInterface
     protected $esDirectivo;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * @var boolean
+     */
+    protected $esOrientador;
+
+    /**
      * @ORM\Column(type="boolean", options={"default": true})
      * @var boolean
      */
@@ -339,6 +345,29 @@ class Usuario implements AdvancedUserInterface
     }
 
     /**
+     * Get esOrientador
+     *
+     * @return boolean
+     */
+    public function getEsOrientador()
+    {
+        return $this->esOrientador;
+    }
+
+    /**
+     * Set esOrientador
+     *
+     * @param boolean $esOrientador
+     * @return Usuario
+     */
+    public function setEsOrientador($esOrientador)
+    {
+        $this->esOrientador = $esOrientador;
+
+        return $this;
+    }
+
+    /**
      * Get esDirectivo
      *
      * @return boolean
@@ -570,6 +599,10 @@ class Usuario implements AdvancedUserInterface
 
         if ($this->getEsAdministrador()) {
             $roles[] = new Role('ROLE_ADMIN');
+        }
+
+        if ($this->getEsOrientador()) {
+            $roles[] = new Role('ROLE_ORIENTADOR');
         }
 
         if ($this->getEsRevisor()) {

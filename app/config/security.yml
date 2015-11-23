@@ -7,7 +7,7 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_ADMIN:       [ROLE_USUARIO, ROLE_DIRECTIVO, ROLE_PERMITE_IMPERSONAR]
+        ROLE_ADMIN:       [ROLE_USUARIO, ROLE_DIRECTIVO, ROLE_PERMITE_IMPERSONAR, ROLE_ORIENTADOR]
         ROLE_DIRECTIVO:   [ROLE_REVISOR]
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
 
