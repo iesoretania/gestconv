@@ -107,10 +107,13 @@ class AlumnoController extends Controller
             );
         }
 
+        $sanciones = $em->getRepository('AppBundle:Sancion')->findAllPorAlumno($alumno);
+
         return $this->render('AppBundle:Alumno:detalle.html.twig',
             array(
                 'vuelta' => $vuelta,
                 'alumno' => $alumno,
+                'sanciones' => $sanciones,
                 'formulario_alumno' => $formularioAlumno->createView(),
                 'usuario' => $usuario
             ));

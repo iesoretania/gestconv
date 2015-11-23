@@ -116,6 +116,7 @@ class SancionRepository extends EntityRepository
     public function findAllPorAlumno($alumno)
     {
         return $this->findTodos()
+            ->distinct()
             ->innerJoin('s.partes', 'p')
             ->where('p.alumno = :alumno')
             ->setParameter('alumno', $alumno)
