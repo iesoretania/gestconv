@@ -2,9 +2,9 @@
 <table class="table table-bordered table-hover table-striped table-responsive listado">
     <thead>
     <tr>
-       <th class="col-md-3">{% block lista_item %}Elemento{% endblock %}</th>
+        <th class="col-md-3">{% block lista_item %}Elemento{% endblock %}</th>
         <th class="col-md-2">Partes (total, sin notificar)<span class="text-muted small"> - Prescritos</span></th>
-        <th class="col-md-2">Sanciones (total, sin notificar)</th>
+        <th class="col-md-2">Sanciones (total)</th>
         <th class="col-md-2">Expulsiones</th>
         <th class="col-md-3">Estado</th>
         {% block lista_extra_cabecera %}{% endblock %}
@@ -18,7 +18,7 @@
             <td>{{ item[1] }}{% if item[1] - item[2] %} <strong>({{ item[1] - item[2] }})</strong>{% endif %}
                 {% if item[7] %}<span class="text-muted"> - {{ item[7] }}</span>{% endif %}
             </td>
-            <td>{{ item[3] - item[5] }}{% if item[3] - item[4] - item[5] %} <strong>({{ item[3] - item[4] - item[5] }})</strong>{% endif %}
+            <td>{{ item[3] - item[5] }}
             </td>
             <td>{% if item[6] %}<strong>{% endif %}{{ item[6] }}{% if item[6] %}</strong>{% endif %}</td>
             <td>{% if item[8] %}Último parte el {{ item[8] | date('d/m/Y') }}{% endif %}{% if item[9] %}. Última sanción el {{ item[9] | date('d/m/Y') }}{% endif %}</td>
@@ -45,7 +45,7 @@
                     {% if suma7 %}<span class="text-muted"> - {{ suma7 }}</span>{% endif %}
                 </th>
                 <th>
-                    {{ suma3 - suma5 }}{% if suma3 - suma4 - suma5 %} <strong>({{ suma3 - suma4 - suma5 }})</strong>{% endif %}
+                    {{ suma3 - suma5 }}
                 </th>
                 <th>{% if suma6 %}<strong>{% endif %}{{ suma6 }}{% if suma6 %}</strong>{% endif %}</td>
                 <th colspan="100"></td>
