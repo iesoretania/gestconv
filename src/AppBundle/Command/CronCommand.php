@@ -108,6 +108,7 @@ class CronCommand extends ContainerAwareCommand
         $partes = $em->getRepository('AppBundle:Parte')->findPrescritos($this->getContainer()->getParameter('dias_aviso_previo'));
 
         foreach($partes as $parte) {
+            $parte->setFechaRecordatorio(new \DateTime());
 
             $titulo = 'Recordatorio: Parte a punto de prescribir de ' . $parte->getAlumno();
 
@@ -116,5 +117,6 @@ class CronCommand extends ContainerAwareCommand
 
             $this->notificarSobreParte($output, $parte, $titulo, $mensaje, $em);
         }
+        $em->flush();
     }
 }

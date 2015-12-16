@@ -229,17 +229,23 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findPrescritos($plazo)
+    public function findPrescritos($plazo, $filtrarRecordados)
     {
         $fecha = new \DateTime();
         $fecha->sub(new \DateInterval('P' . $plazo . 'D'));
 
-        return $this->getEntityManager()
+        $data = $this->getEntityManager()
             ->getRepository('AppBundle:Parte')
             ->createQueryBuilder('p')
             ->where('p.sancion IS NULL')
             ->andWhere('p.prescrito = false')
-            ->andWhere('p.fechaSuceso < :fechaLimite')
+            ->andWhere('p.fechaSuceso < :fechaLimite');
+
+        if ($filtrarRecordados) {
+            $data = $data->andWhere('p.fechaRecordatorio IS NULL');
+        }
+
+        return $data
             ->setParameter('fechaLimite', $fecha)
             ->getQuery()
             ->getResult();

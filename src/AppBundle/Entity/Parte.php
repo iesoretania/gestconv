@@ -94,6 +94,11 @@ class Parte
      */
     protected $fechaAviso;
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    protected $fechaRecordatorio;
+    /**
      * @ORM\Column(type="boolean", nullable=false)
      * @var boolean
      */
@@ -450,6 +455,29 @@ class Parte
     public function getPrioritario()
     {
         return $this->prioritario;
+    }
+
+    /**
+     * Set fechaRecordatorio
+     *
+     * @param \DateTime $fechaRecordatorio
+     * @return Parte
+     */
+    public function setFechaRecordatorio($fechaRecordatorio)
+    {
+        $this->fechaRecordatorio = $fechaRecordatorio;
+
+        return $this;
+    }
+
+    /**
+     * Get fechaRecordatorio
+     *
+     * @return \DateTime
+     */
+    public function getFechaRecordatorio()
+    {
+        return $this->fechaRecordatorio;
     }
 
     /**
