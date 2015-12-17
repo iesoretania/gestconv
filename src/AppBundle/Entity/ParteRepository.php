@@ -229,7 +229,7 @@ class ParteRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findPrescritos($plazo, $filtrarRecordados)
+    public function findPrescritos($plazo, $filtrarRecordados = false)
     {
         $fecha = new \DateTime();
         $fecha->sub(new \DateInterval('P' . $plazo . 'D'));

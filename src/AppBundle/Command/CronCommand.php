@@ -105,7 +105,7 @@ class CronCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Localizando partes a punto de prescribir</info>');
 
-        $partes = $em->getRepository('AppBundle:Parte')->findPrescritos($this->getContainer()->getParameter('dias_aviso_previo'));
+        $partes = $em->getRepository('AppBundle:Parte')->findPrescritos($this->getContainer()->getParameter('dias_aviso_previo'), true);
 
         foreach($partes as $parte) {
             $parte->setFechaRecordatorio(new \DateTime());
