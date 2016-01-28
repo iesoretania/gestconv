@@ -57,6 +57,7 @@ class Parte
      * @ORM\Column(type="text", nullable=false)
      * @var string
      *
+     * @Assert\NotBlank
      * @Assert\Length(min="10", minMessage="parte.anotacion.min_length")
      */
     protected $anotacion;
