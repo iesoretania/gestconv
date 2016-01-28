@@ -78,7 +78,7 @@ class Parte
      * @var \DateTime
      *
      * @Assert\NotBlank(groups={"nuevo"}, message="parte.fecha_suceso.not_blank")
-     * AssertDateRange(max="now +10 minute", maxMessage="parte.fecha_suceso.max")
+     * @AssertDateRange(max="now +10 minute", maxMessage="parte.fecha_suceso.max")
      */
     protected $fechaSuceso;
     /**

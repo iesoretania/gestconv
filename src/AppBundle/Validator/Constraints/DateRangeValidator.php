@@ -53,6 +53,15 @@ class DateRangeValidator extends ConstraintValidator
             return;
         }
 
+        // evaluate now
+        if (null !== $this->min) {
+            $this->min = new \DateTime($this->min);
+        }
+
+        if (null !== $this->max) {
+            $this->max = new \DateTime($this->max);
+        }
+
         if (null !== $constraint->max && $value > $constraint->max) {
             $this->addViolation($constraint->maxMessage, array(
                 '{{ value }}' => $this->formatDate($value),
