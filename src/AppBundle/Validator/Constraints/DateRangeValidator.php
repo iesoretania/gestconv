@@ -60,7 +60,7 @@ class DateRangeValidator extends ConstraintValidator
             if ($value < $dateMin) {
                 $this->addViolation($constraint->minMessage, array(
                     '{{ value }}' => $this->formatDate($value),
-                    '{{ limit }}' => $this->formatDate($constraint->min)
+                    '{{ limit }}' => $this->formatDate($dateMin)
                 ));
             }
         }
@@ -71,7 +71,7 @@ class DateRangeValidator extends ConstraintValidator
             if ($value > $dateMax) {
                 $this->addViolation($constraint->maxMessage, array(
                     '{{ value }}' => $this->formatDate($value),
-                    '{{ limit }}' => $this->formatDate($constraint->max)
+                    '{{ limit }}' => $this->formatDate($dateMax)
                 ));
             }
         }
