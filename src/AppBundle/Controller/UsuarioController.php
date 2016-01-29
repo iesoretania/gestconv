@@ -195,6 +195,7 @@ class UsuarioController extends Controller
                             ->setEsAdministrador(false)
                             ->setEsRevisor(false)
                             ->setEsDirectivo(false)
+                            ->setEsOrientador(false)
                             ->setEstaBloqueado(false)
                             ->setEstaActivo(true);
 
