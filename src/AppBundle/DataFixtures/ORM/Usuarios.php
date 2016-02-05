@@ -58,6 +58,7 @@ class Usuarios extends AbstractFixture implements OrderedFixtureInterface, Conta
             ->setApellidos('Admin')
             ->setEsAdministrador(true)
             ->setEsRevisor(false)
+            ->setEsOrientador(false)
             ->setEsDirectivo(false)
             ->setEstaActivo(true)
             ->setNotificaciones(false)
