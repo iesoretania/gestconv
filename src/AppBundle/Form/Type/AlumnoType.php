@@ -60,7 +60,7 @@ class AlumnoType extends BaseSancionType
             ->add('fechaNacimiento', 'date', array(
                 'label' => 'Fecha de nacimiento*',
                 'widget' => 'single_text',
-                'required' => true,
+                'required' => false,
                 'disabled' => !$options['admin']
             ))
             ->add('tutor1', null, array(

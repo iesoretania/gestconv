@@ -166,7 +166,7 @@ class AlumnoController extends Controller
                         ->setApellido1($alumnoData['Primer apellido'])
                         ->setApellido2($alumnoData['Segundo apellido'])
                         ->setNombre($alumnoData['Nombre'])
-                        ->setFechaNacimiento(\DateTime::createFromFormat('d/m/Y', $alumnoData['Fecha de nacimiento']))
+                        ->setFechaNacimiento($alumnoData['Fecha de nacimiento'] != '' ? \DateTime::createFromFormat('d/m/Y', $alumnoData['Fecha de nacimiento']) : null)
                         ->setTutor1($alumnoData['Nombre Primer tutor'] . ' ' . $alumnoData['Primer apellido Primer tutor'] . ' ' . $alumnoData['Segundo apellido Primer tutor'])
                         ->setTutor2($alumnoData['Nombre Segundo tutor'] . ' ' . $alumnoData['Primer apellido Segundo tutor'] . ' ' . $alumnoData['Segundo apellido Segundo tutor'])
                         ->setTelefono1($alumnoData['Teléfono'])
