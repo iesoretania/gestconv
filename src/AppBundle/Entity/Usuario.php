@@ -131,6 +131,12 @@ class Usuario implements AdvancedUserInterface
     protected $sanciones = null;
 
     /**
+     * @ORM\Column(type="boolean", options={"default": false})
+     * @var boolean
+     */
+    protected $esExterno;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -651,5 +657,24 @@ class Usuario implements AdvancedUserInterface
     public function eraseCredentials()
     {
 
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEsExterno()
+    {
+        return $this->esExterno;
+    }
+
+    /**
+     * @param bool $esExterno
+     *
+     * @return Usuario
+     */
+    public function setEsExterno($esExterno)
+    {
+        $this->esExterno = $esExterno;
+        return $this;
     }
 }

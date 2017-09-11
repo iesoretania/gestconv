@@ -55,6 +55,10 @@ class UsuarioType extends AbstractType
             ->add('notificaciones', null, array(
                 'label' => 'Marcar si se desea recibir notificaciones',
                 'required' => false
+            ))
+            ->add('esExterno', null, array(
+                'label' => 'Marcar si desea usar Séneca para comprobar la contraseña',
+                'required' => false
             ));
 
         if ($options['directivo']) {
