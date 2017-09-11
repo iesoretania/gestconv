@@ -662,7 +662,7 @@ class Usuario implements AdvancedUserInterface
     /**
      * @return bool
      */
-    public function isEsExterno()
+    public function getEsExterno()
     {
         return $this->esExterno;
     }

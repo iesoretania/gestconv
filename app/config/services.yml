@@ -7,3 +7,12 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+    app.form.authenticator:
+        class: AppBundle\Security\FormAuthenticator
+        autowire: true
+
+    app.seneca.authenticator:
+        class: AppBundle\Service\SenecaAuthenticatorService
+        autowire: false
+        arguments: ["%external.url%", "%external.url.force_security%", "%external.enabled%"]

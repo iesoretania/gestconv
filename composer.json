@@ -18,6 +18,7 @@
         ]
     },
     "require": {
+        "ext-curl": "*",
         "php": ">=5.3.9",
         "doctrine/doctrine-bundle": "~1.4",
         "doctrine/doctrine-fixtures-bundle": "^2.4",
