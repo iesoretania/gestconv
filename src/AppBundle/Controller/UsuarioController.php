@@ -197,7 +197,8 @@ class UsuarioController extends Controller
                             ->setEsDirectivo(false)
                             ->setEsOrientador(false)
                             ->setEstaBloqueado(false)
-                            ->setEstaActivo(true);
+                            ->setEstaActivo(true)
+                            ->setEsExterno(true);
 
                         $em->persist($usuario);
                     }
