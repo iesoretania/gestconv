@@ -76,6 +76,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 white_october_tcpdf:
-    class:  "AppBundle\Utils\InformePDF"
+    class:  "\\AppBundle\\Utils\\InformePDF"
     tcpdf:
         k_path_images: "%kernel.root_dir%/"
