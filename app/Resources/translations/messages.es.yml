@@ -2,3 +2,4 @@ The presented password cannot be empty.: El campo contraseña no puede estar vac
 The presented password is invalid.: Nombre de usuario y/o contraseña incorrectos.
 Invalid credentials.: Nombre de usuario y/o contraseña incorrectos.
 Database error.: Error conectando con la base de datos.
+Account is locked.: El usuario de Séneca está bloqueado. Espere unos minutos e inténtelo de nuevo.
