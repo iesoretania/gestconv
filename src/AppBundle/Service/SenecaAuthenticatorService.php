@@ -20,13 +20,10 @@
 
 namespace AppBundle\Service;
 
+use phpseclib3\Math\BigInteger;
+
 class SenecaAuthenticatorService
 {
-    const STATUS_NOT_AVAILABLE = 0;
-    const STATUS_USER_AUTHENTICATED = 1;
-    const STATUS_WRONG_USER_OR_PASSWORD = 2;
-    const STATUS_USER_BLOCKED = 3;
-
     /** @var string */
     private $url;
 
@@ -51,64 +48,48 @@ class SenecaAuthenticatorService
     public function checkUserCredentials($user, $password)
     {
         // devolver error si no está habilitado
-        if (false === $this->enabled) {
-            return self::STATUS_NOT_AVAILABLE;
+        if (!$this->enabled) {
+            return false;
         }
 
-        // obtener URL de entrada
-        $str = $this->getUrl($this->url, $this->forceSecurity);
-        if (!$str) {
-            return self::STATUS_NOT_AVAILABLE;
+        $passwordCodificada = "";
+        $password = iconv('UTF-8', 'ISO-8859-1//TRANSLIT', $password);
+        for ($i = 0, $iMax = strlen($password); $i < $iMax; $i++) {
+            $passwordCodificada .= ord($password[$i]);
         }
 
-        $dom = new \DOMDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($str);
-        $xpath = new \DOMXPath($dom);
-        $form = $xpath->query('//form')->item(0);
-        $hidden = $xpath->query('//input[@name="N_V_"]')->item(0);
+        $p = new BigInteger($passwordCodificada);
 
-        if (!$form || !$hidden) {
-            return self::STATUS_NOT_AVAILABLE;
-        }
-
-        // enviar datos del formulario
-        $postUrl = $form->getAttribute('action');
-        $hiddenValue = $hidden->getAttribute('value');
+        $passwordCifrada = $p->powMod(
+            new BigInteger('3584956249', 10),
+            new BigInteger('356056806984207294102423357623243547284021', 10)
+        )->toString();
 
         $fields = array(
-            'USUARIO' => urlencode($user),
-            'CLAVE' => urlencode($password),
-            'N_V_' => urlencode($hiddenValue)
+            'USUARIO' => $user,
+            'rndval' => random_int(10000000, 99999999),
+            'CLAVECIFRADA' => $passwordCifrada,
+            'CON_PRUEBA' => 'N',
+            'N_V_' => 'NV_' . random_int(1, 9999),
+            'NAV_WEB_NOMBRE' => 'Chrome',
+            'NAV_WEB_VERSION' => '99',
+            'C_INTERFAZ' => 'PASEN'
+
         );
 
-        $str = $this->postToUrl($fields, $postUrl, $this->url, $this->forceSecurity);
+        $str = $this->postToUrl($fields, $this->url, $this->url, $this->forceSecurity);
 
-        if (!$str) {
-            return self::STATUS_NOT_AVAILABLE;
+        if ($str === '') {
+            return false;
         }
 
         $dom = new \DOMDocument();
         libxml_use_internal_errors(true);
-        $dom->loadHTML($str);
+        $dom->loadXML($str);
         $xpath = new \DOMXPath($dom);
-        $nav = $xpath->query('//nav');
-        $error = $xpath->query('//p[@class="text-danger"]');
-        $message = $error->length > 0 ? $error->item(0)->firstChild->nodeValue : '';
+        $nav = $xpath->query('//correcto');
 
-        if ($nav->length === 1 && $error->length === 0) {
-            $result = self::STATUS_USER_AUTHENTICATED;
-        }
-        elseif (false !== strpos($message, 'Usuario bloqueado')) {
-            $result = self::STATUS_USER_BLOCKED;
-        }
-        elseif (false !== strpos($message, 'Usuario incorrecto')) {
-            $result = self::STATUS_WRONG_USER_OR_PASSWORD;
-        }
-        else {
-            $result = self::STATUS_NOT_AVAILABLE;
-        }
-        return $result;
+        return $nav->length === 1 && $nav->item(0)->textContent === "SI";
     }
 
     /**
@@ -121,14 +102,8 @@ class SenecaAuthenticatorService
     private function getUrl($url, $forceSecurity)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $forceSecurity);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_MAXREDIRS, 2);
-        curl_setopt($curl, CURLOPT_URL, $url);
+        $this->setCurlDefaultOptions($url, $forceSecurity, $curl);
         curl_setopt($curl, CURLOPT_REFERER, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.125 Safari/533.4");
         $str = curl_exec($curl);
         curl_close($curl);
         return $str === false ? '' : (string) $str;
@@ -147,22 +122,38 @@ class SenecaAuthenticatorService
     {
         $fieldsString = '';
         foreach ($fields as $key => $value) {
-            $fieldsString .= $key.'='.$value.'&';
+            $fieldsString .= $key.'='.rawurlencode($value).'&';
         }
         $fieldsString = rtrim($fieldsString, '&');
 
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $forceSecurity);
-        curl_setopt($curl, CURLOPT_HEADER, false);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
-        curl_setopt($curl, CURLOPT_URL, $postUrl);
+        $this->setCurlDefaultOptions($postUrl, $forceSecurity, $curl);
         curl_setopt($curl, CURLOPT_REFERER, $refererUrl);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.125 Safari/533.4");
         curl_setopt($curl, CURLOPT_POST, count($fields));
         curl_setopt($curl, CURLOPT_POSTFIELDS, $fieldsString);
         $str = curl_exec($curl);
         curl_close($curl);
         return $str === false ? '' : (string) $str;
+    }
+
+    /**
+     * @param $url
+     * @param $forceSecurity
+     * @param $curl
+     */
+    private function setCurlDefaultOptions($url, $forceSecurity, $curl)
+    {
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $forceSecurity);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($curl, CURLOPT_MAXREDIRS, 2);
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt(
+            $curl,
+            CURLOPT_USERAGENT,
+            'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) ' .
+            'AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.125 Safari/533.4'
+        );
     }
 }
